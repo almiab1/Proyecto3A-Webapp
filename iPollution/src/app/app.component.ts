@@ -17,9 +17,19 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Mapa',
+      url: '/mapa',
+      icon: 'map'
+    },
+    {
+      title: '+Info',
+      url: '/mas-info',
+      icon: 'map'
+    },
+    {
+      title: 'Scaner',
+      url: '/scaner',
+      icon: 'camera'
     }
   ];
 

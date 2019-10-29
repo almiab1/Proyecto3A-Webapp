@@ -9,12 +9,20 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  }
+    path: 'mapa',
+    loadChildren: () => import('./pages/mapa/mapa.module').then(m => m.MapaPageModule)
+  },
+  {
+    path: 'mas-info',
+    loadChildren: () => import('./pages/mas-info/mas-info.module').then(m => m.MasInfoPageModule)
+  },
+  {
+    path: 'scaner',
+    loadChildren: () => import('./pages/scaner/scaner.module').then(m => m.ScanerPageModule)
+  },
 ];
 
 @NgModule({
