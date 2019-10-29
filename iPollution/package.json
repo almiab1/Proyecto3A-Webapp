@@ -1,9 +1,10 @@
 {
   "name": "iPollution",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Equipo4",
   "scripts": {
+    "compileAndroid": "ionic cordova run android --device",
+    "compileServe": "ionic serve",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
