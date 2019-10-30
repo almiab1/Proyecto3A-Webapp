@@ -24,7 +24,7 @@ export class AppComponent {
     {
       title: '+Info',
       url: '/mas-info',
-      icon: 'map'
+      icon: 'information-circle-outline'
     },
     {
       title: 'Scaner',
