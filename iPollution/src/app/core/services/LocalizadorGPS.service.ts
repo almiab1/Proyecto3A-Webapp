@@ -26,7 +26,7 @@ export class LocalizadorGPS {
   public long: number;
 
   constructor(
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
   ) {}
 
   async obtenerMiPosicionGPS() {
