@@ -19,20 +19,12 @@ import {
 // import { LogicaDeNegocioFake } from './services/LogicaDeNegocioFake.service';
 
 // GPS
-import {
-  LocalizadorGPS
-} from 'src/app/core/services/LocalizadorGPS.service';
+import {LocalizadorGPS} from 'src/app/core/services/LocalizadorGPS.service';
 // iBEacon
-import {
-  IBeacon
-} from '@ionic-native/ibeacon/ngx';
+import {IBeacon} from '@ionic-native/ibeacon/ngx';
 // BeaconProvider
-import {
-  BeaconProvider
-} from 'src/app/core/services/BeaconProvider.service';
-import {
-  Events
-} from '@ionic/angular';
+import {BeaconProvider} from 'src/app/core/services/BeaconProvider.service';
+import {Events} from '@ionic/angular';
 
 
 // ----------------------------

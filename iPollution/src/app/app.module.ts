@@ -15,6 +15,9 @@ import { LocalizadorGPS } from './core/services/LocalizadorGPS.service';
 import { IBeacon } from '@ionic-native/ibeacon/ngx';
 import { BeaconProvider } from './core/services/BeaconProvider.service';
 import { HttpClientModule } from '@angular/common/http';
+import { File } from '@ionic-native/file/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReceptorBLE,
     LogicaDeNegocioFake,
     HttpClientModule,
-    IBeacon, BeaconProvider
+    IBeacon, BeaconProvider,
+    File, Camera, PhotoViewer
   ],
   bootstrap: [AppComponent]
 })
