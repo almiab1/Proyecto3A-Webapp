@@ -17,7 +17,7 @@
     <ion-content color="secundario">
       <ion-row>
         <ion-col size="12">
-          <ion-list color="secundario" lines="full">
+          <ion-list color="secundario" lines="full" mode="ios">
             <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
               <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="secundario">
                   <ion-icon slot="start" [name]="p.icon" color="acentuado"></ion-icon>
