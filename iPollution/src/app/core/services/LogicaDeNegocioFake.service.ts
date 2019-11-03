@@ -61,13 +61,16 @@ export class LogicaDeNegocioFake {
         });
     }
     // Enviar datos a la API Rest
-    async postGuardarMedicion(data) {
+    async guardarMedida(data) {
         return new Promise((resolve, reject) => {
             this.http.post(this.urlBasureroGuardar, JSON.stringify({
-                        resultados: {
-                            Time: data.instante,
-                            Value: data.valor
-                        }}),
+                valorMedido: data.valorMedido,
+                idUsuario: data.isUsuario,
+                latitud: data.latitud,
+                longitud: data.longitud,
+                tiempo: data.tiempo,
+                idTipoMedida: data.idTipoMedida
+            }),
                         {observe: 'response'}
                 )
                 .subscribe(response => {
