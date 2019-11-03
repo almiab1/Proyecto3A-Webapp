@@ -45,7 +45,7 @@ export class AppComponent {
         {
           title: 'Mapa',
           url: '/mapa',
-          icon: 'map'
+          icon: 'locate'
         },
         {
           title: '+Info',
@@ -56,7 +56,17 @@ export class AppComponent {
           title: 'Scaner',
           url: '/scaner',
           icon: 'camera'
-        }
+        },
+        {
+          title: 'Rutas',
+          url: '/rutas',
+          icon: 'navigate'
+        },
+        {
+          title: 'Configuración',
+          url: '/config',
+          icon: 'cog'
+        },
       ];
     } else {
       this.appPages = [{
@@ -67,13 +77,23 @@ export class AppComponent {
         {
           title: 'Mapa',
           url: '/mapa',
-          icon: 'map'
+          icon: 'locate'
         },
         {
           title: '+Info',
           url: '/mas-info',
           icon: 'information-circle-outline'
-        }
+        },
+        {
+          title: 'Rutas',
+          url: '/rutas',
+          icon: 'navigate'
+        },
+        {
+          title: 'Configuración',
+          url: '/config',
+          icon: 'cog'
+        },
       ];
     }
 

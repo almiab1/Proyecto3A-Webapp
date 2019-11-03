@@ -23,6 +23,14 @@ const routes: Routes = [
     path: 'scaner',
     loadChildren: () => import('./pages/scaner/scaner.module').then(m => m.ScanerPageModule)
   },
+  {
+    path: 'config',
+    loadChildren: () => import('./pages/config/config.module').then(m => m.ConfigPageModule)
+  },
+  {
+    path: 'rutas',
+    loadChildren: () => import('./pages/rutas/rutas.module').then(m => m.RutasPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 // ----------------------------
-// mapa.page.ts
-// Controlador de la vista mapa
+// rutas.page.ts
+// Controlador de la vista rutas
 // Equipo 4
 // Alejandro Mira Abad
 // Fecha
@@ -10,26 +10,35 @@
 // ----------------------------
 // Includes
 // ----------------------------
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { LocalizadorGPS } from './../../core/services/LocalizadorGPS.service';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
+import {
+  LocalizadorGPS
+} from './../../core/services/LocalizadorGPS.service';
 // Variable global
 declare var google;
 // ----------------------------
 // Components
 // ----------------------------
 @Component({
-  selector: 'app-mapa',
-  templateUrl: './mapa.page.html',
-  styleUrls: ['./mapa.page.scss'],
+  selector: 'app-rutas',
+  templateUrl: './rutas.page.html',
+  styleUrls: ['./rutas.page.scss'],
 })
-
-// ----------------------------
-// Class
-// ----------------------------
-export class MapaPage implements OnInit {
-
+export class RutasPage implements OnInit {
+  // Lista de rutas
+  public rutes: any;
+  // Propiedades
   map: any;
-  @ViewChild('mapElement', {static: false}) mapElement: ElementRef;
+  // Referencia vista mapa
+  @ViewChild('mapElement', {
+    static: false
+  }) mapElement: ElementRef;
+  // Actual localizacion
   currentLocation: any = {
     lat: 0,
     long: 0
@@ -38,6 +47,16 @@ export class MapaPage implements OnInit {
   constructor(
     private geolocation: LocalizadorGPS,
   ) {
+    this.rutes = [{
+      name: 'Grau i Platja Gandia',
+    },
+    {
+      name: 'Oliva',
+    },
+    {
+      name: 'Gandia',
+    },
+  ];
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -55,7 +74,7 @@ export class MapaPage implements OnInit {
       const map = new google.maps.Map(
         this.mapElement.nativeElement, {
           zoom: 15,
-      });
+        });
 
       /*location object*/
       const pos = {
