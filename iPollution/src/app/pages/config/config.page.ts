@@ -20,13 +20,13 @@ export class ConfigPage implements OnInit {
     private gps: LocalizadorGPS,
     private platform: Platform,
   ) {
-    if (this.platform.is('mobile')) {
-      if (this.ble.estaBLEactivado()) {
-        this.estaActivoBle = true;
-      } else {
-        this.estaActivoBle = false;
-      }
-    }
+    // if (this.platform.is('mobile')) {
+    //   if (this.ble.estaBLEactivado()) {
+    //     this.estaActivoBle = true;
+    //   } else {
+    //     this.estaActivoBle = false;
+    //   }
+    // }
   }
 
   ngOnInit() {}

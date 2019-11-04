@@ -131,8 +131,8 @@ export class ReceptorBLE {
       // Parametros
       this.major = parseInt(beacons[0].major);
       this.minor = parseInt(beacons[0].minor);
-
-      console.log('Major: ' + this.major + ' Minor: ' + this.minor);
+      if ( this.major === undefined) { this.major = -1 };
+      if ( this.minor === undefined) { this.major = -1 };
     });
   }
 
@@ -156,6 +156,7 @@ export class ReceptorBLE {
 
   obtenerO3() {
     this.actualizarMediciones();
+    console.log('-------------Este es el JSON medicion-----------------------------');
     console.log(this.medicion);
     return this.medicion;
   }

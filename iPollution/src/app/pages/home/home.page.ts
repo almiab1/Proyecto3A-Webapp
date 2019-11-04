@@ -20,7 +20,7 @@ export class HomePage {
     // ACTUALIZAR DATOS
     setInterval(() => {
       this.hayQueActualizarMedicionesYEnviarlasAlServidor();
-     }, 5000);
+     }, 7000);
   }
 
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
@@ -32,7 +32,7 @@ export class HomePage {
     //   console.log("GET ULTIMA MEDICION")
     //   console.log(response);
     // });
-    console.log('LLAMAR GUARDAR MEDIDA');
+    console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
     this.serve.guardarMedida(medicion).subscribe(data => {console.log(data); });
 
   }

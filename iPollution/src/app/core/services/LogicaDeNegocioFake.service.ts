@@ -109,20 +109,19 @@ export class LogicaDeNegocioFake {
     // Create a new item
     guardarMedida(data): Observable<any> {
         // JSON a enviar
-        let datos = {
-
-            valorMedido: 28,
+        const datos = {
+            valorMedido: data.valorMedido,
             tiempo: data.tiempo,
             latitud: data.latitud,
             longitud: data.longitud,
             idUsuario: 'a@gmail.com',
             idTipoMedida: 1,
             idSensor: 1,
-            temperatura: 7,
-            humedad: 8
+            temperatura: data.temperatura,
+            humedad: data.humedad
         };
         return this.http
-            .post<any>(this.urlBasureroGuardarLocal, 
+            .post<any>(this.urlBasureroGuardarLocal,
                 JSON.stringify(datos),
                 this.httpOptions);
             // .pipe(
@@ -174,7 +173,6 @@ export class LogicaDeNegocioFake {
     // Dar de alta sensor
     async darDeAltaSensor(data) {
         return new Promise((resolve, reject) => {
-            // this.http.post(this.urlPostLocal + data.valor + '&' + data.instante + '&' + data.lat + '&' + data.long, JSON.stringify(data))
             this.http.post(this.urlDarDeAltaSensorLocal, JSON.stringify({
                     idTipoSensor: data.idTipoSensor
                 }), {
