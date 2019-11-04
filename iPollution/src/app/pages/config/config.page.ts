@@ -32,13 +32,13 @@ export class ConfigPage implements OnInit {
   ngOnInit() {}
 
   bleControl(e) {
-    if (this.estaActivoBle === true) {
+    /*if (this.estaActivoBle === true) {
       this.ble.activarBLE();
       // this.estaActivoBle = true;
     } else {
       this.ble.desactivarBLE();
       // this.estaActivoBle = false;
-    }
+    }*/
   }
 
 }

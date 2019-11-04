@@ -36,15 +36,15 @@ export class ReceptorBLE {
   // Propiedades
   // ----------------------------
   // ibeacon data
-  identifier: string;
-  uuid: string;
   major: number;
   minor: number;
   // ubicacion data
-  valor: number;
-  lat: number;
+  valorMedido: number;
+  latitud: number;
   long: number;
-  instante: number;
+  humedad: number;
+  temperatura: number;
+  tiempo: number;
   // medicion
   medicion: any = {};
   // ----------------------------
@@ -127,12 +127,12 @@ export class ReceptorBLE {
         let beaconObject = beacon;
         beacons.push(beaconObject);
       });
+      console.log(beacons);
       // Parametros
-      this.uuid = beacons[0].uuid.toString();
       this.major = parseInt(beacons[0].major);
       this.minor = parseInt(beacons[0].minor);
 
-      // console.log('ObtenerMisTramas: Major: ' + this.major)
+      console.log('Major: ' + this.major + ' Minor: ' + this.minor);
     });
   }
 
@@ -140,27 +140,18 @@ export class ReceptorBLE {
     this.obtenerMisTramas();
     let date = new Date();
     this.medicion = {
-      valor: this.major,
-      lat: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
+      valorMedido: this.major,
+      latitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
         return ubicacion.lat;
       }),
-      long: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
+      longitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
         return ubicacion.long;
       }),
-      instante: date.getTime()
+      tiempo: date.getTime(),
+      idTipoMedida: 1,
+      temperatura: this.minor,
+      humedad: this.minor,
     };
-
-    // console.log(this.medicion);
-    /*
-    // Actualizar UI
-    this.ngZone.run(() => {
-      this.valor = this.medicion.valor;
-      this.lat = this.medicion.lat;
-      this.long = this.medicion.long;
-      // console.log('Lat: ' + this.lat + ', Long: ' + this.long);
-      this.instante = this.medicion.instante;
-    });
-    */
   }
 
   obtenerO3() {
