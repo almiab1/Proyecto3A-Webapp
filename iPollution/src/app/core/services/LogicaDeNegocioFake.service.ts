@@ -40,7 +40,7 @@ export class LogicaDeNegocioFake {
     urlPostLocal = 'http://192.168.100.103/guardarO3/';
     // URL server remoto
     urlPOST = 'https://cartormi.upv.edu.es/guardarMedida';
-    urlGET = 'http://localhost:8080/getUltimaMedida';
+    urlGET = 'http://192.168.0.109:8080/getUltimaMedida';
 
     // API de admin
     urlEditarUsuario = 'https://cartormi.upv.edu.es/admin/editarUsuario';
@@ -65,7 +65,7 @@ export class LogicaDeNegocioFake {
     urlEditarUsuarioAdministradorLocal = 'http://192.168.43.195/admin/editarUsuarioAdministrador';
 
     // Api de técnico local
-    urlBasureroGuardarLocal = 'http://127.0.0.1:8080/basurero/guardarMedida';
+    urlBasureroGuardarLocal = 'http://192.168.0.109:8080/basurero/guardarMedida';
     urlEditarUsuarioBasureroLocal = 'http://192.168.43.195/basurero/editarUsuarioBasurero';
 
     // Http Options
@@ -122,19 +122,9 @@ export class LogicaDeNegocioFake {
             humedad: 8
         };
         return this.http
-            .post<any>(this.urlBasureroGuardarLocal, JSON.stringify(datos
-                // {
-                //     // valorMedido: data.valorMedido,
-                //     valorMedido: 1,
-                //     idUsuario: 'a@gmail.com',
-                //     latitud: data.latitud,
-                //     longitud: data.longitud,
-                //     tiempo: data.tiempo,
-                //     humedad: 1,
-                //     temperatura: 1,
-                //     idTipoMedida: data.idTipoMedida
-                // }
-            ), this.httpOptions);
+            .post<any>(this.urlBasureroGuardarLocal, 
+                JSON.stringify(datos),
+                this.httpOptions);
             // .pipe(
             //     // retry(2),
             //     catchError(this.handleError)
