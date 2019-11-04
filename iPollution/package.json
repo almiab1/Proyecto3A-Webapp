@@ -80,6 +80,7 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-geolocation": {},
+      "cordova-plugin-ibeacon": {},
       "com.unarin.cordova.beacon": {},
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-whitelist": {},

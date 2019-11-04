@@ -20,7 +20,7 @@ export class HomePage {
     // ACTUALIZAR DATOS
     setInterval(() => {
       this.hayQueActualizarMedicionesYEnviarlasAlServidor();
-     }, 7000);
+     }, 10000);
   }
 
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
