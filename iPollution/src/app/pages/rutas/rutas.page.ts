@@ -19,6 +19,11 @@ import {
 import {
   LocalizadorGPS
 } from './../../core/services/LocalizadorGPS.service';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators
+} from '@angular/forms';
 // Variable global
 declare var google;
 // ----------------------------
@@ -41,28 +46,36 @@ export class RutasPage implements OnInit {
   // Actual localizacion
   currentLocation: any = {
     lat: 0,
-    long: 0
+    lng: 0
   };
+  // Direcciones
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  selectedRute: any;
+  correctRute: any;
   // Constructor
   constructor(
     private geolocation: LocalizadorGPS,
   ) {
+
     this.rutes = [{
-      name: 'Grau i Platja Gandia',
-    },
-    {
-      name: 'Oliva',
-    },
-    {
-      name: 'Gandia',
-    },
-  ];
+        name: 'Grau i Platja Gandia - ida',
+        posicion: {lat: 39.019929, lng: -0.177311},
+      },
+      {
+        name: 'Grau i Platja Gandia - vuelta',
+        posicion: {lat: 38.984524, lng: -0.164641},
+      },
+      {
+        name: 'Gandia',
+        posicion: {lat: 38.959545, lng: -0.187941},
+      },
+    ];
   }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
@@ -74,8 +87,10 @@ export class RutasPage implements OnInit {
       const map = new google.maps.Map(
         this.mapElement.nativeElement, {
           zoom: 15,
+          center: {lat: 41.85, lng: -87.65}
         });
-
+      // Direciones
+      this.directionsDisplay.setMap(map);
       /*location object*/
       const pos = {
         lat: this.currentLocation.lat,
@@ -96,5 +111,29 @@ export class RutasPage implements OnInit {
     });
   }
   // ----------------------------------------------------------------------------------------------
+  ruteSelected() {
+    console.log('MetodoRutaSeleccionado y ruta select ' + this.selectedRute);
+    this.rutes.forEach(element => {
+      if (element.name === this.selectedRute) {
+        this.correctRute = element.posicion;
+        console.log('Ruta puesta - ' + this.correctRute);
+        this.calculateAndDisplayRoute();
+      }
+    });
+  }
 
+  calculateAndDisplayRoute() {
+    const that = this;
+    this.directionsService.route({
+      origin: this.currentLocation,
+      destination: this.correctRute,
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        that.directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
 }

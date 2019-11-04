@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 // ----------------------------
 // LogicaDeNegocioFake.service.ts
 // Equipo
@@ -16,8 +15,7 @@ import {
 import {
     HttpClient
 } from '@angular/common/http';
-
-
+import { TestBed } from '@angular/core/testing';
 // ----------------------------
 // Class LogicaDeNegocioFake
 // ----------------------------

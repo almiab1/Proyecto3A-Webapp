@@ -18,9 +18,13 @@
 </ion-header>
 
 <ion-content>
-  <img [src]="currentImage" *ngIf="currentImage">
+  <ion-card expand="full">
+    <ion-card-content>
+        <ion-img [src]="currentImage" *ngIf="currentImage"></ion-img>
+    </ion-card-content>
+  </ion-card>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button (click)="takePicture()" color="acentuado"> 
+    <ion-fab-button (click)="takePicture()" color="acentuado">
       <ion-icon name="camera" expand="full"></ion-icon>
     </ion-fab-button>
   </ion-fab>

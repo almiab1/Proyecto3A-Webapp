@@ -101,6 +101,17 @@ export class ReceptorBLE {
     );
   }
 
+  desactivarBLE() {
+    this.ibeacon.disableBluetooth().then(
+      success => {
+        console.log('Bluetooth is disabled');
+      },
+      error => {
+        console.log('Error disabling bluetooth');
+      }
+    );
+  }
+
   // ASCII only
   private bytesToString(buffer) {
     return String.fromCharCode.apply(null, new Uint8Array(buffer));
