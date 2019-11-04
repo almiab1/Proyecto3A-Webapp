@@ -120,25 +120,25 @@ export class ReceptorBLE {
   obtenerMisTramas() {
     this.events.subscribe('didRangeBeaconsInRegion', (data) => {
       // Crear array ibeacons
-      let beacons = [];
+      const beacons = [];
       // Rellenamar la array
-      let beaconList = data.beacons;
+      const beaconList = data.beacons;
       beaconList.forEach((beacon) => {
-        let beaconObject = beacon;
+        const beaconObject = beacon;
         beacons.push(beaconObject);
       });
       console.log(beacons);
       // Parametros
       this.major = parseInt(beacons[0].major);
       this.minor = parseInt(beacons[0].minor);
-      if ( this.major === undefined) { this.major = -1 };
-      if ( this.minor === undefined) { this.major = -1 };
+      if ( this.major === undefined) { this.major = -1; }
+      if ( this.minor === undefined) { this.major = -1; }
     });
   }
 
   async actualizarMediciones() {
     this.obtenerMisTramas();
-    let date = new Date();
+    const date = new Date();
     this.medicion = {
       valorMedido: this.major,
       latitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
