@@ -56,17 +56,17 @@ export class LogicaDeNegocioFake {
     urlEditarUsuarioBasurero = 'https://osblasae.upv.edu.es/admin/editarUsuarioBasurero';
 
     // API de admin Local
-    urlEditarUsuarioLocal = 'http://192.168.43.195/admin/editarUsuario';
-    urlAsociarSensorUsuarioLocal = 'http://192.168.43.195/admin/asociarSensorUsuario';
-    urlDarDeBajaUsuarioLocal = 'http://192.168.43.195/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuarioLocal = 'http://192.168.43.195/admin/darDeAltaUsuario';
-    urlDarDeBajaSensorLocal = 'http://192.168.43.195/admin/darDeBajaSensor';
-    urlDarDeAltaSensorLocal = 'http://192.168.43.195/admin/darDeAltaSensor';
-    urlEditarUsuarioAdministradorLocal = 'http://192.168.43.195/admin/editarUsuarioAdministrador';
+    urlEditarUsuarioLocal = 'http://osblasae.upv.edu.es/admin/editarUsuario';
+    urlAsociarSensorUsuarioLocal = 'http://osblasae.upv.edu.es/admin/asociarSensorUsuario';
+    urlDarDeBajaUsuarioLocal = 'http://osblasae.upv.edu.es/admin/darDeBajaUsuario';
+    urlDarDeAltaUsuarioLocal = 'http://osblasae.upv.edu.es/admin/darDeAltaUsuario';
+    urlDarDeBajaSensorLocal = 'http://osblasae.upv.edu.es/admin/darDeBajaSensor';
+    urlDarDeAltaSensorLocal = 'http://osblasae.upv.edu.es/admin/darDeAltaSensor';
+    urlEditarUsuarioAdministradorLocal = 'http://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
 
     // Api de técnico local
-    urlBasureroGuardarLocal = 'http://192.168.0.109:8080/basurero/guardarMedida';
-    urlEditarUsuarioBasureroLocal = 'http://192.168.43.195/basurero/editarUsuarioBasurero';
+    urlBasureroGuardarLocal = 'http://osblasae.upv.edu.es/basurero/guardarMedida';
+    urlEditarUsuarioBasureroLocal = 'http://osblasae.upv.edu.es/basurero/editarUsuarioBasurero';
 
     // Http Options
     httpOptions = {
