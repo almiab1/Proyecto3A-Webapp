@@ -40,14 +40,16 @@ export class HomePage {
     private ble: ReceptorBLE,
     private serve: LogicaDeNegocioFake,
   ) {
-    // INICIALIZAR BLE
-    this.ble.inizializar();
     // ACTUALIZAR DATOS
     setInterval(() => {
       this.hayQueActualizarMedicionesYEnviarlasAlServidor();
     }, 10000);
   }
 
+  ngOnInit() {
+    // INICIALIZAR BLE
+    this.ble.inizializar();
+  }
   // --------------------------------------------------------
   // hayQueActualizarMedicionesYEnviarlasAlServidor()
   // --------------------------------------------------------
@@ -55,7 +57,7 @@ export class HomePage {
     const medicion = this.ble.obtenerO3();
 
     // PETICION REST ULTIMA
-    let ultimaMedicion: any;
+    // let ultimaMedicion: any;
     // this.serve.getUltimaMedicion().subscribe(response => {
     //   console.log("GET ULTIMA MEDICION")
     //   console.log(response);
