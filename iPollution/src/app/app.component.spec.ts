@@ -51,7 +51,10 @@ describe('AppComponent', () => {
     const menuItems = app.querySelectorAll('ion-label');
     expect(menuItems.length).toEqual(2);
     expect(menuItems[0].textContent).toContain('Home');
-    expect(menuItems[1].textContent).toContain('List');
+    expect(menuItems[1].textContent).toContain('Mapa');
+    expect(menuItems[2].textContent).toContain('+Info');
+    expect(menuItems[3].textContent).toContain('Scaner');
+
   });
 
   it('should have urls', async () => {
@@ -61,7 +64,10 @@ describe('AppComponent', () => {
     const menuItems = app.querySelectorAll('ion-item');
     expect(menuItems.length).toEqual(2);
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/home');
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/list');
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/mapa');
+    expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/mas-info');
+    expect(menuItems[3].getAttribute('ng-reflect-router-link')).toEqual('/scaner');
+
   });
 
 });

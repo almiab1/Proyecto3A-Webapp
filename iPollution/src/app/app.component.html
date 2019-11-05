@@ -1,24 +1,36 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-split-pane>
+  <!-- <ion-split-pane contentId="main-content" when="lg"> -->
+  <ion-menu contentId="main-content" type="overlay" color="secundario">
+    <ion-header>
+      <ion-toolbar color="secundario">
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-col>
+              <ion-title color="acentuado">
+                <h1>Menu</h1>
+              </ion-title>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content color="secundario">
+      <ion-row>
+        <ion-col size="12">
+          <ion-list color="secundario" lines="full" mode="ios">
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+              <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="secundario">
+                  <ion-icon slot="start" [name]="p.icon" color="acentuado"></ion-icon>
+                  <ion-label color="acentuado">
+                    {{p.title}}
+                  </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+  <!-- </ion-split-pane> -->
 </ion-app>

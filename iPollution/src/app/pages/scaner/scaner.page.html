@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="secundario">
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col size="2">
+          <ion-buttons>
+            <ion-menu-button color="acentuado"></ion-menu-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="10">
+          <ion-title color="acentuado">
+            <h1>Scaner</h1>
+          </ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card expand="full">
+    <ion-card-content>
+        <ion-img [src]="currentImage" *ngIf="currentImage"></ion-img>
+    </ion-card-content>
+  </ion-card>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="takePicture()" color="acentuado">
+      <ion-icon name="camera" expand="full"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,167 @@
+<ion-header>
+  <ion-toolbar color="secundario">
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col size="2">
+          <ion-buttons>
+            <ion-menu-button color="acentuado"></ion-menu-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="10" class="ion-align-items-center ion-justify-content-center">
+          <ion-title color="acentuado">
+            <h1>iPollution</h1>
+          </ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <!-- Card tiempo -->
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-label>Hoy hace un día nublado, te vendría bien llevar un paraguas.</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="6">
+                  <h1>15º</h1>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-img src="assets/icon/cloudy.svg" class="img-home"></ion-img>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <!-- Card de niveles de polucion -->
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                    <ion-label>Los niveles de polución son...</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center ion-justify-content-end">
+                <ion-col size="3">
+                  <ion-img src="assets/icon/co2.svg" class="img-home"></ion-img>
+                </ion-col>
+                <ion-col size="3">
+                  <h1>24%</h1>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-img src="assets/icon/ozone.svg" class="img-home"></ion-img>
+                </ion-col>
+                <ion-col>
+                  <h1>32%</h1>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-justify-content-end">
+                <ion-col size="4">
+                  <ion-label [routerLink]="['/mas-info']" routerLinkActive="router-link-active">
+                    Ver más
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <!-- Card de mapa -->
+    <ion-row>
+      <ion-col>
+        <ion-card color="primario" class="cardBtn" type="button">
+          <ion-card-content [routerLink]="['/mapa']" routerLinkActive="router-link-active">
+            <ion-grid>
+              <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="3" class="ion-justify-content-center">
+                  <ion-img src="assets/icon/map-location.svg" class="iconoCamara"></ion-img>
+                </ion-col>
+                <ion-col col="9">
+                  <ion-row class="ion-align-items-center ion-justify-content-end" margin="2px">
+                    <ion-col size="12">
+                      <ion-title color="acentuado">
+                        <h1>Mapa</h1>
+                      </ion-title>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-label color="texto">Visualizar los diferentes contaminantes en el mapa.</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <!-- Card de scaner -->
+    <ion-row *ngIf="platform.is('android','ios')">
+      <ion-col>
+        <ion-card color="primario" type="button">
+          <ion-card-content [routerLink]="['/scaner']" routerLinkActive="router-link-active">
+            <ion-grid>
+              <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="3">
+                  <ion-img src="assets/icon/photo-camera.svg" class="iconoCamara"></ion-img>
+                </ion-col>
+                <ion-col col="9">
+                  <ion-row class="ion-align-items-center ion-justify-content-end" margin="2px">
+                    <ion-col size="12">
+                      <ion-title color="acentuado">
+                        <h1>Scaner</h1>
+                      </ion-title>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-label color="texto">Escanea el cielo en busca de contaminantes.</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <!-- Card rutas -->
+    <ion-row>
+      <ion-col>
+        <ion-card color="primario" type="button">
+          <ion-card-content [routerLink]="['/rutas']" routerLinkActive="router-link-active">
+            <ion-grid>
+              <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="3">
+                  <ion-img src="assets/icon/straight-arrow.svg" class="iconoCamara"></ion-img>
+                </ion-col>
+                <ion-col col="9">
+                  <ion-row class="ion-align-items-center ion-justify-content-end" margin="2px">
+                    <ion-col size="12">
+                      <ion-title color="acentuado">
+                        <h1>Rutas</h1>
+                      </ion-title>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-label color="texto">Accede a las rutas de limpieza</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
