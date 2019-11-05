@@ -36,24 +36,24 @@ import {
 export class LogicaDeNegocioFake {
 
     // URL server en local
-    urlGetLocal = 'http://192.168.100.205/getultimaMedicion';
-    urlPostLocal = 'http://192.168.100.103/guardarO3/';
+    urlGetLocal = 'http://osblasae.upv.edu.es/getultimaMedicion';
+    urlPostLocal = 'http://osblasae.upv.edu.es/guardarO3/';
     // URL server remoto
-    urlPOST = 'https://cartormi.upv.edu.es/guardarMedida';
-    urlGET = 'http://192.168.0.109:8080/getUltimaMedida';
+    urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
+    urlGET = 'http://osblasae.upv.edu.es/getUltimaMedida';
 
     // API de admin
-    urlEditarUsuario = 'https://cartormi.upv.edu.es/admin/editarUsuario';
-    urlAsociarSensorUsuario = 'https://cartormi.upv.edu.es/admin/asociarSensorAUsuario';
-    urlDarDeBajaUsuario = 'https://cartormi.upv.edu.es/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuario = 'https://cartormi.upv.edu.es/admin/darDeAltaUsuario';
-    urlDarDeBajaSensor = 'https://cartormi.upv.edu.es/admin/darDeBajaSensor';
-    urlDarDeAltaSensor = 'https://cartormi.upv.edu.es/admin/darDeAltaSensor';
-    urlEditarUsuarioAdministrador = 'https://cartormi.upv.edu.es/admin/editarUsuarioAdministrador';
+    urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
+    urlAsociarSensorUsuario = 'https://osblasae.upv.edu.es/admin/asociarSensorAUsuario';
+    urlDarDeBajaUsuario = 'https://osblasae.upv.edu.es/admin/darDeBajaUsuario';
+    urlDarDeAltaUsuario = 'https://osblasae.upv.edu.es/admin/darDeAltaUsuario';
+    urlDarDeBajaSensor = 'https://osblasae.upv.edu.es/admin/darDeBajaSensor';
+    urlDarDeAltaSensor = 'https://osblasae.upv.edu.es/admin/darDeAltaSensor';
+    urlEditarUsuarioAdministrador = 'https://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
 
     // API de técnico
-    urlBasureroGuardar = 'https://cartormi.upv.edu.es/basurero/guardarMedida';
-    urlEditarUsuarioBasurero = 'https://cartormi.upv.edu.es/admin/editarUsuarioBasurero';
+    urlBasureroGuardar = 'https://osblasae.upv.edu.es/basurero/guardarMedida';
+    urlEditarUsuarioBasurero = 'https://osblasae.upv.edu.es/admin/editarUsuarioBasurero';
 
     // API de admin Local
     urlEditarUsuarioLocal = 'http://192.168.43.195/admin/editarUsuario';
