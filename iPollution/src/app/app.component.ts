@@ -62,6 +62,7 @@ export class AppComponent {
           url: '/home',
           icon: 'home'
         },
+        { title: 'Admin', url: '/admin/users'},
         {
           title: 'Mapa',
           url: '/mapa',
@@ -94,6 +95,7 @@ export class AppComponent {
           url: '/home',
           icon: 'home'
         },
+        { title: 'Admin', url: '/admin/users'},
         {
           title: 'Mapa',
           url: '/mapa',
