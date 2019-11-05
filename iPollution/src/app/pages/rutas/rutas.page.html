@@ -18,12 +18,6 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-item>
-    <ion-label>Rutas</ion-label>
-    <ion-select ok-text="Aceptar" cancel-text="Cancelar" placeholde="Elige una ruta">
-      <ion-select-option *ngFor="let p of rutes" value="p.name">{{p.name}}</ion-select-option>
-    </ion-select>
-  </ion-item> -->
   <ion-select name="selectRute" [selectedText]="selectedRute" [(ngModel)]="selectedRute" (ionChange)="ruteSelected()" multiple="false" required>
         <ion-select-option *ngFor="let rute of rutes" value="{{rute.name}}">
           {{rute.name}}

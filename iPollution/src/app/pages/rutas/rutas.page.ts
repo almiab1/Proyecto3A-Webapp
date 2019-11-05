@@ -19,11 +19,6 @@ import {
 import {
   LocalizadorGPS
 } from './../../core/services/LocalizadorGPS.service';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators
-} from '@angular/forms';
 // Variable global
 declare var google;
 // ----------------------------
@@ -125,7 +120,8 @@ export class RutasPage implements OnInit {
   calculateAndDisplayRoute() {
     const that = this;
     this.directionsService.route({
-      origin: this.currentLocation,
+      // origin: this.currentLocation,
+      origin: '{lat:38.997239,long: -0.166362}',
       destination: this.correctRute,
       travelMode: 'DRIVING'
     }, (response, status) => {

@@ -56,12 +56,6 @@ export class HomePage {
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
     const medicion = this.ble.obtenerO3();
 
-    // PETICION REST ULTIMA
-    // let ultimaMedicion: any;
-    // this.serve.getUltimaMedicion().subscribe(response => {
-    //   console.log("GET ULTIMA MEDICION")
-    //   console.log(response);
-    // });
     console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
     this.serve.guardarMedida(medicion).subscribe(data => {
       console.log(data);
