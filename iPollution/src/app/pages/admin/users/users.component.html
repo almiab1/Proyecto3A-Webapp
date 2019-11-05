@@ -1,0 +1,153 @@
+<ion-header>
+  <ion-toolbar color="secundario">
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col size="2">
+          <ion-buttons>
+            <ion-menu-button color="acentuado"></ion-menu-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="10" class="ion-align-items-center ion-justify-content-center">
+          <ion-title color="acentuado">
+            <h1>Administración | Basureros</h1>
+          </ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="container-table">
+    <p-table [columns]="cols" [value]="basureros" selectionMode="single" [(selection)]="basureroSeleccionado" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+        <ng-template pTemplate="caption">
+          Lista de basureros
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <div style="text-align:left">
+                <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Añadir"></button>
+            </div>
+        </ng-template>
+      </p-table>
+      <!-- Dialogo para añadir-->
+      <p-dialog header="Añadir Basurero" [(visible)]="displayAddDialog" [responsive]="true" showEffect="fade" [modal]="false" [style]="{width: '350px'}">
+          <div class="ui-g-12">
+              <div class="ui-g-4">
+                  <label for="id">ID</label>
+              </div>
+              <div class="ui-g-8">
+                  <input pInputText id="id" [(ngModel)]="basurero.id" />
+              </div>
+          </div>
+          <div class="ui-g-12">
+              <div class="ui-g-4">
+                  <label for="telefono">Teléfono</label>
+              </div>
+              <div class="ui-g-8">
+                  <input pInputText id="telefono" [(ngModel)]="basurero.telefono" />
+              </div>
+          </div>
+          <div class="ui-g-12">
+              <div class="ui-g-4">
+                  <label for="tipo">Rol</label>
+              </div>
+              <div class="ui-g-8">
+                  <p-dropdown [options]="roles" [(ngModel)]="selectedRoles"></p-dropdown>     
+              </div>
+          </div>
+          <div class="ui-g-12">
+              <div class="ui-g-4">
+                  <label for="idSensor">ID Sensor</label>
+              </div>
+              <div class="ui-g-8">
+                  <input pInputText id="idSensor" [(ngModel)]="basurero.idSensor" />
+              </div>
+          </div>
+      <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+          </div>
+      </p-footer>
+      </p-dialog>
+      <!-- ------------------------------------ -->
+      <p-dialog header="Basurero Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="false" [style]="{width: '350px'}">
+              <div class="ui-g-12">
+                  <div class="ui-g-4">
+                      <label for="id">ID</label>
+                  </div>
+                  <div class="ui-g-8">
+                      <input pInputText id="id" [(ngModel)]="basurero.id" />
+                  </div>
+              </div>
+              <div class="ui-g-12">
+                  <div class="ui-g-4">
+                      <label for="telefono">Teléfono</label>
+                  </div>
+                  <div class="ui-g-8">
+                      <input pInputText id="telefono" [(ngModel)]="basurero.telefono" />
+                  </div>
+              </div>
+              <div class="ui-g-12">
+                  <div class="ui-g-4">
+                      <label for="tipo">Rol</label>
+                  </div>
+                  <div class="ui-g-8">
+                      <p-dropdown [options]="roles" [(ngModel)]="selectedRoles"></p-dropdown>
+                  </div>
+              </div>
+              <div class="ui-g-12">
+                  <div class="ui-g-4">
+                      <label for="idSensor">ID Sensor</label>
+                  </div>
+                  <div class="ui-g-8">
+                      <input pInputText id="idSensor" [(ngModel)]="basurero.idSensor" />
+                  </div>
+              </div>
+          <p-footer>
+              <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                  <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="warnDelete()" label="Eliminar"></button>
+                  <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+              </div>
+          </p-footer>
+      </p-dialog>
+      <p-dialog header="Eliminar basurero" [(visible)]="deleteDialog" [responsive]="true" showEffect="fade" [modal]="false" [style]="{width: '350px'}">
+        <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="delete()" label="Eliminar"></button>
+              <button type="button" pButton icon="fa fa-check" (click)="backToDialog()" label="Volver"></button>
+          </div>
+      </p-footer>
+      </p-dialog>
+      <p-toast position="center" key="c" (onClose)="onReject()" [modal]="false" [baseZIndex]="5000">
+          <ng-template let-message pTemplate="message">
+              <div style="text-align: center">
+                  <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+                  <h3>{{message.summary}}</h3>
+                  <p>{{message.detail}}</p>
+              </div>
+              <div class="ui-g ui-fluid">
+                  <div class="ui-g-6">
+                      <button type="button" pButton (click)="onConfirm(basurero.id)" label="Sí" class="ui-button-success"></button>
+                  </div>
+                  <div class="ui-g-6">
+                      <button type="button" pButton (click)="onReject()" label="No" class="ui-button-secondary"></button>
+                  </div>
+              </div>
+          </ng-template>
+      </p-toast>
+      <p-toast></p-toast>  
+</ion-content>
