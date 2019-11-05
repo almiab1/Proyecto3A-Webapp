@@ -10,11 +10,26 @@
 // ----------------------------
 // Includes
 // ----------------------------
-import {LogicaDeNegocioFake} from './../../core/services/LogicaDeNegocioFake.service';
-import {Component, OnInit, NgZone} from '@angular/core';
-import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
-import {File, IWriteOptions,  FileEntry} from '@ionic-native/file/ngx';
-import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import {
+  LogicaDeNegocioFake
+} from './../../core/services/LogicaDeNegocioFake.service';
+import {
+  Component,
+  OnInit,
+  NgZone
+} from '@angular/core';
+import {
+  Camera,
+  CameraOptions
+} from '@ionic-native/camera/ngx';
+import {
+  File,
+  IWriteOptions,
+  FileEntry
+} from '@ionic-native/file/ngx';
+import {
+  PhotoViewer
+} from '@ionic-native/photo-viewer/ngx';
 
 // ----------------------------
 // Components
@@ -45,12 +60,13 @@ export class ScanerPage implements OnInit {
     private camera: Camera,
     private ngZone: NgZone,
     private photoViewer: PhotoViewer,
-    ) {
+  ) {
 
-    }
+  }
 
   ngOnInit(): void {}
 
+  // takePicture()
   takePicture() {
     const options: CameraOptions = {
       quality: 100,
@@ -59,6 +75,7 @@ export class ScanerPage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE
     };
 
+    // cargar imagen en la vista
     this.camera.getPicture(options).then((imageData) => {
       this.ngZone.run(() => {
         this.currentImage = 'data:image/jpeg;base64,' + imageData;

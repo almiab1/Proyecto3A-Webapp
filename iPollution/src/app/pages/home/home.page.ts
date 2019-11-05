@@ -1,28 +1,56 @@
-import { LogicaDeNegocioFake } from './../../core/services/LogicaDeNegocioFake.service';
-import { ReceptorBLE } from './../../core/services/ReceptorBle.service';
-import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
+// ----------------------------
+// home.page.ts
+// Controlador vista home
+// Equipo 4
+// Alejandro Mira Abad
+// Fecha
+// CopyRight
+// ----------------------------
 
+// ----------------------------
+// Includes
+// ----------------------------
+import {
+  LogicaDeNegocioFake
+} from './../../core/services/LogicaDeNegocioFake.service';
+import {
+  ReceptorBLE
+} from './../../core/services/ReceptorBle.service';
+import {
+  Component
+} from '@angular/core';
+import {
+  Platform
+} from '@ionic/angular';
+// ----------------------------
+// Components
+// ----------------------------
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+// ----------------------------
+// Clase HomePage
+// ----------------------------
 export class HomePage {
 
   constructor(
     public platform: Platform,
     private ble: ReceptorBLE,
     private serve: LogicaDeNegocioFake,
-    ) {
+  ) {
     // INICIALIZAR BLE
     this.ble.inizializar();
     // ACTUALIZAR DATOS
     setInterval(() => {
       this.hayQueActualizarMedicionesYEnviarlasAlServidor();
-     }, 10000);
+    }, 10000);
   }
 
+  // --------------------------------------------------------
+  // hayQueActualizarMedicionesYEnviarlasAlServidor()
+  // --------------------------------------------------------
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
     const medicion = this.ble.obtenerO3();
 
@@ -33,7 +61,11 @@ export class HomePage {
     //   console.log(response);
     // });
     console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
-    this.serve.guardarMedida(medicion).subscribe(data => {console.log(data); });
+    this.serve.guardarMedida(medicion).subscribe(data => {
+      console.log(data);
+    });
+
+    // --------------------------------------------------------
 
   }
 

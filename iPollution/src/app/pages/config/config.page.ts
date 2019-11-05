@@ -1,20 +1,53 @@
-import { Platform } from '@ionic/angular';
-import { LocalizadorGPS } from './../../core/services/LocalizadorGPS.service';
-import { ReceptorBLE } from './../../core/services/ReceptorBle.service';
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+// ----------------------------
+// config.page.ts
+// Controlador vista configuracion
+// Equipo 4
+// Alejandro Mira Abad
+// Fecha
+// CopyRight
+// ----------------------------
 
+// ----------------------------
+// Includes
+// ----------------------------
+import {
+  Platform
+} from '@ionic/angular';
+import {
+  LocalizadorGPS
+} from './../../core/services/LocalizadorGPS.service';
+import {
+  ReceptorBLE
+} from './../../core/services/ReceptorBle.service';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
+// ----------------------------
+// Component
+// ----------------------------
 @Component({
   selector: 'app-config',
   templateUrl: './config.page.html',
   styleUrls: ['./config.page.scss'],
 })
+// ----------------------------
+// Clase ConfigPage
+// ----------------------------
 export class ConfigPage implements OnInit {
 
   // Control ble
   estaActivoBle: any;
   // Elemento vista
-  @ViewChild('bleToogle', {static: false}) bleToogle: ElementRef;
+  @ViewChild('bleToogle', {
+    static: false
+  }) bleToogle: ElementRef;
 
+  // ----------------------------
+  // Constructor
+  // ----------------------------
   constructor(
     private ble: ReceptorBLE,
     private gps: LocalizadorGPS,
@@ -31,6 +64,9 @@ export class ConfigPage implements OnInit {
 
   ngOnInit() {}
 
+  // ----------------------------
+  // Metodo controlador toogle
+  // ----------------------------
   bleControl(e) {
     /*if (this.estaActivoBle === true) {
       this.ble.activarBLE();
