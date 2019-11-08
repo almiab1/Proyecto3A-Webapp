@@ -1,7 +1,5 @@
 {
   "name": "iPollution",
-  "integrations": {
-    "cordova": {}
-  },
+  "integrations": {},
   "type": "angular"
 }
