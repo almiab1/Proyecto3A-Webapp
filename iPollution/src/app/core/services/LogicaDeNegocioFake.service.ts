@@ -40,6 +40,7 @@ export class LogicaDeNegocioFake {
     // URL server remoto
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
     urlGET = 'http://192.168.0.109:8080/getUltimaMedida';
+    urlGETAll = 'http://osblasae.upv.edu.es/getAllMedidas';
 
     // API de admin
     urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
@@ -103,6 +104,16 @@ export class LogicaDeNegocioFake {
                 // retry(2),
                 // catchError(this.handleError)
               )
+    }
+
+    // Get all data by ID
+    getAllMediciones(): Observable < any > {
+        return this.http
+            .get(this.urlGETAll, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+              );
     }
 
     // Create a new item
