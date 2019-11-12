@@ -20,11 +20,20 @@
           <ion-list color="secundario" lines="full" mode="ios">
             <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
               <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="secundario">
-                  <ion-icon slot="start" [name]="p.icon" color="acentuado"></ion-icon>
-                  <ion-label color="acentuado">
-                    {{p.title}}
-                  </ion-label>
+                <ion-icon slot="start" [name]="p.icon" color="acentuado"></ion-icon>
+                <ion-label color="acentuado">
+                  {{p.title}}
+                </ion-label>
               </ion-item>
+              <ion-list color="secundario" lines="full" mode="ios">
+                <ion-menu-toggle auto-hide="false" *ngFor="let s of p.subPages" color="secundario">
+                  <ion-item [routerDirection]="'root'" [routerLink]="[s.url]" color="secundario">
+                    <ion-label color="acentuado">
+                      {{s.title}}
+                    </ion-label>
+                  </ion-item>
+                </ion-menu-toggle>
+              </ion-list>
             </ion-menu-toggle>
           </ion-list>
         </ion-col>

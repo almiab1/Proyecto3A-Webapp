@@ -86,6 +86,20 @@ export class AppComponent {
           icon: 'navigate'
         },
         {
+          title: 'Adinistración',
+          url: '/admin',
+          icon: 'cog',
+          subPages: [{
+              title: 'Usuarios',
+              url: '/admin/users'
+            },
+            {
+              title: 'Nodos',
+              url: '/admin/nodos'
+            }
+          ]
+        },
+        {
           title: 'Configuración',
           url: '/config',
           icon: 'cog'
@@ -111,6 +125,20 @@ export class AppComponent {
           title: 'Rutas',
           url: '/rutas',
           icon: 'navigate'
+        },
+        {
+          title: 'Adinistración',
+          url: '/admin',
+          icon: 'cog',
+          subPages: [{
+              title: 'Usuarios',
+              url: '/admin/users'
+            },
+            {
+              title: 'Nodos',
+              url: '/admin/nodos'
+            }
+          ]
         },
         {
           title: 'Configuración',
