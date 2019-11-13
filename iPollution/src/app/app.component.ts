@@ -73,7 +73,18 @@ export class AppComponent {
         {
           title: '+Info',
           url: '/mas-info',
-          icon: 'information-circle-outline'
+          icon: 'information-circle-outline',
+          subPages: [{
+            title: 'Tips',
+            icon: 'add',
+            url: '/admin/users'
+          },
+          {
+            title: 'Medidas Oficiales',
+            icon: 'add',
+            url: '/admin/nodos'
+          }
+        ]
         },
         {
           title: 'Scaner',
@@ -121,7 +132,18 @@ export class AppComponent {
         {
           title: '+Info',
           url: '/mas-info',
-          icon: 'information-circle-outline'
+          icon: 'information-circle-outline',
+          subPages: [{
+            title: 'Tips',
+            icon: 'add',
+            url: '/admin/users'
+          },
+          {
+            title: 'Medidas Oficiales',
+            icon: 'add',
+            url: '/admin/nodos'
+          }
+        ]
         },
         {
           title: 'Rutas',
