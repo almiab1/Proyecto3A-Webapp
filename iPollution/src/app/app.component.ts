@@ -91,10 +91,12 @@ export class AppComponent {
           icon: 'cog',
           subPages: [{
               title: 'Usuarios',
+              icon: 'add',
               url: '/admin/users'
             },
             {
               title: 'Nodos',
+              icon: 'add',
               url: '/admin/nodos'
             }
           ]
@@ -132,10 +134,12 @@ export class AppComponent {
           icon: 'cog',
           subPages: [{
               title: 'Usuarios',
+              icon: 'add',
               url: '/admin/users'
             },
             {
               title: 'Nodos',
+              icon: 'add',
               url: '/admin/nodos'
             }
           ]

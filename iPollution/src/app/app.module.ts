@@ -5,13 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -40,11 +33,6 @@ import {LoginPage} from './pages/login/login.page';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    DialogModule,
-    DropdownModule,
-    ButtonModule,
-    TableModule,
-    ToastModule
   ],
   providers: [
     StatusBar,
