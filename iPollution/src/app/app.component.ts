@@ -13,6 +13,7 @@ import {
   Component
 } from '@angular/core';
 import {
+  ModalController,
   Platform
 } from '@ionic/angular';
 import {
@@ -21,6 +22,7 @@ import {
 import {
   StatusBar
 } from '@ionic-native/status-bar/ngx';
+import {LoginPage} from './pages/login/login.page';
 // ----------------------------
 // Components
 // ----------------------------
@@ -42,6 +44,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    public modalController: ModalController
   ) {
     this.initializeApp();
   }
@@ -117,5 +120,11 @@ export class AppComponent {
       ];
     }
 
+  }
+  loginModal = async ()  => {
+    const modal = await this.modalController.create({
+      component: LoginPage
+    });
+    modal.present();
   }
 }

@@ -62,3 +62,13 @@
     --ion-color-shade: var(--ion-color-normal-shade);
     --ion-color-tint: var(--ion-color-normal-tint);
 }
+
+.boton-login {
+    --background: var(--ion-color-acentuado);
+    --color: var(--ion-color-secundario);
+}
+
+.login-icon {
+    max-width: 2rem;
+    --color: var(--ion-color-secundario);
+}

@@ -28,10 +28,11 @@ import { File } from '@ionic-native/file/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { UsersComponent } from './pages/admin/users/users.component';
+import {LoginPage} from './pages/login/login.page';
 
 @NgModule({
-  declarations: [AppComponent, UsersComponent],
-  entryComponents: [],
+  declarations: [AppComponent, UsersComponent, LoginPage],
+  entryComponents: [LoginPage],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

@@ -33,7 +33,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/rutas/rutas.module').then(m => m.RutasPageModule)
   },
   { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },
-  { path: 'admin/users', component: UsersComponent}
+  { path: 'admin/users', component: UsersComponent},
 ];
 
 @NgModule({

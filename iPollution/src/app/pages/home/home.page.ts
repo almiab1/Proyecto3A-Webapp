@@ -46,7 +46,7 @@ export class HomePage {
     }, 10000);
   }
 
-  ngOnInit() {
+  ngOnInit = () => {
     // INICIALIZAR BLE
     this.ble.inizializar();
   }
