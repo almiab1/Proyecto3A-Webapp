@@ -40,7 +40,7 @@ export class LogicaDeNegocioFake {
     // URL server remoto
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
     urlGET = 'http://192.168.0.109:8080/getUltimaMedida';
-    urlGETAll = 'http://osblasae.upv.edu.es/getAllMedidas';
+    urlGETAll = 'https://osblasae.upv.edu.es/getAllMedidas';
 
     // API de admin
     urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
@@ -107,13 +107,34 @@ export class LogicaDeNegocioFake {
     }
 
     // Get all data by ID
-    getAllMediciones(): Observable < any > {
+   /* getAllMediciones(): Observable < any > {
         return this.http
             .get(this.urlGETAll, this.httpOptions)
             .pipe(
                 // retry(2),
                 // catchError(this.handleError)
-              );
+              );            
+    }*/
+
+    // METODO GET ALL DE PRUEBA
+    async getAllMediciones() {
+        const medidas = [{
+            esto: 'aquello'
+        }, {
+            latitud: 39.000466,
+            longitud: -0.165349,
+            valorMedido: 320
+        }, {
+            latitud: 39.002577,
+            longitud: -0.161285,
+            valorMedido: 500
+        }, {
+            latitud: 38.999102,
+            longitud: -0.160547,
+            valorMedido: 703
+        }];
+
+        return medidas;
     }
 
     // Create a new item
