@@ -1,3 +1,4 @@
+import { MapaService } from './../../core/services/Mapa.service';
 // ----------------------------
 // mapa.page.ts
 // Controlador de la vista mapa
@@ -29,6 +30,7 @@ declare var google;
 export class MapaPage implements OnInit {
 
   map: any;
+  mapa: MapaService;
   @ViewChild('mapElement', {static: false}) mapElement: ElementRef;
   currentLocation: any = {
     lat: 0,
@@ -52,26 +54,28 @@ export class MapaPage implements OnInit {
     this.geolocation.obtenerMiPosicionGPS().then((resp) => {
       this.currentLocation.lat = resp.lat;
       this.currentLocation.long = resp.long;
-      const map = new google.maps.Map(
+      /*const map = new google.maps.Map(
         this.mapElement.nativeElement, {
           zoom: 15,
-      });
+      });*/
+
+      this.mapa = new MapaService({lat: resp.lat, lng: resp.long}, {zoom: 15}, this.mapElement.nativeElement);
 
       /*location object*/
       const pos = {
         lat: this.currentLocation.lat,
         lng: this.currentLocation.long
       };
-      map.setCenter(pos);
       const icon = {
         url: 'assets/icon/gpsIcon.svg', // image url
         scaledSize: new google.maps.Size(40, 40), // scaled size
       };
-      const marker = new google.maps.Marker({
+      
+      /*const marker = new google.maps.Marker({
         position: pos,
-        map: map,
+        map: mapa,
         icon: icon
-      });
+      }); */
     }).catch((error) => {
       console.log('Error getting location', error);
     });
