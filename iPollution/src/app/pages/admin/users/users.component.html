@@ -33,11 +33,18 @@
         <ion-row>
             <ion-col>
                 <div>
-                    <ion-list>
+                    <!-- <ion-list>
                         <ion-list-header>
                             <ion-title>Lista de usuarios:</ion-title>
                         </ion-list-header>
-                    </ion-list>
+                    </ion-list> -->
+
+                    <ion-list><ion-title>Lista de usuarios:</ion-title></ion-list>
+
+                    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+                        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+                        </ion-infinite-scroll-content>
+                    </ion-infinite-scroll>
                 </div>
             </ion-col>
         </ion-row>
