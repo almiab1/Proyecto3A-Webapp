@@ -13,6 +13,7 @@ import { MapaService } from './../../core/services/Mapa.service';
 // ----------------------------
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { LocalizadorGPS } from './../../core/services/LocalizadorGPS.service';
+import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // Variable global
 declare var google;
 // ----------------------------
@@ -28,7 +29,6 @@ declare var google;
 // Class
 // ----------------------------
 export class MapaPage implements OnInit {
-
   map: any;
   mapa: MapaService;
   @ViewChild('mapElement', {static: false}) mapElement: ElementRef;
@@ -39,6 +39,7 @@ export class MapaPage implements OnInit {
   // Constructor
   constructor(
     private geolocation: LocalizadorGPS,
+    private server: LogicaDeNegocioFake
   ) {
   }
   // ----------------------------------------------------------------------------------------------
@@ -60,6 +61,16 @@ export class MapaPage implements OnInit {
       });*/
 
       this.mapa = new MapaService({lat: resp.lat, lng: resp.long}, {zoom: 15}, this.mapElement.nativeElement);
+      this.mapa.anyadirMarcador({lat: this.currentLocation.lat, lng: this.currentLocation.long}, 'assets/icon/gpsIcon.svg');
+
+      // Pido las medidas al servidor
+      this.server.getAllMediciones().then((mediciones: any) => {
+        mediciones.forEach(medicion => {
+          this.mapa.anyadirMedicion(medicion);
+        });
+
+        this.mapa.refrescarMapa();
+      });
 
       /*location object*/
       const pos = {

@@ -119,8 +119,6 @@ export class LogicaDeNegocioFake {
     // METODO GET ALL DE PRUEBA
     async getAllMediciones() {
         const medidas = [{
-            esto: 'aquello'
-        }, {
             latitud: 39.000466,
             longitud: -0.165349,
             valorMedido: 320
