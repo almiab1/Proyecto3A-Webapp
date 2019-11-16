@@ -112,6 +112,25 @@
         </ion-card>
       </ion-col>
     </ion-row>
+    <!-- Card Admin-->
+    <!-- Card de scaner -->
+    <ion-row>
+      <ion-col>
+        <ion-card color="primario" type="button">
+          <ion-card-content [routerLink]="['/scaner']" routerLinkActive="router-link-active">
+            <ion-grid>
+              <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="3">
+                  <ion-img src="assets/icon/photo-camera.svg" class="iconoCamara"></ion-img>
+                </ion-col>
+                <ion-col col="9">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
     <!-- Card de scaner -->
     <ion-row *ngIf="platform.is('android','ios')">
       <ion-col>
