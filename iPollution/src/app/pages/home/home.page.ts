@@ -13,15 +13,16 @@
 import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
-import {
-  ReceptorBLE
-} from './../../core/services/ReceptorBle.service';
+
 import {
   Component
 } from '@angular/core';
 import {
   Platform
 } from '@ionic/angular';
+import {
+  ReceptorBLE
+} from '../../core/services/ReceptorBle.service';
 // ----------------------------
 // Components
 // ----------------------------
@@ -56,10 +57,10 @@ export class HomePage {
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
     const medicion = this.ble.obtenerO3();
 
-    console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
-    this.serve.guardarMedida(medicion).subscribe(data => {
+    // console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
+   /* this.serve.guardarMedida(medicion).subscribe(data => {
       console.log(data);
-    });
+    }); */
 
     // --------------------------------------------------------
 
