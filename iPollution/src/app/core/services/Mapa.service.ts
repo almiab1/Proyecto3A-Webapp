@@ -19,15 +19,13 @@ export class MapaService {
 
   private mapa: any;
   private puntoCentral: any;
-  private datosInterpolacion: Array<any>;
-  private mapaDeCalor: any;
-  
+  private capasDeMediciones: Array<any>;
+  private marcadores: Array<any>;
 
   //////////////////////
 
 
   constructor(posicion: any , settings: any, elementoHtml: ElementRef) {
-    this.datosInterpolacion = new Array<any>();
     this.puntoCentral = posicion;
     this.mapa = new google.maps.Map(elementoHtml, {
       zoom: settings.zoom
@@ -35,14 +33,9 @@ export class MapaService {
 
     this.centrarEn(this.puntoCentral);
 
-    this.mapaDeCalor = new google.maps.visualization.HeatmapLayer({
-      data: this.datosInterpolacion,
-      dissipating: true,
-      radius: 80,
-      maxIntensity: 900
-    });
+    this.capasDeMediciones = new Array<any>();
 
-    this.mapaDeCalor.setMap(this.mapa);
+    this.marcadores = new Array<any>();
   }
 
 
@@ -51,6 +44,7 @@ export class MapaService {
   // ------------------------------------------
   centrarEn(posicion: any) {
     this.mapa.setCenter(posicion);
+    this.refrescarMapa();
   }
   // -------------------------------------------
 
@@ -65,19 +59,19 @@ export class MapaService {
   // -----------------------------------------
   // posicion:Posicion -> anyadirMarcador -> void
   // ------------------------------------------
-  anyadirMarcador(posicion: any, iconoUrl: string) {
+  anyadirMarcador(nombre: string , posicion: any, iconoUrl: string) {
     const icono = {
       url: iconoUrl,
       scaledSize: new google.maps.Size(40, 40)
     };
 
-    let marcador = new google.maps.Marker({
+    const marcador = new google.maps.Marker({
       icon: icono,
       map: this.mapa,
       position: posicion
     });
 
-    this.refrescarMapa();
+    this.marcadores[nombre] = marcador;
     // -------------------------------------------
 
   }
@@ -85,13 +79,60 @@ export class MapaService {
   // -----------------------------------------
   // medicion: Medicion -> anyadirMedicion -> void
   // ------------------------------------------
-  anyadirMedicion(medicion: any) {
+  anyadirMedicion(nombreDelGas: string, medicion: any) {
 
-   this.datosInterpolacion.push({
-     location: new google.maps.LatLng(medicion.latitud, medicion.longitud),
-     weight: medicion.valorMedido
+   this.capasDeMediciones[nombreDelGas].data.push({
+    location: new google.maps.LatLng(medicion.latitud, medicion.longitud),
+    weight: medicion.valorMedido
    });
 
   }
   // ------------------------------------------
+
+  // -----------------------------------------
+  // informacion:Json -> anyadirCapa() -> void
+  // ------------------------------------------
+  anyadirCapa(informacion: any) {
+    const layer = new google.maps.visualization.HeatmapLayer({
+      dissipating: informacion.disipado,
+      radius: informacion.radio,
+      maxIntensity: informacion.maxIntensidad
+    });
+
+    this.capasDeMediciones[informacion.nombre] = layer;
+    this.mostrarCapa(informacion.nombre);
+  }
+  // ------------------------------------------
+
+  // -----------------------------------------
+  // nombreGas:string -> mostrarCapa() -> void
+  // ------------------------------------------
+
+    mostrarCapa(nombreGas: string) {
+      if (this.capasDeMediciones[nombreGas]) {
+
+        this.capasDeMediciones[nombreGas].setMap(this.mapa);
+        this.refrescarMapa();
+
+      }
+    }
+
+  // ------------------------------------------
+
+
+  // -----------------------------------------
+  // nombreGas:string -> ocultarCapa() -> void
+  // ------------------------------------------
+
+    ocultarCapa(nombreGas: string) {
+      if (this.capasDeMediciones[nombreGas]) {
+
+        this.capasDeMediciones[nombreGas].setMap(null);
+        this.refrescarMapa();
+
+      }
+    }
+
+  // ------------------------------------------
+
 }

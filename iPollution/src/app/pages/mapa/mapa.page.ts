@@ -29,7 +29,6 @@ declare var google;
 // Class
 // ----------------------------
 export class MapaPage implements OnInit {
-  map: any;
   mapa: MapaService;
   @ViewChild('mapElement', {static: false}) mapElement: ElementRef;
   currentLocation: any = {
@@ -55,38 +54,29 @@ export class MapaPage implements OnInit {
     this.geolocation.obtenerMiPosicionGPS().then((resp) => {
       this.currentLocation.lat = resp.lat;
       this.currentLocation.long = resp.long;
-      /*const map = new google.maps.Map(
-        this.mapElement.nativeElement, {
-          zoom: 15,
-      });*/
 
       this.mapa = new MapaService({lat: resp.lat, lng: resp.long}, {zoom: 15}, this.mapElement.nativeElement);
-      this.mapa.anyadirMarcador({lat: this.currentLocation.lat, lng: this.currentLocation.long}, 'assets/icon/gpsIcon.svg');
+      this.mapa.anyadirMarcador(
+        'Posicion Actual', {lat: this.currentLocation.lat, lng: this.currentLocation.long}, 'assets/icon/gpsIcon.svg'
+      );
 
-      // Pido las medidas al servidor
+      // Genero la capa donde pondre las medidas de ozono
+      this.mapa.anyadirCapa({
+        nombre: 'ozono',
+        disipado: true, // Escalado del aspecto de los puntos en funcion del zoom
+        radio: 70, // Radio de influencia de cada punto en pixeles sobre el mapa
+        maxIntensidad: 900 // Valor en el cual el color es máximo
+      });
+
+      // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
       this.server.getAllMediciones().then((mediciones: any) => {
         mediciones.forEach(medicion => {
-          this.mapa.anyadirMedicion(medicion);
+          this.mapa.anyadirMedicion('ozono', medicion);
         });
 
         this.mapa.refrescarMapa();
       });
 
-      /*location object*/
-      const pos = {
-        lat: this.currentLocation.lat,
-        lng: this.currentLocation.long
-      };
-      const icon = {
-        url: 'assets/icon/gpsIcon.svg', // image url
-        scaledSize: new google.maps.Size(40, 40), // scaled size
-      };
-      
-      /*const marker = new google.maps.Marker({
-        position: pos,
-        map: mapa,
-        icon: icon
-      }); */
     }).catch((error) => {
       console.log('Error getting location', error);
     });
