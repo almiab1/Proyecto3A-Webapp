@@ -1,15 +1,14 @@
-import { timeout } from 'q';
-// ----------------------------
+// ------------------------------------------------------------------------------------
 // LogicaDeNegocioFake.service.ts
-// Equipo
+// Equipo 4
 // Alejandro Mira Abad
 // Fecha
 // CopyRight
-// ----------------------------
+// ------------------------------------------------------------------------------------
 
-// ----------------------------
+// ------------------------------------------------------------------------------------
 // Includes
-// ----------------------------
+// ------------------------------------------------------------------------------------
 import {
     Injectable
 } from '@angular/core';
@@ -19,19 +18,12 @@ import {
     HttpErrorResponse
 } from '@angular/common/http';
 import {
-    TestBed
-} from '@angular/core/testing';
-import {
     Observable,
     throwError
 } from 'rxjs';
-import {
-    retry,
-    catchError
-} from 'rxjs/operators';
-// ----------------------------
+// ------------------------------------------------------------------------------------
 // Class LogicaDeNegocioFake
-// ----------------------------
+// ------------------------------------------------------------------------------------
 @Injectable()
 export class LogicaDeNegocioFake {
     // URL server en local
@@ -40,7 +32,6 @@ export class LogicaDeNegocioFake {
     // URL server remoto
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
     urlGET = 'http://192.168.0.109:8080/getUltimaMedida';
-    urlGETAll = 'https://osblasae.upv.edu.es/getAllMedidas';
 
     // API de admin
     urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
@@ -73,7 +64,7 @@ export class LogicaDeNegocioFake {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
         })
-    }
+    };
 
     constructor(
         public http: HttpClient
@@ -96,47 +87,44 @@ export class LogicaDeNegocioFake {
             'Something bad happened; please try again later.');
     }
 
-    // Get single student data by ID
+    // -----------------------------GET----------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // GET getUltimaMedicion()
+    // ------------------------------------------------------------------------------------
     getUltimaMedicion(): Observable < any > {
         return this.http
             .get(this.urlGET, this.httpOptions)
             .pipe(
                 // retry(2),
                 // catchError(this.handleError)
-              )
+            );
     }
 
-    // Get all data by ID
-   /* getAllMediciones(): Observable < any > {
-        return this.http
-            .get(this.urlGETAll, this.httpOptions)
-            .pipe(
-                // retry(2),
-                // catchError(this.handleError)
-              );            
-    }*/
-
-    // METODO GET ALL DE PRUEBA
-    async getAllMediciones() {
-        const medidas = [{
-            latitud: 39.000466,
-            longitud: -0.165349,
-            valorMedido: 320
-        }, {
-            latitud: 39.002577,
-            longitud: -0.161285,
-            valorMedido: 500
-        }, {
-            latitud: 38.999102,
-            longitud: -0.160547,
-            valorMedido: 703
-        }];
-
-        return medidas;
+    // -----------------------------GET----------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // GET getUltimaMedicion()
+    // ------------------------------------------------------------------------------------
+    getUsuarios() {
+        // return this.http
+        //     .get(this.urlGET, this.httpOptions)
+        //     .pipe(
+        //         // retry(2),
+        //         // catchError(this.handleError)
+        //     );
+        const datos = [
+            'Alex',
+            'Pepe',
+            'Juan'
+        ];
+        return datos;
     }
 
-    // Create a new item
-    guardarMedida(data): Observable<any> {
+
+    // -----------------------------POST---------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // POST guardarMedida
+    // ------------------------------------------------------------------------------------
+    guardarMedida(data): Observable < any > {
         // JSON a enviar
         const datos = {
             valorMedido: data.valorMedido,
@@ -150,123 +138,135 @@ export class LogicaDeNegocioFake {
             humedad: data.humedad
         };
         return this.http
-            .post<any>(this.urlBasureroGuardarLocal,
+            .post < any > (this.urlBasureroGuardarLocal,
                 JSON.stringify(datos),
                 this.httpOptions);
-            // .pipe(
-            //     // retry(2),
-            //     catchError(this.handleError)
-            // );
+        // .pipe(
+        //     // retry(2),
+        //     catchError(this.handleError)
+        // );
     }
 
+    // ------------------------------------------------------------------------------------
+    // POST editarUsuario()
     // Enviar datos para editar el usuario
-    async editarUsuario(data) {
-        return new Promise((resolve, reject) => {
-            this.http.post(this.urlEditarUsuarioAdministradorLocal, JSON.stringify({
-                    idUsuario: data.idUsuario,
-                    password: data.password,
-                    tipoUsuario: data.tipoUsuario,
-                    telefono: data.telefono
-                }), {
-                    observe: 'response'
-                })
-                .subscribe(response => {
-                    resolve(response);
-                }, (error) => {
-                    reject(error);
-                });
-        });
+    // ------------------------------------------------------------------------------------
+    editarUsuario(data): Observable < any > {
+        // JSON a enviar
+        const datos = {
+            idUsuario: data.idUsuario,
+            password: data.password,
+            tipoUsuario: data.tipoUsuario,
+            telefono: data.telefono
+        };
+        return this.http
+            .post < any > (this.urlEditarUsuarioAdministradorLocal,
+                JSON.stringify(datos),
+                this.httpOptions);
+        // .pipe(
+        //     // retry(2),
+        //     catchError(this.handleError)
+        // );
     }
 
-
+    // ------------------------------------------------------------------------------------
+    // POST darDeAltaUsuario()
     // Enviar datos para dar de alta el usuario
-    async darDeAltaUsuario(data) {
-        return new Promise((resolve, reject) => {
-            // this.http.post(this.urlPostLocal + data.valor + '&' + data.instante + '&' + data.lat + '&' + data.long, JSON.stringify(data))
-            this.http.post(this.urlDarDeAltaUsuarioLocal, JSON.stringify({
-                    idUsuario: data.idUsuario,
-                    password: data.password,
-                    tipoUsuario: data.tipoUsuario,
-                    telefono: data.telefono
-                }), {
-                    observe: 'response'
-                })
-                .subscribe(response => {
-                    resolve(response);
-                }, (error) => {
-                    reject(error);
-                });
-        });
+    // ------------------------------------------------------------------------------------
+    darDeAltaUsuario(data): Observable < any > {
+        // JSON a enviar
+        const datos = {
+            idUsuario: data.idUsuario,
+            password: data.password,
+            tipoUsuario: data.tipoUsuario,
+            telefono: data.telefono
+        };
+        return this.http
+            .post < any > (this.urlDarDeAltaUsuarioLocal,
+                JSON.stringify(datos),
+                this.httpOptions);
+        // .pipe(
+        //     // retry(2),
+        //     catchError(this.handleError)
+        // );
     }
 
-    // Dar de alta sensor
-    async darDeAltaSensor(data) {
-        return new Promise((resolve, reject) => {
-            this.http.post(this.urlDarDeAltaSensorLocal, JSON.stringify({
-                    idTipoSensor: data.idTipoSensor
-                }), {
-                    observe: 'response'
-                })
-                .subscribe(response => {
-                    resolve(response);
-                }, (error) => {
-                    reject(error);
-                });
-        });
+    // ------------------------------------------------------------------------------------
+    // POST darDeAltaSensor()
+    // Dar de alta al sensor
+    // ------------------------------------------------------------------------------------
+    darDeAltaSensor(data): Observable < any > {
+        // JSON a enviar
+        const datos = {
+            idTipoSensor: data.idTipoSensor
+        };
+        return this.http
+            .post < any > (this.urlDarDeAltaSensorLocal,
+                JSON.stringify(datos),
+                this.httpOptions);
+        // .pipe(
+        //     // retry(2),
+        //     catchError(this.handleError)
+        // );
     }
 
+    // ------------------------------------------------------------------------------------
+    // POST asociarSensorAUsuario()
     // Asociar sensor con Usuario
-    async asociarSensorAUsuario(data) {
-        return new Promise((resolve, reject) => {
-            // this.http.post(this.urlPostLocal + data.valor + '&' + data.instante + '&' + data.lat + '&' + data.long, JSON.stringify(data))
-            this.http.post(this.urlAsociarSensorUsuarioLocal, JSON.stringify({
-                    idUsuario: data.idUsuario,
-                    idSensor: data.idSensor
-                }), {
-                    observe: 'response'
-                })
-                .subscribe(response => {
-                    resolve(response);
-                }, (error) => {
-                    reject(error);
-                });
-        });
+    // ------------------------------------------------------------------------------------
+    asociarSensorAUsuario(data): Observable < any > {
+        // JSON a enviar
+        const datos = {
+            idUsuario: data.idUsuario,
+            idSensor: data.idSensor
+        };
+        return this.http
+            .post < any > (this.urlAsociarSensorUsuarioLocal,
+                JSON.stringify(datos),
+                this.httpOptions);
+        // .pipe(
+        //     // retry(2),
+        //     catchError(this.handleError)
+        // );
     }
 
+    // ------------------------------------------------------------------------------------
+    // POST darDeBajaUsuario()
     // Dar de baja Usuario
-    async darDeBajaUsuario(data) {
-        return new Promise((resolve, reject) => {
-            // this.http.post(this.urlPostLocal + data.valor + '&' + data.instante + '&' + data.lat + '&' + data.long, JSON.stringify(data))
-            this.http.post(this.urlDarDeBajaUsuarioLocal, JSON.stringify({
-                    idUsuario: data.idUsuario
-                }), {
-                    observe: 'response'
-                })
-                .subscribe(response => {
-                    resolve(response);
-                }, (error) => {
-                    reject(error);
-                });
-        });
+    // ------------------------------------------------------------------------------------
+    darDeBajaUsuario(data): Observable < any > {
+        // JSON a enviar
+        const datos = {
+            idUsuario: data.idUsuario
+        };
+        return this.http
+            .post < any > (this.urlDarDeBajaUsuarioLocal,
+                JSON.stringify(datos),
+                this.httpOptions);
+        // .pipe(
+        //     // retry(2),
+        //     catchError(this.handleError)
+        // );
     }
 
-
+    // ------------------------------------------------------------------------------------
+    // POST darDeBajaSensor()
     // Dar de baja Sensor
-    async darDeBajaSensor(data) {
-        return new Promise((resolve, reject) => {
-            // this.http.post(this.urlPostLocal + data.valor + '&' + data.instante + '&' + data.lat + '&' + data.long, JSON.stringify(data))
-            this.http.post(this.urlDarDeBajaSensorLocal, JSON.stringify({
-                    idSensor: data.idSensor
-                }), {
-                    observe: 'response'
-                })
-                .subscribe(response => {
-                    resolve(response);
-                }, (error) => {
-                    reject(error);
-                });
-        });
+    // ------------------------------------------------------------------------------------
+    darDeBajaSensor(data): Observable < any > {
+        // JSON a enviar
+        const datos = {
+            idSensor: data.idSensor
+        };
+        return this.http
+            .post < any > (this.urlDarDeBajaSensorLocal,
+                JSON.stringify(datos),
+                this.httpOptions);
+        // .pipe(
+        //     // retry(2),
+        //     catchError(this.handleError)
+        // );
     }
 }
 
-// ----------------------------
+// ------------------------------------------------------------------------------------

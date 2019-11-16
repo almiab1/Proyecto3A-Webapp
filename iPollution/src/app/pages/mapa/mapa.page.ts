@@ -69,13 +69,25 @@ export class MapaPage implements OnInit {
       });
 
       // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
-      this.server.getAllMediciones().then((mediciones: any) => {
-        mediciones.forEach(medicion => {
-          this.mapa.anyadirMedicion('ozono', medicion);
-        });
 
-        this.mapa.refrescarMapa();
+      const medidas = [{
+        latitud: 39.000466,
+        longitud: -0.165349,
+        valorMedido: 320
+    }, {
+        latitud: 39.002577,
+        longitud: -0.161285,
+        valorMedido: 500
+    }, {
+        latitud: 38.999102,
+        longitud: -0.160547,
+        valorMedido: 703
+    }];
+
+      medidas.forEach(medicion => {
+        this.mapa.anyadirMedicion('ozono', medicion);
       });
+
 
     }).catch((error) => {
       console.log('Error getting location', error);
