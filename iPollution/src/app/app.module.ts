@@ -1,3 +1,6 @@
+import { NodosComponent } from './components/nodos/nodos.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ComponentsModule } from './components/components.module';
 import { FormsModule } from '@angular/forms';
 import { LogicaDeNegocioFake } from './core/services/LogicaDeNegocioFake.service';
 import { NgModule } from '@angular/core';
@@ -20,11 +23,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { File } from '@ionic-native/file/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
-import { UsersComponent } from './pages/admin/users/users.component';
 import {LoginPage} from './pages/login/login.page';
 
 @NgModule({
-  declarations: [AppComponent, UsersComponent, LoginPage],
+  declarations: [AppComponent, LoginPage, UsuariosComponent, NodosComponent],
   entryComponents: [LoginPage],
   imports: [
     BrowserModule,
@@ -44,7 +46,7 @@ import {LoginPage} from './pages/login/login.page';
     LogicaDeNegocioFake,
     HttpClientModule,
     IBeacon, BeaconProvider,
-    File, Camera, PhotoViewer
+    File, Camera, PhotoViewer, ComponentsModule
   ],
   bootstrap: [AppComponent]
 })

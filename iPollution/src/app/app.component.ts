@@ -77,12 +77,12 @@ export class AppComponent {
           subPages: [{
             title: 'Tips',
             icon: 'add',
-            url: '/admin/users'
+            url: '/components/nodos'
           },
           {
             title: 'Medidas Oficiales',
             icon: 'add',
-            url: '/admin/nodos'
+            url: '/components/usuarios'
           }
         ]
         },
@@ -103,12 +103,12 @@ export class AppComponent {
           subPages: [{
               title: 'Usuarios',
               icon: 'add',
-              url: '/admin/users'
+              url: '/components/usuarios'
             },
             {
               title: 'Nodos',
               icon: 'add',
-              url: '/admin/nodos'
+              url: '/components/nodos'
             }
           ]
         },
@@ -136,12 +136,12 @@ export class AppComponent {
           subPages: [{
             title: 'Tips',
             icon: 'add',
-            url: '/admin/users'
+            url: '/components/usuarios'
           },
           {
             title: 'Medidas Oficiales',
             icon: 'add',
-            url: '/admin/nodos'
+            url: '/components/nodos'
           }
         ]
         },
@@ -157,12 +157,12 @@ export class AppComponent {
           subPages: [{
               title: 'Usuarios',
               icon: 'add',
-              url: '/admin/users'
+              url: '/components/usuarios'
             },
             {
               title: 'Nodos',
               icon: 'add',
-              url: '/admin/nodos'
+              url: '/components/nodos'
             }
           ]
         },
