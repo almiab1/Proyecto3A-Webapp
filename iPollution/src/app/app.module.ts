@@ -1,3 +1,4 @@
+import { EditarComponent } from './components/editar/editar.component';
 import { NodosComponent } from './components/nodos/nodos.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ComponentsModule } from './components/components.module';
@@ -26,7 +27,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import {LoginPage} from './pages/login/login.page';
 
 @NgModule({
-  declarations: [AppComponent, LoginPage, UsuariosComponent, NodosComponent],
+  declarations: [AppComponent, LoginPage, UsuariosComponent, NodosComponent, EditarComponent],
   entryComponents: [LoginPage],
   imports: [
     BrowserModule,

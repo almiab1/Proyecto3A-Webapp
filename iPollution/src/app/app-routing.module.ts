@@ -1,3 +1,4 @@
+import { EditarComponent } from './components/editar/editar.component';
 import { NodosComponent } from './components/nodos/nodos.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { NgModule } from '@angular/core';
@@ -38,7 +39,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule)
   },
   { path: 'components/usuarios', component: UsuariosComponent},
-  { path: 'components/nodos', component: NodosComponent}
+  { path: 'components/nodos', component: NodosComponent},
+  { path: 'components/editar', component: EditarComponent}
 
 ];
 

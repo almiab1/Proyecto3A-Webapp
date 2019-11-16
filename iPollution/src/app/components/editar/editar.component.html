@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="secundario">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2" text-center>
+          <ion-icon (click)="closeModal()" name="arrow-forward" color="acentuado"></ion-icon>
+        </ion-col>
+        <ion-col size="10">
+          <ion-title>{{modalTitle}}</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-text text-center expand="full">NobreNodo: </ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input type="text" value="{{usuariNodo}}"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-text>Tipo nodo: </ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input type="number" value="{{tipoNodo}}"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-text>Usuario del nodo: </ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-input type="text" value="{{usuariNodo}}"></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
