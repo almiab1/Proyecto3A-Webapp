@@ -34,7 +34,9 @@ import {
 export class NodosComponent implements OnInit {
   // Propiedades
   dataReturned: any;
-  public nodos: any;
+  public nodos: any[];
+  public nodoFiltrados: any[];
+
   // ----------------------------------------------------------------------------
 
   aa = [{
@@ -66,7 +68,37 @@ export class NodosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // ngOnInit()
-  ngOnInit() {}
+  ngOnInit() {
+    this.nodos = this.aa;
+    this.nodoFiltrados = this.aa;
+  }
+  // ----------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------
+  // Search Bar controler
+  // initializeItems()
+  initializeItems(): void {
+    this.nodos = this.nodoFiltrados;
+  }
+  // filterList()
+  filterList(evt) {
+    this.initializeItems();
+
+    const nodoBuscado = evt.srcElement.value;
+
+    if (!nodoBuscado) {
+      return;
+    }
+
+    this.nodos = this.nodos.filter(nodoDeseado => {
+      if (nodoDeseado.nombre && nodoBuscado) {
+        if (nodoDeseado.nombre.toLowerCase().indexOf(nodoBuscado.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------

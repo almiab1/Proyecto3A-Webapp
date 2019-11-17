@@ -64,11 +64,13 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() {}
   // ----------------------------------------------------------------------------
 
+  // ----------------------------------------------------------------------------
   // Search Bar controler
+  // initializeItems()
   initializeItems(): void {
     this.users = this.usersFiltrados;
   }
-
+  // filterList()
   filterList(evt) {
     this.initializeItems();
 
@@ -87,6 +89,8 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
+  // ----------------------------------------------------------------------------
+
   // ----------------------------------------------------------------------------
   // openModal()
   async openModal(titulo: string, nombre: string, email: string, nodos: string) {
