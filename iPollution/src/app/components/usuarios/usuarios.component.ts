@@ -27,7 +27,8 @@ export class UsuariosComponent implements OnInit {
 
   // Propiedades
   dataReturned: any;
-  public users: any;
+  public users: any[];
+  public usersFiltrados: any[];
   // ----------------------------------------------------------------------------
 
   aa = [{
@@ -53,6 +54,7 @@ export class UsuariosComponent implements OnInit {
     public platform: Platform,
   ) {
     this.users = this.aa;
+    this.usersFiltrados = this.aa;
   }
   // ----------------------------------------------------------------------------
 
@@ -62,6 +64,29 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() {}
   // ----------------------------------------------------------------------------
 
+  // Search Bar controler
+  initializeItems(): void {
+    this.users = this.usersFiltrados;
+  }
+
+  filterList(evt) {
+    this.initializeItems();
+
+    const usuarioBuscado = evt.srcElement.value;
+
+    if (!usuarioBuscado) {
+      return;
+    }
+
+    this.users = this.users.filter(userDeseado => {
+      if (userDeseado.nombre && usuarioBuscado) {
+        if (userDeseado.nombre.toLowerCase().indexOf(usuarioBuscado.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
   // ----------------------------------------------------------------------------
   // openModal()
   async openModal(titulo: string, nombre: string, email: string, nodos: string) {
