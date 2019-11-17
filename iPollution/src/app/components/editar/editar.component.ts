@@ -29,6 +29,7 @@ export class EditarComponent implements OnInit {
   modalTitle: string;
   tipoNodo: number;
   usuarioNodo: string;
+  tituloComponent: string;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -47,6 +48,7 @@ export class EditarComponent implements OnInit {
     this.tipoNodo = parseInt(this.navParams.data.tipoNodo);
     this.modalTitle = this.navParams.data.nombreNodo;
     this.usuarioNodo = this.navParams.data.usuarioNodo;
+    this.tituloComponent = this.navParams.data.titulo;
   }
   // ----------------------------------------------------------------------------
 

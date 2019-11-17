@@ -64,10 +64,11 @@ export class UsuariosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // openModal()
-  async openModal(nombre: string, email: string, nodos: string) {
+  async openModal(titulo: string, nombre: string, email: string, nodos: string) {
     const modal = await this.modalController.create({
       component: EditarUsuariosComponent,
       componentProps: {
+        titulo,
         nombre,
         email,
         nodos

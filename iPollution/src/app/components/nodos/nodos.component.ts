@@ -71,10 +71,11 @@ export class NodosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // openModal()
-  async openModal(nombreNodo: string, tipoNodo: string, usuarioNodo: string) {
+  async openModal(titulo: string, nombreNodo: string, tipoNodo: string, usuarioNodo: string) {
     const modal = await this.modalController.create({
       component: EditarComponent,
       componentProps: {
+        titulo,
         nombreNodo,
         tipoNodo,
         usuarioNodo

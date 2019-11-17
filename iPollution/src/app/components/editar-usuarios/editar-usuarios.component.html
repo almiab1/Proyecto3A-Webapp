@@ -3,10 +3,10 @@
     <ion-grid>
       <ion-row>
         <ion-col size="2" text-center>
-          <ion-icon (click)="closeModal()" name="arrow-forward" color="acentuado"></ion-icon>
+          <ion-icon (click)="closeModal()" name="arrow-back" color="acentuado" size="large" expand="full"></ion-icon>
         </ion-col>
-        <ion-col size="10">
-          <ion-title>{{nombreUser}}</ion-title>
+        <ion-col size="10" text-center>
+          <ion-title horizontal="center">{{tituloComponent}}</ion-title>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -16,27 +16,27 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="6">
-        <ion-text text-center expand="full">Nombre: </ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-input type="text" value="{{nombreUser}}"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <ion-text>E-mail: </ion-text>
-      </ion-col>
-      <ion-col size="6">
-        <ion-input type="number" value="{{emailUsuario}}"></ion-input>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Nombre: </ion-label>
+          <ion-input type="text" value="{{nombreUser}}"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="6">
-        <ion-text>Nodos del usuario: </ion-text>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">E-mail: </ion-label>
+          <ion-input type="text" value="{{emailUsuario}}"></ion-input>
+        </ion-item>
       </ion-col>
-      <ion-col size="6">
-        <ion-input type="text" value="{{nodosUser}}"></ion-input>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Nodos del usuario: </ion-label>
+          <ion-input type="text" value="{{nodosUser}}"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>

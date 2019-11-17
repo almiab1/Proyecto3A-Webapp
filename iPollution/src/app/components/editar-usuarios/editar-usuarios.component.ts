@@ -25,13 +25,10 @@ import { Component, OnInit } from '@angular/core';
 export class EditarUsuariosComponent implements OnInit {
 
   // Propiedades
-  modalTitle: string;
-  tipoNodo: number;
-  usuarioNodo: string;
-  // Propiedades
   nombreUser: string;
   emailUsuario: string;
   nodosUser: string;
+  tituloComponent: string;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -50,6 +47,7 @@ export class EditarUsuariosComponent implements OnInit {
     this.emailUsuario = this.navParams.data.email;
     this.nombreUser = this.navParams.data.nombre;
     this.nodosUser = this.navParams.data.nodos;
+    this.tituloComponent = this.navParams.data.titulo;
   }
   // ----------------------------------------------------------------------------
 
