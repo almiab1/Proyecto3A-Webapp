@@ -57,9 +57,7 @@ export class HomePage {
     const medicion = this.ble.obtenerO3();
 
     console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
-    this.serve.guardarMedida(medicion).subscribe(data => {
-      console.log(data);
-    });
+    this.serve.guardarMedida(medicion);
 
     // --------------------------------------------------------
 

@@ -15,7 +15,8 @@ import {
 import {
     HttpClient,
     HttpHeaders,
-    HttpErrorResponse
+    HttpErrorResponse,
+    HttpParams
 } from '@angular/common/http';
 import {
     Observable,
@@ -86,6 +87,39 @@ export class LogicaDeNegocioFake {
         return throwError(
             'Something bad happened; please try again later.');
     }
+    // ------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------
+    // Funciones para GET y POS
+    // POST
+    private peticionPost(url, body) {
+        this.http.post(url, body)
+            .subscribe(
+                res => {
+                    console.log(res);
+                },
+                err => {
+                    console.log('ERROR --> ');
+                    console.log(err);
+                }
+            );
+    }
+    // GET
+    private peticionGet(url) {
+        this.http.get(url)
+            .subscribe(
+                res => {
+                    console.log(res);
+                },
+                err => {
+                    if (err.status != 200) {
+                        console.log('ERROR --> ' + err);
+                    }
+                }
+            );
+    }
+    // ------------------------------------------------------------------------------------
+
 
     // -----------------------------GET----------------------------------------------------
     // ------------------------------------------------------------------------------------
@@ -102,7 +136,7 @@ export class LogicaDeNegocioFake {
 
     // -----------------------------GET----------------------------------------------------
     // ------------------------------------------------------------------------------------
-    // GET getUltimaMedicion()
+    // GET getUsuarios()
     // ------------------------------------------------------------------------------------
     getUsuarios() {
         // return this.http
@@ -119,153 +153,104 @@ export class LogicaDeNegocioFake {
         return datos;
     }
 
-
     // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // POST guardarMedida
     // ------------------------------------------------------------------------------------
-    guardarMedida(data): Observable < any > {
-        // JSON a enviar
-        const datos = {
-            valorMedido: data.valorMedido,
-            tiempo: data.tiempo,
-            latitud: data.latitud,
-            longitud: data.longitud,
-            idUsuario: 'a@gmail.com',
-            idTipoMedida: 1,
-            idSensor: 1,
-            temperatura: data.temperatura,
-            humedad: data.humedad
-        };
-        return this.http
-            .post < any > (this.urlBasureroGuardarLocal,
-                JSON.stringify(datos),
-                this.httpOptions);
-        // .pipe(
-        //     // retry(2),
-        //     catchError(this.handleError)
-        // );
+    public guardarMedida(data) {
+
+        const body = new HttpParams()
+            .set('valorMedido', '' + data.valorMedido)
+            .set('tiempo', '' + data.tiempo)
+            .set('latitud', '' + data.latitud)
+            .set('longitud', '' + data.longitud)
+            .set('idUsuario', 'a@gmail.com')
+            .set('idTipoMedida', '1')
+            .set('idSensor', '1')
+            .set('temperatura', '' + data.temperatura)
+            .set('humedad', '' + data.humedad);
+
+        this.peticionPost(this.urlBasureroGuardarLocal, body);
     }
 
     // ------------------------------------------------------------------------------------
     // POST editarUsuario()
     // Enviar datos para editar el usuario
     // ------------------------------------------------------------------------------------
-    editarUsuario(data): Observable < any > {
-        // JSON a enviar
-        const datos = {
-            idUsuario: data.idUsuario,
-            password: data.password,
-            tipoUsuario: data.tipoUsuario,
-            telefono: data.telefono
-        };
-        return this.http
-            .post < any > (this.urlEditarUsuarioAdministradorLocal,
-                JSON.stringify(datos),
-                this.httpOptions);
-        // .pipe(
-        //     // retry(2),
-        //     catchError(this.handleError)
-        // );
+    public editarUsuario(data) {
+
+        const body = new HttpParams()
+            .set('idUsuario', '' + data.idUsuario)
+            .set('password', '' + data.password)
+            .set('tipoUsuario', '' + data.tipoUsuario)
+            .set('telefono', '' + data.telefono);
+
+        this.peticionPost(this.urlEditarUsuarioAdministradorLocal, body);
     }
 
     // ------------------------------------------------------------------------------------
     // POST darDeAltaUsuario()
     // Enviar datos para dar de alta el usuario
     // ------------------------------------------------------------------------------------
-    darDeAltaUsuario(data): Observable < any > {
-        // JSON a enviar
-        const datos = {
-            idUsuario: data.idUsuario,
-            password: data.password,
-            tipoUsuario: data.tipoUsuario,
-            telefono: data.telefono
-        };
-        return this.http
-            .post < any > (this.urlDarDeAltaUsuarioLocal,
-                JSON.stringify(datos),
-                this.httpOptions);
-        // .pipe(
-        //     // retry(2),
-        //     catchError(this.handleError)
-        // );
+    public darDeAltaUsuario(data) {
+
+        const body = new HttpParams()
+            .set('idUsuario', '' + data.idUsuario)
+            .set('password', '' + data.password)
+            .set('tipoUsuario', '' + data.tipoUsuario)
+            .set('telefono', '' + data.telefono);
+
+        this.peticionPost(this.urlDarDeAltaUsuarioLocal, body);
+
     }
 
     // ------------------------------------------------------------------------------------
     // POST darDeAltaSensor()
     // Dar de alta al sensor
     // ------------------------------------------------------------------------------------
-    darDeAltaSensor(data): Observable < any > {
-        // JSON a enviar
-        const datos = {
-            idTipoSensor: data.idTipoSensor
-        };
-        return this.http
-            .post < any > (this.urlDarDeAltaSensorLocal,
-                JSON.stringify(datos),
-                this.httpOptions);
-        // .pipe(
-        //     // retry(2),
-        //     catchError(this.handleError)
-        // );
+    public darDeAltaSensor(data) {
+
+        const body = new HttpParams()
+            .set('idTipoSensor', '' + data.idTipoSensor);
+
+        this.peticionPost(this.urlDarDeAltaSensorLocal, body);
     }
 
     // ------------------------------------------------------------------------------------
     // POST asociarSensorAUsuario()
     // Asociar sensor con Usuario
     // ------------------------------------------------------------------------------------
-    asociarSensorAUsuario(data): Observable < any > {
-        // JSON a enviar
-        const datos = {
-            idUsuario: data.idUsuario,
-            idSensor: data.idSensor
-        };
-        return this.http
-            .post < any > (this.urlAsociarSensorUsuarioLocal,
-                JSON.stringify(datos),
-                this.httpOptions);
-        // .pipe(
-        //     // retry(2),
-        //     catchError(this.handleError)
-        // );
+    public asociarSensorAUsuario(data) {
+
+        const body = new HttpParams()
+            .set('idUsuario', '' + data.idUsuario)
+            .set('idSensor', '' + data.idSensor);
+
+        this.peticionPost(this.urlAsociarSensorUsuarioLocal, body);
     }
 
     // ------------------------------------------------------------------------------------
     // POST darDeBajaUsuario()
     // Dar de baja Usuario
     // ------------------------------------------------------------------------------------
-    darDeBajaUsuario(data): Observable < any > {
-        // JSON a enviar
-        const datos = {
-            idUsuario: data.idUsuario
-        };
-        return this.http
-            .post < any > (this.urlDarDeBajaUsuarioLocal,
-                JSON.stringify(datos),
-                this.httpOptions);
-        // .pipe(
-        //     // retry(2),
-        //     catchError(this.handleError)
-        // );
+    public darDeBajaUsuario(data) {
+
+        const body = new HttpParams()
+            .set('idUsuario', '' + data.idUsuario);
+
+        this.peticionPost(this.urlDarDeBajaUsuarioLocal, body);
     }
 
     // ------------------------------------------------------------------------------------
     // POST darDeBajaSensor()
     // Dar de baja Sensor
     // ------------------------------------------------------------------------------------
-    darDeBajaSensor(data): Observable < any > {
-        // JSON a enviar
-        const datos = {
-            idSensor: data.idSensor
-        };
-        return this.http
-            .post < any > (this.urlDarDeBajaSensorLocal,
-                JSON.stringify(datos),
-                this.httpOptions);
-        // .pipe(
-        //     // retry(2),
-        //     catchError(this.handleError)
-        // );
+    public darDeBajaSensor(data) {
+
+        const body = new HttpParams()
+            .set('idSensor', '' + data.idSensor);
+
+        this.peticionPost(this.urlDarDeBajaSensorLocal, body);
     }
 }
 

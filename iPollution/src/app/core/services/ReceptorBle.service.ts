@@ -1,55 +1,42 @@
-// ----------------------------
+// ------------------------------------------------------------------------------------------------
 // ReceptorBle.service.ts
-// Descripcion que hace el codigo a grandes rasgos
+// Controlados BLE
 // Equipo
 // Alejandro Mira Abad
 // Fecha
 // CopyRight
-// ----------------------------
+// ------------------------------------------------------------------------------------------------
 
-// ----------------------------
+// ------------------------------------------------------------------------------------------------
 // Includes
-// ----------------------------
-import {
-  Injectable,
-  NgZone
-} from '@angular/core';
-
-// LogicaDeNegocioFake
-// import { LogicaDeNegocioFake } from './services/LogicaDeNegocioFake.service';
-
+// ------------------------------------------------------------------------------------------------
+import { Injectable, NgZone } from '@angular/core';
 // GPS
-import {LocalizadorGPS} from 'src/app/core/services/LocalizadorGPS.service';
+import { LocalizadorGPS} from 'src/app/core/services/LocalizadorGPS.service';
 // iBEacon
 import {IBeacon} from '@ionic-native/ibeacon/ngx';
 // BeaconProvider
-import {BeaconProvider} from 'src/app/core/services/BeaconProvider.service';
-import {Events} from '@ionic/angular';
+import { BeaconProvider } from 'src/app/core/services/BeaconProvider.service';
+import { Events } from '@ionic/angular';
 
 
-// ----------------------------
+// ------------------------------------------------------------------------------------------------
 // ReceptorBle
-// ----------------------------
+// ------------------------------------------------------------------------------------------------
 @Injectable()
 export class ReceptorBLE {
-  // ----------------------------
+  // ------------------------------------------------------------------------------------------------
   // Propiedades
-  // ----------------------------
   // ibeacon data
   major: number;
   minor: number;
-  // ubicacion data
-  valorMedido: number;
-  latitud: number;
-  long: number;
-  humedad: number;
-  temperatura: number;
-  tiempo: number;
+  uuid: string;
   // medicion
   medicion: any = {};
-  // ----------------------------
+  // ------------------------------------------------------------------------------------------------
+
+  // ------------------------------------------------------------------------------------------------
   // Constructor
-  // ----------------------------
   constructor(
     // private servidor: ServidorFake,
     private gps: LocalizadorGPS,
@@ -58,11 +45,13 @@ export class ReceptorBLE {
     public events: Events,
     private ngZone: NgZone,
   ) {}
+  // ------------------------------------------------------------------------------------------------
 
-  // ----------------------------
+  // ------------------------------------------------------------------------------------------------
   // Metodos
-  // ----------------------------
-
+  
+  // ------------------------------------------------------------------------------------------------
+  // inizializar()
   async inizializar() {
     // Comprobar ble
     if (!this.estaBLEactivado()) {
@@ -74,10 +63,11 @@ export class ReceptorBLE {
         this.actualizarMediciones();
       }
     });
-
-    // Actualizar Mediciones
   }
+  // ------------------------------------------------------------------------------------------------
 
+  // ------------------------------------------------------------------------------------------------
+  // estaBLEactivado()
   estaBLEactivado() {
     this.ibeacon.isBluetoothEnabled().then(
       success => {
@@ -89,7 +79,10 @@ export class ReceptorBLE {
     );
     return false;
   }
+  // ------------------------------------------------------------------------------------------------
 
+  // ------------------------------------------------------------------------------------------------
+  // activarBLE()
   activarBLE() {
     this.ibeacon.enableBluetooth().then(
       success => {
@@ -100,7 +93,10 @@ export class ReceptorBLE {
       }
     );
   }
+  // ------------------------------------------------------------------------------------------------
 
+  // ------------------------------------------------------------------------------------------------
+  // desactivarBLE()
   desactivarBLE() {
     this.ibeacon.disableBluetooth().then(
       success => {
@@ -111,34 +107,44 @@ export class ReceptorBLE {
       }
     );
   }
+  // ------------------------------------------------------------------------------------------------
 
-  // ASCII only
-  private bytesToString(buffer) {
-    return String.fromCharCode.apply(null, new Uint8Array(buffer));
-  }
+  // ------------------------------------------------------------------------------------------------
+  // obtenerMisTramas()
+  private obtenerMisTramas() {
+    this.events.subscribe('didRangeBeaconsInRegion', async (data) => {
 
-  obtenerMisTramas() {
-    this.events.subscribe('didRangeBeaconsInRegion', (data) => {
-      // Crear array ibeacons
-      const beacons = [];
-      // Rellenamar la array
-      const beaconList = data.beacons;
-      beaconList.forEach((beacon) => {
-        const beaconObject = beacon;
-        beacons.push(beaconObject);
-      });
-      console.log(beacons);
-      // Parametros
-      this.major = parseInt(beacons[0].major);
-      this.minor = parseInt(beacons[0].minor);
-      if ( this.major === undefined) { this.major = -1; }
-      if ( this.minor === undefined) { this.major = -1; }
+      console.log(data.beacons);
+
+      if (data.beacons.length > 0) {
+        console.log('------------------Beacon recibido------------------');
+        console.table(data.beacons[0]);
+
+        // Parametros
+        // tslint:disable-next-line: radix
+        this.major = parseInt(data.beacons[0].major);
+        // tslint:disable-next-line: radix
+        this.minor = parseInt(data.beacons[0].minor);
+        this.uuid = data.beacons[0].uuid;
+        if (this.major === undefined) {
+          this.major = 0;
+        }
+        if (this.minor === undefined) {
+          this.major = 0;
+        }
+      }
     });
   }
+  // ------------------------------------------------------------------------------------------------
 
+  // ------------------------------------------------------------------------------------------------
+  // actualizarMediciones()
   async actualizarMediciones() {
+    // llamada a obtenerMisTramas()
     this.obtenerMisTramas();
+    // Cogemos fecha
     const date = new Date();
+    // Creamos json medicion
     this.medicion = {
       valorMedido: this.major,
       latitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
@@ -154,13 +160,14 @@ export class ReceptorBLE {
     };
   }
 
+  // ------------------------------------------------------------------------------------------------
   obtenerO3() {
     this.actualizarMediciones();
     console.log('-------------Este es el JSON medicion-----------------------------');
-    console.log(this.medicion);
+    console.table(this.medicion);
     return this.medicion;
   }
 
 }
 
-// ----------------------------
+// ---------------------------------------------------------------------------------------------------------

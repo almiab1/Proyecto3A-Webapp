@@ -38,7 +38,7 @@ export class BeaconProvider {
     public ibeacon: IBeacon,
     ) {}
 
-  initialise(): any {
+  public initialise(): any {
     let promise = new Promise((resolve, reject) => {
       // we need to be running on a device
       if (this.platform.is('cordova')) {
@@ -59,7 +59,7 @@ export class BeaconProvider {
           );
 
         // setup a beacon region
-        this.region = this.ibeacon.BeaconRegion(this.identifier.toString(), this.uuid.toString());
+        this.region = this.ibeacon.BeaconRegion(this.identifier, this.uuid);
         // this.region = this.ibeacon.BeaconRegion('iPollution-00001', '69506f6c-6c75-7469-6f6e-2d3030303031');
 
         // start ranging
