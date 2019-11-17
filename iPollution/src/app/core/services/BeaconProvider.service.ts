@@ -30,7 +30,7 @@ export class BeaconProvider {
   delegate: any;
   region: any;
   identifier = 'iPollution-00001';
-  uuid = '69506f6c-6c75-7469-6f6e-2d3030303031';
+  uuid = '69504f4c-4c55-5449-4f4c-2d3030303031';
 
   constructor(
     public platform: Platform,

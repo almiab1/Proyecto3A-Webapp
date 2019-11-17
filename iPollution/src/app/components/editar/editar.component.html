@@ -1,15 +1,18 @@
 <ion-header>
   <ion-toolbar color="secundario">
+
     <ion-grid>
       <ion-row>
-        <ion-col size="2" text-center>
+        <ion-col size="2">
           <ion-icon (click)="closeModal()" name="arrow-back" color="acentuado" size="large" expand="full"></ion-icon>
         </ion-col>
-        <ion-col size="10" text-center>
-          <ion-title horizontal="center">{{tituloComponent}}</ion-title>
+
+        <ion-col size="10">
+            <ion-title color="acentuado" size="large" class="ion-text-center">{{tituloComponent}}</ion-title>
         </ion-col>
       </ion-row>
     </ion-grid>
+
   </ion-toolbar>
 </ion-header>
 
@@ -29,7 +32,7 @@
     </ion-item>
   </ion-list>
   <!-- Botones comfirmacion -->
-  <div text-end vertical="bottom" slot="fixed">
+  <div class="ion-text-end" vertical="bottom" slot="fixed">
     <ion-button color="success" (click)="closeModal('aceptar')">Aceptar</ion-button>
     <ion-button color="danger" (click)="closeModal('cancelar')">Cancelar</ion-button>
   </div>
