@@ -1,3 +1,4 @@
+import { EditarUsuariosComponent } from './components/editar-usuarios/editar-usuarios.component';
 import { EditarComponent } from './components/editar/editar.component';
 import { NodosComponent } from './components/nodos/nodos.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
@@ -40,7 +41,9 @@ const routes: Routes = [
   },
   { path: 'components/usuarios', component: UsuariosComponent},
   { path: 'components/nodos', component: NodosComponent},
-  { path: 'components/editar', component: EditarComponent}
+  { path: 'components/editar', component: EditarComponent},
+  { path: 'components/editarUsuarios', component: EditarUsuariosComponent}
+
 
 ];
 

@@ -24,8 +24,8 @@
         <ion-toolbar expand="full">
           <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras">
           </ion-searchbar>
-          <ion-button slot="end" color="success">
-            <ion-icon name="add" size="large"></ion-icon>
+          <ion-button slot="end" color="success" disabled="false" (click)="openModal('Añadir Nodo','','')">
+            <ion-icon name="add" size="large" expand="block" ></ion-icon>
           </ion-button>
         </ion-toolbar>
       </ion-col>

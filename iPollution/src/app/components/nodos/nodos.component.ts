@@ -1,10 +1,3 @@
-import {
-  EditarComponent
-} from './../editar/editar.component';
-import {
-  ModalController,
-  Platform
-} from '@ionic/angular';
 // ----------------------------------------------------------------------------
 // nodos.component.ts
 // Controlador modal nodos
@@ -20,7 +13,13 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-
+import {
+  EditarComponent
+} from './../editar/editar.component';
+import {
+  ModalController,
+  Platform
+} from '@ionic/angular';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
