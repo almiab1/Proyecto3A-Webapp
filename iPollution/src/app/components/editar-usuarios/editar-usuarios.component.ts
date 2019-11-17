@@ -9,8 +9,14 @@
 // ----------------------------------------------------------------------------
 // Includes
 // ----------------------------------------------------------------------------
-import { ModalController, NavParams } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import {
+  ModalController,
+  NavParams
+} from '@ionic/angular';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -35,7 +41,7 @@ export class EditarUsuariosComponent implements OnInit {
   constructor(
     private modalController: ModalController,
     private navParams: NavParams
-  ) { }
+  ) {}
   // ----------------------------------------------------------------------------
 
 
@@ -53,10 +59,27 @@ export class EditarUsuariosComponent implements OnInit {
 
 
   // ----------------------------------------------------------------------------
-  // closeModal()
-  async closeModal() {
+  // tipoBoton --> closeModal()
+  async closeModal(tipoBoton: string) {
     const onClosedData = 'ModalCerrado';
-    await this.modalController.dismiss(onClosedData);
+
+    switch (tipoBoton) {
+      case 'aceptar': {
+        console.log('----------Boton aceptar modal------------');
+        await this.modalController.dismiss(onClosedData);
+        break;
+      }
+      case 'cancelar': {
+        console.log('----------Boton cancelar modal------------');
+        await this.modalController.dismiss(onClosedData);
+        break;
+      }
+      default: {
+        console.log('----------Default------------');
+        await this.modalController.dismiss(onClosedData);
+        break;
+      }
+    }
   }
   // ----------------------------------------------------------------------------
 

@@ -14,30 +14,24 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Nombre: </ion-label>
-          <ion-input type="text" value="{{nombreUser}}"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">E-mail: </ion-label>
-          <ion-input type="text" value="{{emailUsuario}}"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Nodos del usuario: </ion-label>
-          <ion-input type="text" value="{{nodosUser}}"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list expand="full" slot="fixed">
+    <ion-item>
+      <ion-label position="floating">Nombre: </ion-label>
+      <ion-input type="text" value="{{nombreUser}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">E-mail: </ion-label>
+      <ion-input type="text" value="{{emailUsuario}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Nodos del usuario: </ion-label>
+      <ion-input type="text" value="{{nodosUser}}"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <!-- Botones comfirmacion -->
+  <div text-end vertical="bottom" slot="fixed">
+    <ion-button color="success" (click)="closeModal('aceptar')">Aceptar</ion-button>
+    <ion-button color="danger" (click)="closeModal('cancelar')">Cancelar</ion-button>
+  </div>
 </ion-content>

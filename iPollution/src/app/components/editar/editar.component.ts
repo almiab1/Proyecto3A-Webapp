@@ -54,10 +54,29 @@ export class EditarComponent implements OnInit {
 
 
   // ----------------------------------------------------------------------------
-  // closeModal()
-  async closeModal() {
+  // ----------------------------------------------------------------------------
+  // tipoBoton --> closeModal()
+  async closeModal(tipoBoton: string) {
     const onClosedData = 'ModalCerrado';
-    await this.modalController.dismiss(onClosedData);
+
+    switch (tipoBoton) {
+      case 'aceptar': {
+        console.log('----------Boton aceptar modal------------');
+
+        await this.modalController.dismiss(onClosedData);
+        break;
+      }
+      case 'cancelar': {
+        console.log('----------Boton cancelar modal------------');
+
+        await this.modalController.dismiss(onClosedData);
+        break;
+      }
+      default: {
+        await this.modalController.dismiss(onClosedData);
+        break;
+      }
+    }
   }
   // ----------------------------------------------------------------------------
 

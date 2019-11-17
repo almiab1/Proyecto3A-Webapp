@@ -14,30 +14,23 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">NobreNodo: </ion-label>
-          <ion-input type="text" value="{{modalTitle}}"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Tipo nodo: </ion-label>
-          <ion-input type="number" value="{{tipoNodo}}"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Usuario del nodo: </ion-label>
-          <ion-input type="text" value="{{usuarioNodo}}"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list expand="full" slot="fixed">
+    <ion-item>
+      <ion-label position="floating">NobreNodo: </ion-label>
+      <ion-input type="text" value="{{modalTitle}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tipo nodo: </ion-label>
+      <ion-input type="number" value="{{tipoNodo}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Usuario del nodo:: </ion-label>
+      <ion-input type="text" value="{{usuarioNodo}}"></ion-input>
+    </ion-item>
+  </ion-list>
+  <!-- Botones comfirmacion -->
+  <div text-end vertical="bottom" slot="fixed">
+    <ion-button color="success" (click)="closeModal('aceptar')">Aceptar</ion-button>
+    <ion-button color="danger" (click)="closeModal('cancelar')">Cancelar</ion-button>
+  </div>
 </ion-content>
