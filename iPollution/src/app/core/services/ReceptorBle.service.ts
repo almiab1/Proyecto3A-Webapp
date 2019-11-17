@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------------------------
 // Includes
 // ------------------------------------------------------------------------------------------------
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 // GPS
 import { LocalizadorGPS} from 'src/app/core/services/LocalizadorGPS.service';
 // iBEacon
@@ -43,13 +43,11 @@ export class ReceptorBLE {
     private ibeacon: IBeacon,
     public beaconProvider: BeaconProvider,
     public events: Events,
-    private ngZone: NgZone,
   ) {}
   // ------------------------------------------------------------------------------------------------
 
   // ------------------------------------------------------------------------------------------------
   // Metodos
-  
   // ------------------------------------------------------------------------------------------------
   // inizializar()
   async inizializar() {

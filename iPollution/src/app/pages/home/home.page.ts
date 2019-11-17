@@ -40,6 +40,7 @@ export class HomePage {
     private ble: ReceptorBLE,
     private serve: LogicaDeNegocioFake,
   ) {
+    this.ble.inizializar();
     // ACTUALIZAR DATOS
     setInterval(() => {
       this.hayQueActualizarMedicionesYEnviarlasAlServidor();
@@ -48,8 +49,9 @@ export class HomePage {
 
   ngOnInit = () => {
     // INICIALIZAR BLE
-    this.ble.inizializar();
+    //  this.ble.inizializar();
   }
+
   // --------------------------------------------------------
   // hayQueActualizarMedicionesYEnviarlasAlServidor()
   // --------------------------------------------------------

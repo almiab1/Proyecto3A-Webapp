@@ -1,6 +1,6 @@
 // ----------------------------
 // BeaconProvider.service.ts
-// Descripcion que hace el codigo a grandes rasgos
+// Controlador del beacon
 // Equipo
 // Alejandro Mira Abad
 // Fecha
@@ -29,14 +29,16 @@ export class BeaconProvider {
 
   delegate: any;
   region: any;
-  identifier = 'iPollution-00001';
-  uuid = '69504f4c-4c55-5449-4f4c-2d3030303031';
+  identifier: string = "iPollution-00001";
+  uuid: string = "69504f4c-4c55-5449-4f4e-2d3030303031";
 
   constructor(
     public platform: Platform,
     public events: Events,
     public ibeacon: IBeacon,
-    ) {}
+  ) {
+
+  }
 
   public initialise(): any {
     let promise = new Promise((resolve, reject) => {
@@ -49,7 +51,7 @@ export class BeaconProvider {
         // create a new delegate and register it with the native layer
         this.delegate = this.ibeacon.Delegate();
 
-        // Subscribe to some of the delegate's event handlers
+        // Subscribimos un delegaddo en el manejador de eventos
         this.delegate.didRangeBeaconsInRegion()
           .subscribe(
             data => {
@@ -58,25 +60,27 @@ export class BeaconProvider {
             error => console.error()
           );
 
-        // setup a beacon region
+        // Ponemos al beacon en una region
         this.region = this.ibeacon.BeaconRegion(this.identifier, this.uuid);
-        // this.region = this.ibeacon.BeaconRegion('iPollution-00001', '69506f6c-6c75-7469-6f6e-2d3030303031');
+        console.log('--------------Beacon Region-------------------');
+        console.log(this.region);
+        console.log(this.identifier + ' - ' + this.uuid);
 
-        // start ranging
+        // Comenzamos en monitoreo
         this.ibeacon.startRangingBeaconsInRegion(this.region)
           .then(
             () => {
               resolve(true);
             },
             error => {
-              console.error('Failed to begin monitoring: ', error);
+              console.error('Fallo al empezar el monitoreo: ', error);
               resolve(false);
             }
           );
 
 
       } else {
-        console.error('This application needs to be running on a device');
+        console.error('La app necesita ejecutarse en un dispositivo con bluetooth');
         resolve(false);
       }
     });
