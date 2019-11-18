@@ -38,6 +38,11 @@
                   <ion-img src="assets/icon/cloudy.svg" class="img-home"></ion-img>
                 </ion-col>
               </ion-row>
+              <ion-row>
+                <ion-col>
+                  <br>
+                </ion-col>
+              </ion-row>
             </ion-grid>
           </ion-card-content>
         </ion-card>
@@ -49,7 +54,8 @@
             <ion-grid>
               <ion-row>
                 <ion-col>
-                    <ion-label>Los niveles de polución son...</ion-label>
+                  <ion-label>Los niveles de polución son...</ion-label> 
+                  <br>
                 </ion-col>
               </ion-row>
               <ion-row class="ion-align-items-center ion-justify-content-end">
@@ -99,6 +105,25 @@
                       <ion-label color="texto">Visualizar los diferentes contaminantes en el mapa.</ion-label>
                     </ion-col>
                   </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <!-- Card Admin-->
+    <!-- Card de scaner -->
+    <ion-row>
+      <ion-col>
+        <ion-card color="primario" type="button">
+          <ion-card-content [routerLink]="['/scaner']" routerLinkActive="router-link-active">
+            <ion-grid>
+              <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="3">
+                  <ion-img src="assets/icon/photo-camera.svg" class="iconoCamara"></ion-img>
+                </ion-col>
+                <ion-col col="9">
                 </ion-col>
               </ion-row>
             </ion-grid>
