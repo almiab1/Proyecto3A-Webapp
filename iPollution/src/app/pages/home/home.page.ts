@@ -48,7 +48,7 @@ export class HomePage {
 
   ngOnInit = () => {
     // INICIALIZAR BLE
-    this.ble.inizializar();
+    // this.ble.inizializar();
   }
   // --------------------------------------------------------
   // hayQueActualizarMedicionesYEnviarlasAlServidor()
