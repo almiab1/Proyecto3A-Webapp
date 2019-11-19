@@ -31,7 +31,8 @@ export class LogicaDeNegocioFake {
     urlPostLocal = 'http://192.168.100.103/guardarO3/';
     // URL server remoto
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
-    urlGET = 'http://192.168.0.109:8080/getUltimaMedida';
+    urlGET = 'https://osblasae.upv.edu.es/getUltimaMedida';
+    urlGETAll = 'https://osblasae.upv.edu.es/getAllMedidas';
 
     // API de admin
     urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
@@ -94,6 +95,19 @@ export class LogicaDeNegocioFake {
     getUltimaMedicion(): Observable < any > {
         return this.http
             .get(this.urlGET, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
+
+     // -----------------------------GET----------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // GET getAllMedidas()
+    // ------------------------------------------------------------------------------------
+    getAllMedidas(): Observable < any > {
+        return this.http
+            .get(this.urlGETAll, this.httpOptions)
             .pipe(
                 // retry(2),
                 // catchError(this.handleError)
