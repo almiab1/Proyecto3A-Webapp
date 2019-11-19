@@ -112,7 +112,9 @@ export class ReceptorBLE {
   private obtenerMisTramas() {
     this.events.subscribe('didRangeBeaconsInRegion', async (data) => {
 
-      console.log(data.beacons);
+      setInterval(() => {
+        console.log(data.beacons);
+      }, 5000);
 
       if (data.beacons.length > 0) {
         console.log('------------------Beacon recibido------------------');
@@ -124,12 +126,9 @@ export class ReceptorBLE {
         // tslint:disable-next-line: radix
         this.minor = parseInt(data.beacons[0].minor);
         this.uuid = data.beacons[0].uuid;
-        if (this.major === undefined) {
-          this.major = 0;
-        }
-        if (this.minor === undefined) {
-          this.major = 0;
-        }
+      } else {
+        this.major = -1;
+        this.minor = -1;
       }
     });
   }
@@ -137,7 +136,7 @@ export class ReceptorBLE {
 
   // ------------------------------------------------------------------------------------------------
   // actualizarMediciones()
-  async actualizarMediciones() {
+  private async actualizarMediciones() {
     // llamada a obtenerMisTramas()
     this.obtenerMisTramas();
     // Cogemos fecha

@@ -28,11 +28,11 @@ import {
 @Injectable()
 export class LogicaDeNegocioFake {
     // URL server en local
-    urlGetLocal = 'http://192.168.100.205/getultimaMedicion';
-    urlPostLocal = 'http://192.168.100.103/guardarO3/';
+    urlGetLocal = 'https://192.168.100.205/getultimaMedicion';
+    urlPostLocal = 'https://192.168.100.103/guardarO3/';
     // URL server remoto
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
-    urlGET = 'http://192.168.0.109:8080/getUltimaMedida';
+    urlGET = 'https://192.168.0.109:8080/getUltimaMedida';
 
     // API de admin
     urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
@@ -48,17 +48,17 @@ export class LogicaDeNegocioFake {
     urlEditarUsuarioBasurero = 'https://osblasae.upv.edu.es/admin/editarUsuarioBasurero';
 
     // API de admin Local
-    urlEditarUsuarioLocal = 'http://osblasae/admin/editarUsuario';
-    urlAsociarSensorUsuarioLocal = 'http://osblasae.upv.edu.es/admin/asociarSensorUsuario';
-    urlDarDeBajaUsuarioLocal = 'http://osblasae.upv.edu.es/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuarioLocal = 'http://osblasae.upv.edu.es/admin/darDeAltaUsuario';
-    urlDarDeBajaSensorLocal = 'http://osblasae.upv.edu.es/admin/darDeBajaSensor';
-    urlDarDeAltaSensorLocal = 'http://osblasae.upv.edu.es/admin/darDeAltaSensor';
-    urlEditarUsuarioAdministradorLocal = 'http://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
+    urlEditarUsuarioLocal = 'https://osblasae/admin/editarUsuario';
+    urlAsociarSensorUsuarioLocal = 'https://osblasae.upv.edu.es/admin/asociarSensorUsuario';
+    urlDarDeBajaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeBajaUsuario';
+    urlDarDeAltaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeAltaUsuario';
+    urlDarDeBajaSensorLocal = 'https://osblasae.upv.edu.es/admin/darDeBajaSensor';
+    urlDarDeAltaSensorLocal = 'https://osblasae.upv.edu.es/admin/darDeAltaSensor';
+    urlEditarUsuarioAdministradorLocal = 'https://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
 
     // Api de técnico local
-    urlBasureroGuardarLocal = 'http://osblasae.upv.edu.es/basurero/guardarMedida';
-    urlEditarUsuarioBasureroLocal = 'http://osblasae.upv.edu.es/basurero/editarUsuarioBasurero';
+    urlBasureroGuardarLocal = 'https://osblasae.upv.edu.es/basurero/guardarMedida';
+    urlEditarUsuarioBasureroLocal = 'https://osblasae.upv.edu.es/basurero/editarUsuarioBasurero';
 
     // Http Options
     httpOptions = {
