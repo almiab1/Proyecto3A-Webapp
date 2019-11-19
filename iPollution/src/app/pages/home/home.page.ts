@@ -41,6 +41,7 @@ export class HomePage {
     private ble: ReceptorBLE,
     private serve: LogicaDeNegocioFake,
   ) {
+    // this.ble.inizializar();
     // ACTUALIZAR DATOS
     setInterval(() => {
       this.hayQueActualizarMedicionesYEnviarlasAlServidor();
@@ -51,19 +52,21 @@ export class HomePage {
     // INICIALIZAR BLE
     // this.ble.inizializar();
   }
+
+  ionViewDidEnter = () => {
+    this.ble.inizializar();
+  }
+
   // --------------------------------------------------------
   // hayQueActualizarMedicionesYEnviarlasAlServidor()
   // --------------------------------------------------------
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
     const medicion = this.ble.obtenerO3();
 
-    // console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
-   /* this.serve.guardarMedida(medicion).subscribe(data => {
-      console.log(data);
-    }); */
+    console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
+    this.serve.guardarMedida(medicion);
 
     // --------------------------------------------------------
-
   }
 
 }
