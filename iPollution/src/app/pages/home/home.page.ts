@@ -13,15 +13,16 @@
 import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
-import {
-  ReceptorBLE
-} from './../../core/services/ReceptorBle.service';
+
 import {
   Component
 } from '@angular/core';
 import {
   Platform
 } from '@ionic/angular';
+import {
+  ReceptorBLE
+} from '../../core/services/ReceptorBle.service';
 // ----------------------------
 // Components
 // ----------------------------
@@ -49,7 +50,7 @@ export class HomePage {
 
   ngOnInit = () => {
     // INICIALIZAR BLE
-    //  this.ble.inizializar();
+    // this.ble.inizializar();
   }
 
   ionViewDidEnter = () => {
