@@ -1,16 +1,14 @@
+import { EditarUsuariosComponent } from './components/editar-usuarios/editar-usuarios.component';
+import { EditarComponent } from './components/editar/editar.component';
+import { NodosComponent } from './components/nodos/nodos.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ComponentsModule } from './components/components.module';
 import { FormsModule } from '@angular/forms';
 import { LogicaDeNegocioFake } from './core/services/LogicaDeNegocioFake.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -27,11 +25,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { File } from '@ionic-native/file/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
-import { UsersComponent } from './pages/admin/users/users.component';
 import {LoginPage} from './pages/login/login.page';
 
 @NgModule({
-  declarations: [AppComponent, UsersComponent, LoginPage],
+  declarations: [AppComponent, LoginPage, UsuariosComponent, NodosComponent, EditarComponent, EditarUsuariosComponent],
   entryComponents: [LoginPage],
   imports: [
     BrowserModule,
@@ -40,11 +37,6 @@ import {LoginPage} from './pages/login/login.page';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    DialogModule,
-    DropdownModule,
-    ButtonModule,
-    TableModule,
-    ToastModule
   ],
   providers: [
     StatusBar,
@@ -56,7 +48,7 @@ import {LoginPage} from './pages/login/login.page';
     LogicaDeNegocioFake,
     HttpClientModule,
     IBeacon, BeaconProvider,
-    File, Camera, PhotoViewer
+    File, Camera, PhotoViewer, ComponentsModule
   ],
   bootstrap: [AppComponent]
 })

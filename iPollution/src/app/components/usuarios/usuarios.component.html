@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar color="secundario">
+        <ion-grid>
+            <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="2">
+                    <ion-buttons>
+                        <ion-menu-button color="acentuado"></ion-menu-button>
+                    </ion-buttons>
+                </ion-col>
+                <ion-col size="10" class="ion-align-items-center ion-justify-content-center">
+                    <ion-title color="acentuado">
+                        <h1>Administración | Basureros</h1>
+                    </ion-title>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-toolbar expand="block">
+          <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras" (ionInput)="filterList($event)">
+          </ion-searchbar>
+          <ion-button slot="end" color="success" disabled="false" (click)="openModal('Añadir Usuario','','','')">
+            <ion-icon name="add" size="large" expand="block" ></ion-icon>
+          </ion-button>
+        </ion-toolbar>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div>
+          <ion-list>
+            <ion-list-header>
+              <ion-title>Lista de Basureros:</ion-title>
+            </ion-list-header>
+            <ion-item *ngFor="let item of users" (click)="openModal(item.nombre,item.nombre,item.email,item.nodos)">
+              {{ item.nombre }}
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

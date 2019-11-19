@@ -1,4 +1,7 @@
-import { UsersComponent } from './pages/admin/users/users.component';
+import { EditarUsuariosComponent } from './components/editar-usuarios/editar-usuarios.component';
+import { EditarComponent } from './components/editar/editar.component';
+import { NodosComponent } from './components/nodos/nodos.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -32,8 +35,16 @@ const routes: Routes = [
     path: 'rutas',
     loadChildren: () => import('./pages/rutas/rutas.module').then(m => m.RutasPageModule)
   },
-  { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },
-  { path: 'admin/users', component: UsersComponent},
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule)
+  },
+  { path: 'components/usuarios', component: UsuariosComponent},
+  { path: 'components/nodos', component: NodosComponent},
+  { path: 'components/editar', component: EditarComponent},
+  { path: 'components/editarUsuarios', component: EditarUsuariosComponent}
+
+
 ];
 
 @NgModule({

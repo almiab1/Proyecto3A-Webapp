@@ -14,40 +14,67 @@
         </ion-grid>
       </ion-toolbar>
     </ion-header>
+
     <ion-content color="secundario">
-      <ion-row>
-        <ion-col size="12">
-          <ion-list color="secundario" lines="full" mode="ios">
-            <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-              <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="secundario">
-                  <ion-icon slot="start" [name]="p.icon" color="acentuado"></ion-icon>
-                  <ion-label color="acentuado">
-                    {{p.title}}
-                  </ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-      </ion-row>
       <ion-grid>
         <ion-row>
-          <ion-col>
-          </ion-col>
-          <ion-col>
+          <ion-col size="12">
             <div>
-              <ion-button (click)="loginModal()" size="large" background="secundario-contrast" class="boton-login">
+              <ion-list color="secundario" lines="full" mode="ios">
+                <div *ngFor="let p of appPages">
+
+                  <ion-menu-toggle auto-hide="false">
+
+                    <div *ngIf="p.subPages == undefined || p.subPages == 0">
+                      <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="secundario">
+                        <ion-icon slot="start" [name]="p.icon" color="acentuado"></ion-icon>
+                        <ion-label color="acentuado">
+                          {{p.title}}
+                        </ion-label>
+                      </ion-item>
+                    </div>
+                  </ion-menu-toggle>
+
+                  <div *ngIf="p.subPages?.length > 0">
+                    <ion-item (click)="p.open = !p.open" detail="false" color="secundario">
+                      <ion-icon slot="start" [name]="p.icon" color="acentuado"></ion-icon>
+                      <ion-label color="acentuado">{{p.title}}</ion-label>
+                      <ion-icon slot="end" name="arrow-forward" *ngIf="!p.open" color="acentuado"></ion-icon>
+                      <ion-icon slot="end" name="arrow-down" *ngIf="p.open" color="acentuado"></ion-icon>
+                    </ion-item>
+                  </div>
+
+                  <div *ngIf="p.open">
+                    <ion-menu-toggle auto-hide="false">
+                      <ion-item *ngFor="let s of p.subPages" [routerDirection]="'root'" [routerLink]="[s.url]"
+                        color="secundario" expand="full">
+                        <ion-icon [name]="s.icon" color="acentuado" class="ion-margin-horizontal"></ion-icon>
+                        <ion-label color="acentuado">
+                          {{s.title}}
+                        </ion-label>
+                      </ion-item>
+                    </ion-menu-toggle>
+                  </div>
+
+                </div>
+              </ion-list>
+
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-align-items-baseline">
+          <ion-col class="ion-margin">
+            <div>
+              <ion-button (click)="loginModal()" size="large" expand="block" background="secundario-contrast" class="boton-login">
                 <img src="../assets/icon/login.png" alt="login" class="login-icon" style="color: #fff">
                 Entrar</ion-button>
             </div>
           </ion-col>
-          <ion-col>
-          </ion-col>
         </ion-row>
+
       </ion-grid>
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="main-content"></ion-router-outlet>
-  <!-- </ion-split-pane> -->
 </ion-app>

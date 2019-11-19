@@ -73,7 +73,18 @@ export class AppComponent {
         {
           title: '+Info',
           url: '/mas-info',
-          icon: 'information-circle-outline'
+          icon: 'information-circle-outline',
+          subPages: [{
+            title: 'Tips',
+            icon: 'add',
+            url: '/components/nodos'
+          },
+          {
+            title: 'Medidas Oficiales',
+            icon: 'add',
+            url: '/components/usuarios'
+          }
+        ]
         },
         {
           title: 'Scaner',
@@ -84,6 +95,22 @@ export class AppComponent {
           title: 'Rutas',
           url: '/rutas',
           icon: 'navigate'
+        },
+        {
+          title: 'Adinistración',
+          url: '/admin',
+          icon: 'cog',
+          subPages: [{
+              title: 'Usuarios',
+              icon: 'add',
+              url: '/components/usuarios'
+            },
+            {
+              title: 'Nodos',
+              icon: 'add',
+              url: '/components/nodos'
+            }
+          ]
         },
         {
           title: 'Configuración',
@@ -105,12 +132,39 @@ export class AppComponent {
         {
           title: '+Info',
           url: '/mas-info',
-          icon: 'information-circle-outline'
+          icon: 'information-circle-outline',
+          subPages: [{
+            title: 'Tips',
+            icon: 'add',
+            url: '/components/usuarios'
+          },
+          {
+            title: 'Medidas Oficiales',
+            icon: 'add',
+            url: '/components/nodos'
+          }
+        ]
         },
         {
           title: 'Rutas',
           url: '/rutas',
           icon: 'navigate'
+        },
+        {
+          title: 'Adinistración',
+          url: '/admin',
+          icon: 'cog',
+          subPages: [{
+              title: 'Usuarios',
+              icon: 'add',
+              url: '/components/usuarios'
+            },
+            {
+              title: 'Nodos',
+              icon: 'add',
+              url: '/components/nodos'
+            }
+          ]
         },
         {
           title: 'Configuración',
