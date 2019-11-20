@@ -1,4 +1,6 @@
-import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
+import {
+  LogicaDeNegocioFake
+} from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // nodos.component.ts
 // Controlador modal nodos
@@ -10,9 +12,17 @@ import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.s
 // ----------------------------------------------------------------------------
 // Includes
 // ----------------------------------------------------------------------------
-import { Component, OnInit } from '@angular/core';
-import { EditarComponent } from './../editar/editar.component';
-import { ModalController, Platform } from '@ionic/angular';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  EditarComponent
+} from './../editar/editar.component';
+import {
+  ModalController,
+  Platform
+} from '@ionic/angular';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -37,15 +47,17 @@ export class NodosComponent implements OnInit {
     public modalController: ModalController,
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
-  ) {
-  }
+  ) {}
   // ----------------------------------------------------------------------------
 
 
   // ----------------------------------------------------------------------------
   // ngOnInit()
   ngOnInit() {
-    this.nodos = this.serve.getNodos();
+    this.serve.getNodos().then(
+      res => this.nodos = res,
+      err => console.log(err)
+    )
     this.nodoFiltrados = this.nodos;
   }
   // ----------------------------------------------------------------------------
@@ -78,8 +90,26 @@ export class NodosComponent implements OnInit {
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
-  // openModal()
-  async openModal(titulo: string, nombreNodo: string, tipoNodo: string, usuarioNodo: string) {
+  // titulo,nombreNodo,tipoNodo,openModal()
+  async openModal(data) {
+
+    let titulo;
+    let nombreNodo;
+    let tipoNodo;
+    let usuarioNodo;
+
+    if (data != undefined) {
+      titulo = 'Nodo ' + data.idSensor;
+      nombreNodo = 'Nodo ' + data.idSensor;
+      tipoNodo = data.descripcion;
+      usuarioNodo = data.idUsuario;
+    } else {
+      titulo = 'Añadir Nodo ';
+      nombreNodo = '';
+      tipoNodo = '';
+      usuarioNodo = '';
+    }
+
     const modal = await this.modalController.create({
       component: EditarComponent,
       componentProps: {

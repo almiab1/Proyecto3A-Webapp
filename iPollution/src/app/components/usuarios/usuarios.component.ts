@@ -46,7 +46,15 @@ export class UsuariosComponent implements OnInit {
   // ----------------------------------------------------------------------------
   // ngOnInit()
   ngOnInit() {
-    this.users = this.serve.getUsuarios();
+    this.serve.getUsuarios().then(
+      res => this.users = res,
+      err => console.log(err)
+    )
+    console.log('---------------------------------GET USUARIOS COMPONENT---------------');
+    console.log(this.users);
+    console.log('---------------------------------------------------');
+    // console.log(this.serve.getUsuarios());
+
     this.usersFiltrados = this.users;
   }
   // ----------------------------------------------------------------------------
@@ -80,7 +88,27 @@ export class UsuariosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // openModal()
-  async openModal(titulo: string, nombre: string, email: string, telefono: string, nodos: number) {
+  async openModal(data) {
+
+    let titulo;
+    let nombre;
+    let email;
+    let telefono;
+    let nodos;
+
+    if (data != undefined) {
+      titulo = data.descripcion;
+      nombre = data.nombre;
+      email = data.idUsuario;
+      telefono = data.telefono;
+      nodos = 'Nodo ' + data.idSensor;
+    } else {
+      titulo = 'Añadir Usuario';
+      nombre = '';
+      email = '';
+      telefono = '';
+      nodos = '';
+    }
     const modal = await this.modalController.create({
       component: EditarUsuariosComponent,
       componentProps: {

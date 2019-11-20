@@ -27,9 +27,7 @@ import {
 // ------------------------------------------------------------------------------------
 @Injectable()
 export class LogicaDeNegocioFake {
-    // URL server en local
-    urlGetLocal = 'https://192.168.100.205/getultimaMedicion';
-    urlPostLocal = 'https://192.168.100.103/guardarO3/';
+
     // URL server remoto
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
     urlGET = 'https://192.168.0.109:8080/getUltimaMedida';
@@ -43,11 +41,7 @@ export class LogicaDeNegocioFake {
     urlDarDeAltaSensor = 'https://osblasae.upv.edu.es/admin/darDeAltaSensor';
     urlEditarUsuarioAdministrador = 'https://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
 
-    // API de técnico
-    urlBasureroGuardar = 'https://osblasae.upv.edu.es/basurero/guardarMedida';
-    urlEditarUsuarioBasurero = 'https://osblasae.upv.edu.es/admin/editarUsuarioBasurero';
-
-    // API de admin Local
+    // API de admin
     urlGetUsuarios = 'https://osblasae.upv.edu.es/admin/getUsuarios';
     urlGetNodos = 'https://osblasae.upv.edu.es/admin/getSensores';
     urlEditarUsuarioLocal = 'https://osblasae.upv.edu.es/admin/editarUsuario';
@@ -61,6 +55,9 @@ export class LogicaDeNegocioFake {
     // Api de técnico local
     urlBasureroGuardarLocal = 'https://osblasae.upv.edu.es/basurero/guardarMedida';
     urlEditarUsuarioBasureroLocal = 'https://osblasae.upv.edu.es/basurero/editarUsuarioBasurero';
+
+    // URL Base
+    private url = 'https://osblasae.upv.edu.es';
 
     // Http Options
     httpOptions = {
@@ -98,7 +95,7 @@ export class LogicaDeNegocioFake {
         this.http.post(url, body)
             .subscribe(
                 res => {
-                    console.log(res);
+                    // console.log(res);
                 },
                 err => {
                     console.log('ERROR --> ');
@@ -108,19 +105,21 @@ export class LogicaDeNegocioFake {
     }
     // GET
     private peticionGet(url) {
+        let dataToReturn: any;
         this.http.get(url)
             .subscribe(
                 res => {
-                    console.log(res);
-                    return res;
+                    // console.log(res);
+                    dataToReturn = res;
                 },
                 err => {
                     if (err.status != 200) {
                         console.log('ERROR --> ' + err);
-                        return err.status;
+                        dataToReturn = err.status;
                     }
                 }
             );
+        return dataToReturn;
     }
     // ------------------------------------------------------------------------------------
 
@@ -129,15 +128,15 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     // GET getUltimaMedicion()
     // ------------------------------------------------------------------------------------
-    public getUltimaMedicion(){
-        let medicion: any = this.peticionGet(this.urlGET);
+    public async getUltimaMedicion(){
+        let medicion: any = await this.peticionGet(this.urlGET);
         return JSON.parse(medicion);
     }
 
     // ------------------------------------------------------------------------------------
     // GET getUsuarios()
     // ------------------------------------------------------------------------------------
-    public getUsuarios() {
+    public async getUsuarios() {
         const datos = [{
             descripcion: 'Santiago Moreno',
             idUsuario: '1234@5678.com',
@@ -163,19 +162,20 @@ export class LogicaDeNegocioFake {
             idSensor: '01',
           },
         ];
+
         let usuarios: any;
-        usuarios = this.peticionGet(this.urlGetUsuarios);
-        console.log('-------------GET USUARIOS------------------');
+        usuarios = await this.peticionGet(this.urlGetUsuarios);
+        console.log('-------------GET USUARIOS LOGICA------------------');
         console.table(usuarios);
-        // return usuarios;
-        return datos;
+        return usuarios;
+        // return datos;
     }
 
     // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // GET getNodos()
     // ------------------------------------------------------------------------------------
-    public getNodos() {
+    public async getNodos() {
         const datos = [{
             descripcion: 'Ozono',
             idSensor: '1',
@@ -194,9 +194,9 @@ export class LogicaDeNegocioFake {
         ];
 
         let nodos: any;
-        nodos = this.peticionGet(this.urlGetNodos);
-        console.log('-------------GET NODOS------------------');
-        console.table(nodos);
+        nodos = await this.peticionGet(this.urlGetNodos);
+        // console.log('-------------GET NODOS------------------');
+        // console.table(nodos);
         return nodos;
         // return datos;
     }
