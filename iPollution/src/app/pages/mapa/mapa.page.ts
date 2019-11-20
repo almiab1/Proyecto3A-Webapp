@@ -59,6 +59,9 @@ export class MapaPage implements OnInit {
       this.mapa.anyadirMarcador(
         'Posicion Actual', {lat: this.currentLocation.lat, lng: this.currentLocation.long}, 'assets/icon/gpsIcon.svg'
       );
+      this.mapa.anyadirMarcador(
+        'Estación oficial', {lat: 38.966754, lng: -0.185648}, 'assets/icon/courthouse.svg'
+      );
 
       // Genero la capa donde pondre las medidas de ozono
       this.mapa.anyadirCapa({
