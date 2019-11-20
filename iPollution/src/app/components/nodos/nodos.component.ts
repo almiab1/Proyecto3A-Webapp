@@ -1,3 +1,4 @@
+import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // nodos.component.ts
 // Controlador modal nodos
@@ -9,17 +10,9 @@
 // ----------------------------------------------------------------------------
 // Includes
 // ----------------------------------------------------------------------------
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  EditarComponent
-} from './../editar/editar.component';
-import {
-  ModalController,
-  Platform
-} from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { EditarComponent } from './../editar/editar.component';
+import { ModalController, Platform } from '@ionic/angular';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -36,32 +29,15 @@ export class NodosComponent implements OnInit {
   dataReturned: any;
   public nodos: any[];
   public nodoFiltrados: any[];
-
   // ----------------------------------------------------------------------------
 
-  aa = [{
-      nombre: 'Nodo001',
-      tipo: '01',
-      usuario: 'user01'
-    },
-    {
-      nombre: 'Nodo002',
-      tipo: '02',
-      usuario: 'user02'
-    },
-    {
-      nombre: 'Nodo003',
-      tipo: '03',
-      usuario: 'user03'
-    },
-  ];
   // ----------------------------------------------------------------------------
   // Contructor
   constructor(
     public modalController: ModalController,
     public platform: Platform,
+    public serve: LogicaDeNegocioFake,
   ) {
-    this.nodos = this.aa;
   }
   // ----------------------------------------------------------------------------
 
@@ -69,8 +45,8 @@ export class NodosComponent implements OnInit {
   // ----------------------------------------------------------------------------
   // ngOnInit()
   ngOnInit() {
-    this.nodos = this.aa;
-    this.nodoFiltrados = this.aa;
+    this.nodos = this.serve.getNodos();
+    this.nodoFiltrados = this.nodos;
   }
   // ----------------------------------------------------------------------------
 

@@ -60,14 +60,14 @@ export class EditarComponent implements OnInit {
     const onClosedData = 'ModalCerrado';
 
     switch (tipoBoton) {
-      case 'aceptar': {
-        console.log('----------Boton aceptar modal------------');
+      case 'guardar': {
+        console.log('----------Boton guardar modal------------');
 
         await this.modalController.dismiss(onClosedData);
         break;
       }
-      case 'cancelar': {
-        console.log('----------Boton cancelar modal------------');
+      case 'eliminar': {
+        console.log('----------Boton eliminar modal------------');
 
         await this.modalController.dismiss(onClosedData);
         break;

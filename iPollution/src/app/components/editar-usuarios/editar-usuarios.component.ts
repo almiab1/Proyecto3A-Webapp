@@ -33,8 +33,10 @@ export class EditarUsuariosComponent implements OnInit {
   // Propiedades
   nombreUser: string;
   emailUsuario: string;
-  nodosUser: string;
+  telefono: string;
   tituloComponent: string;
+  nodos: string;
+
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -52,8 +54,9 @@ export class EditarUsuariosComponent implements OnInit {
     // tslint:disable-next-line: radix
     this.emailUsuario = this.navParams.data.email;
     this.nombreUser = this.navParams.data.nombre;
-    this.nodosUser = this.navParams.data.nodos;
+    this.telefono = this.navParams.data.telefono;
     this.tituloComponent = this.navParams.data.titulo;
+    this.nodos = this.navParams.data.nodos;
   }
   // ----------------------------------------------------------------------------
 
@@ -64,13 +67,13 @@ export class EditarUsuariosComponent implements OnInit {
     const onClosedData = 'ModalCerrado';
 
     switch (tipoBoton) {
-      case 'aceptar': {
-        console.log('----------Boton aceptar modal------------');
+      case 'guardar': {
+        console.log('----------Boton guardar modal------------');
         await this.modalController.dismiss(onClosedData);
         break;
       }
-      case 'cancelar': {
-        console.log('----------Boton cancelar modal------------');
+      case 'eliminar': {
+        console.log('----------Boton eliminar modal------------');
         await this.modalController.dismiss(onClosedData);
         break;
       }

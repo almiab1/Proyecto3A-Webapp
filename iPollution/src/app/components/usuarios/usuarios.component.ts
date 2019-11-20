@@ -12,6 +12,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { EditarUsuariosComponent } from './../editar-usuarios/editar-usuarios.component';
+import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -31,37 +32,23 @@ export class UsuariosComponent implements OnInit {
   public usersFiltrados: any[];
   // ----------------------------------------------------------------------------
 
-  aa = [{
-      nombre: 'Santiago Moreno',
-      email: '1234@5678.com',
-      nodos: 'nodo01'
-    },
-    {
-      nombre: 'Juan Pedro Rico',
-      email: '1234@5678.com',
-      nodos: 'nodo02'
-    },
-    {
-      nombre: 'Antonio Fernandez',
-      email: '1234@5678.com',
-      nodos: 'nodo03'
-    },
-  ];
   // ----------------------------------------------------------------------------
   // Contructor
   constructor(
     public modalController: ModalController,
     public platform: Platform,
+    public serve: LogicaDeNegocioFake,
   ) {
-    this.users = this.aa;
-    this.usersFiltrados = this.aa;
   }
   // ----------------------------------------------------------------------------
 
 
   // ----------------------------------------------------------------------------
   // ngOnInit()
-  ngOnInit() {}
+  ngOnInit() {
+    this.users = this.serve.getUsuarios();
+    this.usersFiltrados = this.users;
+  }
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
@@ -93,14 +80,15 @@ export class UsuariosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // openModal()
-  async openModal(titulo: string, nombre: string, email: string, nodos: string) {
+  async openModal(titulo: string, nombre: string, email: string, telefono: string, nodos: number) {
     const modal = await this.modalController.create({
       component: EditarUsuariosComponent,
       componentProps: {
         titulo,
         nombre,
         email,
-        nodos
+        telefono,
+        nodos,
       }
     });
 

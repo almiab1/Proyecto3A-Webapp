@@ -48,7 +48,9 @@ export class LogicaDeNegocioFake {
     urlEditarUsuarioBasurero = 'https://osblasae.upv.edu.es/admin/editarUsuarioBasurero';
 
     // API de admin Local
-    urlEditarUsuarioLocal = 'https://osblasae/admin/editarUsuario';
+    urlGetUsuarios = 'https://osblasae.upv.edu.es/admin/getUsuarios';
+    urlGetNodos = 'https://osblasae.upv.edu.es/admin/getSensores';
+    urlEditarUsuarioLocal = 'https://osblasae.upv.edu.es/admin/editarUsuario';
     urlAsociarSensorUsuarioLocal = 'https://osblasae.upv.edu.es/admin/asociarSensorUsuario';
     urlDarDeBajaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeBajaUsuario';
     urlDarDeAltaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeAltaUsuario';
@@ -63,7 +65,7 @@ export class LogicaDeNegocioFake {
     // Http Options
     httpOptions = {
         headers: new HttpHeaders({
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-url-encoded',
         })
     };
 
@@ -110,10 +112,12 @@ export class LogicaDeNegocioFake {
             .subscribe(
                 res => {
                     console.log(res);
+                    return res;
                 },
                 err => {
                     if (err.status != 200) {
                         console.log('ERROR --> ' + err);
+                        return err.status;
                     }
                 }
             );
@@ -125,35 +129,78 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     // GET getUltimaMedicion()
     // ------------------------------------------------------------------------------------
-    getUltimaMedicion(): Observable < any > {
-        return this.http
-            .get(this.urlGET, this.httpOptions)
-            .pipe(
-                // retry(2),
-                // catchError(this.handleError)
-            );
+    public getUltimaMedicion(){
+        let medicion: any = this.peticionGet(this.urlGET);
+        return JSON.parse(medicion);
     }
 
-    // -----------------------------GET----------------------------------------------------
     // ------------------------------------------------------------------------------------
     // GET getUsuarios()
     // ------------------------------------------------------------------------------------
-    getUsuarios() {
-        // return this.http
-        //     .get(this.urlGET, this.httpOptions)
-        //     .pipe(
-        //         // retry(2),
-        //         // catchError(this.handleError)
-        //     );
-        const datos = [
-            'Alex',
-            'Pepe',
-            'Juan'
+    public getUsuarios() {
+        const datos = [{
+            descripcion: 'Santiago Moreno',
+            idUsuario: '1234@5678.com',
+            telefono: '622584526',
+            idSensor: '01',
+          },
+          {
+            descripcion: 'Juan Pedro Rico',
+            idUsuario: '1234@5678.com',
+            telefono: '62525168',
+            idSensor: '01',
+          },
+          {
+            descripcion: 'Antonio Fernandez',
+            idUsuario: '1234@5678.com',
+            telefono: '6548156',
+            idSensor: '01',
+          },
+          {
+            descripcion: 'Pedro Jose Fernandez',
+            idUsuario: '1234@5678.com',
+            telefono: '6155895522',
+            idSensor: '01',
+          },
         ];
+        let usuarios: any;
+        usuarios = this.peticionGet(this.urlGetUsuarios);
+        console.log('-------------GET USUARIOS------------------');
+        console.table(usuarios);
+        // return usuarios;
         return datos;
     }
 
     // -----------------------------POST---------------------------------------------------
+    // ------------------------------------------------------------------------------------
+    // GET getNodos()
+    // ------------------------------------------------------------------------------------
+    public getNodos() {
+        const datos = [{
+            descripcion: 'Ozono',
+            idSensor: '1',
+            idUsuario: 'user01@gmail.com'
+          },
+          {
+            descripcion: 'Ozono',
+            idSensor: '2',
+            idUsuario: 'user02@gmail.com'
+          },
+          {
+            descripcion: 'Ozono',
+            idSensor: '3',
+            idUsuario: 'user03@gmail.com'
+          },
+        ];
+
+        let nodos: any;
+        nodos = this.peticionGet(this.urlGetNodos);
+        console.log('-------------GET NODOS------------------');
+        console.table(nodos);
+        return nodos;
+        // return datos;
+    }
+
     // ------------------------------------------------------------------------------------
     // POST guardarMedida
     // ------------------------------------------------------------------------------------
