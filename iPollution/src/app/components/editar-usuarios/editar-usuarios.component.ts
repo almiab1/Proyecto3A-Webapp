@@ -1,3 +1,4 @@
+import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // editar-usuarios.component.ts
 // Controlador modal editar usuarios
@@ -42,7 +43,8 @@ export class EditarUsuariosComponent implements OnInit {
   // Constructor
   constructor(
     private modalController: ModalController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private serve: LogicaDeNegocioFake
   ) {}
   // ----------------------------------------------------------------------------
 
@@ -69,16 +71,31 @@ export class EditarUsuariosComponent implements OnInit {
     switch (tipoBoton) {
       case 'guardar': {
         console.log('----------Boton guardar modal------------');
+
+        let nuevoUser = {
+          nombre: 'Creado',
+          descripcion: 'Creado',
+          idUsuario: 'Creado',
+          telefono: 'Creado',
+          idSensor: 'Creado',
+        }
+        this.serve.darDeAltaUsuario(nuevoUser);
+
         await this.modalController.dismiss(onClosedData);
         break;
       }
       case 'eliminar': {
         console.log('----------Boton eliminar modal------------');
+
+        let user = this.emailUsuario;
+        this.serve.darDeBajaSensor(user);
+
         await this.modalController.dismiss(onClosedData);
         break;
       }
       default: {
         console.log('----------Default------------');
+
         await this.modalController.dismiss(onClosedData);
         break;
       }

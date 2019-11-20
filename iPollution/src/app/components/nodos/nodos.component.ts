@@ -1,6 +1,3 @@
-import {
-  LogicaDeNegocioFake
-} from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // nodos.component.ts
 // Controlador modal nodos
@@ -23,6 +20,9 @@ import {
   ModalController,
   Platform
 } from '@ionic/angular';
+import {
+  LogicaDeNegocioFake
+} from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -66,6 +66,13 @@ export class NodosComponent implements OnInit {
     this.nodoFiltrados = this.nodos;
   }
   // ----------------------------------------------------------------------------
+  ionViewWillEnter() {
+    this.serve.getNodos().then(
+      res => this.nodos = res,
+      err => console.log(err)
+    )
+    this.nodoFiltrados = this.nodos;
+  }
 
   // ----------------------------------------------------------------------------
   // Search Bar controler
@@ -104,8 +111,8 @@ export class NodosComponent implements OnInit {
     let usuarioNodo;
 
     if (data != undefined) {
-      titulo = 'Nodo ' + data.idSensor;
-      nombreNodo = 'Nodo ' + data.idSensor;
+      titulo = 'Nodo' + data.idSensor;
+      nombreNodo = data.idSensor;
       tipoNodo = data.descripcion;
       usuarioNodo = data.idUsuario;
     } else {

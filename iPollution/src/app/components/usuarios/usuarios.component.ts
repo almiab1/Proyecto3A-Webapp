@@ -54,13 +54,18 @@ export class UsuariosComponent implements OnInit {
       res => this.users = res,
       err => console.log(err)
     )
-    console.log('---------------------------------GET USUARIOS COMPONENT---------------');
-    console.log(this.users);
-    console.log('----------------------------------------------------------------------');
 
     this.usersFiltrados = this.users;
   }
   // ----------------------------------------------------------------------------
+  ionViewWillEnter() {
+    this.serve.getUsuarios().then(
+      res => this.users = res,
+      err => console.log(err)
+    )
+
+    this.usersFiltrados = this.users;
+  }
 
   // ----------------------------------------------------------------------------
   // Search Bar controler

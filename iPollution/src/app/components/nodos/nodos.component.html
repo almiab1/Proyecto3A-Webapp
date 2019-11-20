@@ -38,7 +38,7 @@
               <ion-title>Lista de nodos:</ion-title>
             </ion-list-header>
             <ion-item *ngFor="let item of nodos" (click)="openModal(item)">
-              {{ item.descripcion }}
+              Nodo {{ item.idSensor }}
             </ion-item>
           </ion-list>
         </div>

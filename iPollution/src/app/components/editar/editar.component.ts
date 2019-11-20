@@ -1,3 +1,6 @@
+import {
+  LogicaDeNegocioFake
+} from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // editar.component.ts
 // Controlador modal editarr
@@ -10,8 +13,14 @@
 // ----------------------------------------------------------------------------
 // Includes
 // ----------------------------------------------------------------------------
-import { NavParams, ModalController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import {
+  NavParams,
+  ModalController
+} from '@ionic/angular';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 // ----------------------------------------------------------------------------
 // Components
 // ----------------------------------------------------------------------------
@@ -26,8 +35,8 @@ import { Component, OnInit } from '@angular/core';
 export class EditarComponent implements OnInit {
 
   // Propiedades
-  modalTitle: string;
-  tipoNodo: number;
+  nombreNodo: string;
+  tipoNodo: string;
   usuarioNodo: string;
   tituloComponent: string;
 
@@ -35,8 +44,9 @@ export class EditarComponent implements OnInit {
   // Constructor
   constructor(
     private modalController: ModalController,
-    private navParams: NavParams
-  ) { }
+    private navParams: NavParams,
+    private serve: LogicaDeNegocioFake
+  ) {}
   // ----------------------------------------------------------------------------
 
 
@@ -45,8 +55,8 @@ export class EditarComponent implements OnInit {
   ngOnInit() {
     console.table(this.navParams);
     // tslint:disable-next-line: radix
-    this.tipoNodo = parseInt(this.navParams.data.tipoNodo);
-    this.modalTitle = this.navParams.data.nombreNodo;
+    this.tipoNodo = this.navParams.data.tipoNodo;
+    this.nombreNodo = this.navParams.data.nombreNodo;
     this.usuarioNodo = this.navParams.data.usuarioNodo;
     this.tituloComponent = this.navParams.data.titulo;
   }
@@ -63,11 +73,21 @@ export class EditarComponent implements OnInit {
       case 'guardar': {
         console.log('----------Boton guardar modal------------');
 
+        let nuevoSensor = {
+            descripcion: 'Ozono',
+            idUsuario: '1234@gmail.com',
+            idSensor: 3
+        };
+        this.serve.darDeAltaSensor(nuevoSensor);
+
         await this.modalController.dismiss(onClosedData);
         break;
       }
       case 'eliminar': {
         console.log('----------Boton eliminar modal------------');
+
+        let sensor = this.nombreNodo;
+        this.serve.darDeBajaSensor(sensor);
 
         await this.modalController.dismiss(onClosedData);
         break;
@@ -81,4 +101,3 @@ export class EditarComponent implements OnInit {
   // ----------------------------------------------------------------------------
 
 }
-

@@ -57,6 +57,48 @@ export class LogicaDeNegocioFake {
         })
     };
 
+    // PRUEBAS USERS Y NODOS
+    usuariosFicticios: any = [{
+            nombre: 'Santiago Moreno',
+            descripcion: 'Basurero',
+            idUsuario: '1234@5678.com',
+            telefono: '622584526',
+            idSensor: '01',
+        },
+        {
+            nombre: 'Juan Pedro Rico',
+            descripcion: 'Basurero',
+            idUsuario: '1234@5678.com',
+            telefono: '62525168',
+            idSensor: '01',
+        },
+        {
+            nombre: 'Antonio Fernandez',
+            descripcion: 'Basurero',
+            idUsuario: '1234@5678.com',
+            telefono: '6548156',
+            idSensor: '01',
+        },
+        {
+            nombre: 'Pedro Jose Fernandez',
+            descripcion: 'Basurero',
+            idUsuario: '1234@5678.com',
+            telefono: '6155895522',
+            idSensor: '01',
+        },
+    ];
+
+    nodosFicticios: any = [{
+            descripcion: 'Ozono',
+            idUsuario: '1234@gmail.com',
+            idSensor: 1
+        },
+        {
+            descripcion: 'Ozono',
+            idUsuario: '4567@gmail.com',
+            idSensor: 2
+        }
+    ];
     constructor(
         public http: HttpClient
     ) {}
@@ -119,8 +161,8 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     // GET getUltimaMedicion()
     // ------------------------------------------------------------------------------------
-    public async getUltimaMedicion(){
-        let medicion: any = await this.peticionGet(this.urlGET);
+    public async getUltimaMedicion() {
+        const medicion: any = await this.peticionGet(this.urlGET);
         return JSON.parse(medicion);
     }
 
@@ -128,38 +170,13 @@ export class LogicaDeNegocioFake {
     // GET getUsuarios()
     // ------------------------------------------------------------------------------------
     public async getUsuarios() {
-        const datos = [{
-            descripcion: 'Santiago Moreno',
-            idUsuario: '1234@5678.com',
-            telefono: '622584526',
-            idSensor: '01',
-          },
-          {
-            descripcion: 'Juan Pedro Rico',
-            idUsuario: '1234@5678.com',
-            telefono: '62525168',
-            idSensor: '01',
-          },
-          {
-            descripcion: 'Antonio Fernandez',
-            idUsuario: '1234@5678.com',
-            telefono: '6548156',
-            idSensor: '01',
-          },
-          {
-            descripcion: 'Pedro Jose Fernandez',
-            idUsuario: '1234@5678.com',
-            telefono: '6155895522',
-            idSensor: '01',
-          },
-        ];
 
         let usuarios: any;
         usuarios = await this.peticionGet(this.urlGetUsuarios);
         console.log('-------------GET USUARIOS LOGICA------------------');
         console.table(usuarios);
-        return usuarios;
-        // return datos;
+        // return usuarios;
+        return this.usuariosFicticios;
     }
 
     // -----------------------------POST---------------------------------------------------
@@ -167,29 +184,13 @@ export class LogicaDeNegocioFake {
     // GET getNodos()
     // ------------------------------------------------------------------------------------
     public async getNodos() {
-        const datos = [{
-            descripcion: 'Ozono',
-            idSensor: '1',
-            idUsuario: 'user01@gmail.com'
-          },
-          {
-            descripcion: 'Ozono',
-            idSensor: '2',
-            idUsuario: 'user02@gmail.com'
-          },
-          {
-            descripcion: 'Ozono',
-            idSensor: '3',
-            idUsuario: 'user03@gmail.com'
-          },
-        ];
 
         let nodos: any;
         nodos = await this.peticionGet(this.urlGetNodos);
         // console.log('-------------GET NODOS------------------');
         // console.table(nodos);
-        return nodos;
-        // return datos;
+        // return nodos;
+        return this.nodosFicticios;
     }
 
     // ------------------------------------------------------------------------------------
@@ -238,7 +239,9 @@ export class LogicaDeNegocioFake {
             .set('tipoUsuario', '' + data.tipoUsuario)
             .set('telefono', '' + data.telefono);
 
-        this.peticionPost(this.urlDarDeAltaUsuario, body);
+        this.usuariosFicticios.push(data);
+
+        // this.peticionPost(this.urlDarDeAltaUsuario, body);
 
     }
 
@@ -251,7 +254,9 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idTipoSensor', '' + data.idTipoSensor);
 
-        this.peticionPost(this.urlDarDeAltaSensor, body);
+        this.nodosFicticios.push(data);
+
+        // this.peticionPost(this.urlDarDeAltaSensor, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -276,7 +281,15 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idUsuario', '' + data.idUsuario);
 
-        this.peticionPost(this.urlDarDeBajaUsuario, body);
+        // Eleminar seleccionado ------- PRUEBA ----------------
+        this.usuariosFicticios.forEach(element => {
+            if (element.idUsuario = data) {
+                let index = this.usuariosFicticios.indexOf(element);
+                this.usuariosFicticios.slice(index);
+            }
+        });
+
+        // this.peticionPost(this.urlDarDeBajaUsuario, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -288,7 +301,14 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idSensor', '' + data.idSensor);
 
-        this.peticionPost(this.urlDarDeBajaSensor, body);
+        // Eleminar seleccionado ------- PRUEBA
+        this.nodosFicticios.forEach(element => {
+            if (element.idSensor = data) {
+                let index = this.nodosFicticios.indexOf(element);
+                this.nodosFicticios.slice(index);
+            }
+        });
+        // this.peticionPost(this.urlDarDeBajaSensor, body);
     }
 }
 
