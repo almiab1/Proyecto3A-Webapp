@@ -10,17 +10,9 @@
 // ----------------------------
 // Includes
 // ----------------------------
-import {
-  Injectable
-} from '@angular/core';
-import {
-  Platform,
-  Events
-} from '@ionic/angular';
-import {
-  IBeacon
-} from '@ionic-native/ibeacon/ngx';
-
+import { Injectable } from '@angular/core';
+import { Platform, Events } from '@ionic/angular';
+import { IBeacon } from '@ionic-native/ibeacon/ngx';
 // ----------------------------
 // BeaconProvider
 // ----------------------------
