@@ -28,7 +28,8 @@ export class MapaService {
   constructor(posicion: any , settings: any, elementoHtml: ElementRef) {
     this.puntoCentral = posicion;
     this.mapa = new google.maps.Map(elementoHtml, {
-      zoom: settings.zoom
+      zoom: settings.zoom,
+      zoomControl: false
     });
 
     this.centrarEn(this.puntoCentral);
@@ -81,7 +82,7 @@ export class MapaService {
   // ------------------------------------------
   anyadirMedicion(nombreDelGas: string, medicion: any) {
 
-   this.capasDeMediciones[nombreDelGas].data.push({
+   this.capasDeMediciones[nombreDelGas].layer.data.push({
     location: new google.maps.LatLng(medicion.latitud, medicion.longitud),
     weight: medicion.valorMedido
    });
@@ -99,7 +100,10 @@ export class MapaService {
       maxIntensity: informacion.maxIntensidad
     });
 
-    this.capasDeMediciones[informacion.nombre] = layer;
+    this.capasDeMediciones[informacion.nombre] = {
+      layer: layer,
+      nombre: informacion.nombre
+    };
     this.mostrarCapa(informacion.nombre);
   }
   // ------------------------------------------
@@ -111,7 +115,7 @@ export class MapaService {
     mostrarCapa(nombreGas: string) {
       if (this.capasDeMediciones[nombreGas]) {
 
-        this.capasDeMediciones[nombreGas].setMap(this.mapa);
+        this.capasDeMediciones[nombreGas].layer.setMap(this.mapa);
         this.refrescarMapa();
 
       }
@@ -127,12 +131,26 @@ export class MapaService {
     ocultarCapa(nombreGas: string) {
       if (this.capasDeMediciones[nombreGas]) {
 
-        this.capasDeMediciones[nombreGas].setMap(null);
+        this.capasDeMediciones[nombreGas].layer.setMap(null);
         this.refrescarMapa();
 
       }
     }
 
   // ------------------------------------------
+
+  // -----------------------------------------
+  // nombreGas:string -> ocultarCapa() -> void
+  // ------------------------------------------
+
+  ocultarTodasLasCapas() {
+    for (const i in this.capasDeMediciones) {
+      if (this.capasDeMediciones.hasOwnProperty(i)) {
+        this.ocultarCapa(this.capasDeMediciones[i].nombre);
+      }
+    }
+  }
+
+// ------------------------------------------
 
 }
