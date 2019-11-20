@@ -14,15 +14,9 @@ import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
 
-import {
-  Component
-} from '@angular/core';
-import {
-  Platform
-} from '@ionic/angular';
-import {
-  ReceptorBLE
-} from '../../core/services/ReceptorBle.service';
+import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { ReceptorBLE } from '../../core/services/ReceptorBle.service';
 // ----------------------------
 // Components
 // ----------------------------

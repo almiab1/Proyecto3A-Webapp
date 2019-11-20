@@ -112,13 +112,13 @@ export class ReceptorBLE {
   private obtenerMisTramas() {
     this.events.subscribe('didRangeBeaconsInRegion', async (data) => {
 
-      setInterval(() => {
-        console.log(data.beacons);
-      }, 5000);
+      // setInterval(() => {
+      //   console.log(data.beacons);
+      // }, 5000);
 
       if (data.beacons.length > 0) {
-        console.log('------------------Beacon recibido------------------');
-        console.table(data.beacons[0]);
+        // console.log('------------------Beacon recibido------------------');
+        // console.table(data.beacons[0]);
 
         // Parametros
         // tslint:disable-next-line: radix
