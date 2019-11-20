@@ -88,7 +88,7 @@ export class EditarUsuariosComponent implements OnInit {
         console.log('----------Boton eliminar modal------------');
 
         let user = this.emailUsuario;
-        this.serve.darDeBajaSensor(user);
+        this.serve.darDeBajaUsuario(user);
 
         await this.modalController.dismiss(onClosedData);
         break;

@@ -58,50 +58,54 @@ export class LogicaDeNegocioFake {
     };
 
     // PRUEBAS USERS Y NODOS
-    usuariosFicticios: any = [{
-            nombre: 'Santiago Moreno',
-            descripcion: 'Basurero',
-            idUsuario: '1234@5678.com',
-            telefono: '622584526',
-            idSensor: '01',
-        },
-        {
-            nombre: 'Juan Pedro Rico',
-            descripcion: 'Basurero',
-            idUsuario: '1234@5678.com',
-            telefono: '62525168',
-            idSensor: '01',
-        },
-        {
-            nombre: 'Antonio Fernandez',
-            descripcion: 'Basurero',
-            idUsuario: '1234@5678.com',
-            telefono: '6548156',
-            idSensor: '01',
-        },
-        {
-            nombre: 'Pedro Jose Fernandez',
-            descripcion: 'Basurero',
-            idUsuario: '1234@5678.com',
-            telefono: '6155895522',
-            idSensor: '01',
-        },
-    ];
+    usuariosFicticios: any;
 
-    nodosFicticios: any = [{
-            descripcion: 'Ozono',
-            idUsuario: '1234@gmail.com',
-            idSensor: 1
-        },
-        {
-            descripcion: 'Ozono',
-            idUsuario: '4567@gmail.com',
-            idSensor: 2
-        }
-    ];
+    nodosFicticios: any;
+
     constructor(
         public http: HttpClient
-    ) {}
+    ) {
+        this.nodosFicticios = [{
+                descripcion: 'Ozono',
+                idUsuario: '1234@gmail.com',
+                idSensor: 1
+            },
+            {
+                descripcion: 'Ozono',
+                idUsuario: '4567@gmail.com',
+                idSensor: 2
+            }
+        ];
+        this.usuariosFicticios = [{
+                nombre: 'Santiago Moreno',
+                descripcion: 'Basurero',
+                idUsuario: '1234@5678.com',
+                telefono: '622584526',
+                idSensor: '01',
+            },
+            {
+                nombre: 'Juan Pedro Rico',
+                descripcion: 'Basurero',
+                idUsuario: '5678@5678.com',
+                telefono: '62525168',
+                idSensor: '01',
+            },
+            {
+                nombre: 'Antonio Fernandez',
+                descripcion: 'Basurero',
+                idUsuario: '9101@5678.com',
+                telefono: '6548156',
+                idSensor: '01',
+            },
+            {
+                nombre: 'Pedro Jose Fernandez',
+                descripcion: 'Basurero',
+                idUsuario: '1213@5678.com',
+                telefono: '6155895522',
+                idSensor: '01',
+            },
+        ];
+    }
 
     // Handle API errors
     handleError(error: HttpErrorResponse) {
@@ -283,9 +287,11 @@ export class LogicaDeNegocioFake {
 
         // Eleminar seleccionado ------- PRUEBA ----------------
         this.usuariosFicticios.forEach(element => {
-            if (element.idUsuario = data) {
+            console.log(element);
+            if (element.idUsuario === data) {
                 let index = this.usuariosFicticios.indexOf(element);
-                this.usuariosFicticios.slice(index);
+                console.log(index);
+                this.usuariosFicticios.pop(index);
             }
         });
 
@@ -303,9 +309,10 @@ export class LogicaDeNegocioFake {
 
         // Eleminar seleccionado ------- PRUEBA
         this.nodosFicticios.forEach(element => {
-            if (element.idSensor = data) {
+            console.log(element);
+            if (element.idSensor === data) {
                 let index = this.nodosFicticios.indexOf(element);
-                this.nodosFicticios.slice(index);
+                this.nodosFicticios.pop(index);
             }
         });
         // this.peticionPost(this.urlDarDeBajaSensor, body);
