@@ -28,36 +28,27 @@ import {
 @Injectable()
 export class LogicaDeNegocioFake {
 
+    // URL Base
+    private urlServe = 'https://osblasae.upv.edu.es';
+
     // URL server remoto
-    urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
-    urlGET = 'https://192.168.0.109:8080/getUltimaMedida';
+    urlPOST = this.urlServe + '/guardarMedida';
+    urlGET = this.urlServe + '/getUltimaMedida';
 
     // API de admin
-    urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
-    urlAsociarSensorUsuario = 'https://osblasae.upv.edu.es/admin/asociarSensorAUsuario';
-    urlDarDeBajaUsuario = 'https://osblasae.upv.edu.es/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuario = 'https://osblasae.upv.edu.es/admin/darDeAltaUsuario';
-    urlDarDeBajaSensor = 'https://osblasae.upv.edu.es/admin/darDeBajaSensor';
-    urlDarDeAltaSensor = 'https://osblasae.upv.edu.es/admin/darDeAltaSensor';
-    urlEditarUsuarioAdministrador = 'https://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
-
-    // API de admin
-    urlGetUsuarios = 'https://osblasae.upv.edu.es/admin/getUsuarios';
-    urlGetNodos = 'https://osblasae.upv.edu.es/admin/getSensores';
-    urlEditarUsuarioLocal = 'https://osblasae.upv.edu.es/admin/editarUsuario';
-    urlAsociarSensorUsuarioLocal = 'https://osblasae.upv.edu.es/admin/asociarSensorUsuario';
-    urlDarDeBajaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeAltaUsuario';
-    urlDarDeBajaSensorLocal = 'https://osblasae.upv.edu.es/admin/darDeBajaSensor';
-    urlDarDeAltaSensorLocal = 'https://osblasae.upv.edu.es/admin/darDeAltaSensor';
-    urlEditarUsuarioAdministradorLocal = 'https://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
+    urlGetUsuarios = this.urlServe + '/admin/getUsuarios';
+    urlGetNodos = this.urlServe + '/admin/getSensores';
+    urlEditarUsuario = this.urlServe + '/admin/editarUsuario';
+    urlAsociarSensorUsuario = this.urlServe + '/admin/asociarSensorUsuario';
+    urlDarDeBajaUsuario = this.urlServe + '/admin/darDeBajaUsuario';
+    urlDarDeAltaUsuario = this.urlServe + '/admin/darDeAltaUsuario';
+    urlDarDeBajaSensor = this.urlServe + '/admin/darDeBajaSensor';
+    urlDarDeAltaSensor = this.urlServe + '/admin/darDeAltaSensor';
+    urlEditarUsuarioAdministrador = this.urlServe + '/admin/editarUsuarioAdministrador';
 
     // Api de técnico local
-    urlBasureroGuardarLocal = 'https://osblasae.upv.edu.es/basurero/guardarMedida';
-    urlEditarUsuarioBasureroLocal = 'https://osblasae.upv.edu.es/basurero/editarUsuarioBasurero';
-
-    // URL Base
-    private url = 'https://osblasae.upv.edu.es';
+    urlBasureroGuardar = this.urlServe + '/basurero/guardarMedida';
+    urlEditarUsuarioBasurero = this.urlServe + '/basurero/editarUsuarioBasurero';
 
     // Http Options
     httpOptions = {
@@ -217,7 +208,7 @@ export class LogicaDeNegocioFake {
             .set('temperatura', '' + data.temperatura)
             .set('humedad', '' + data.humedad);
 
-        this.peticionPost(this.urlBasureroGuardarLocal, body);
+        this.peticionPost(this.urlBasureroGuardar, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -232,7 +223,7 @@ export class LogicaDeNegocioFake {
             .set('tipoUsuario', '' + data.tipoUsuario)
             .set('telefono', '' + data.telefono);
 
-        this.peticionPost(this.urlEditarUsuarioAdministradorLocal, body);
+        this.peticionPost(this.urlEditarUsuarioAdministrador, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -247,7 +238,7 @@ export class LogicaDeNegocioFake {
             .set('tipoUsuario', '' + data.tipoUsuario)
             .set('telefono', '' + data.telefono);
 
-        this.peticionPost(this.urlDarDeAltaUsuarioLocal, body);
+        this.peticionPost(this.urlDarDeAltaUsuario, body);
 
     }
 
@@ -260,7 +251,7 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idTipoSensor', '' + data.idTipoSensor);
 
-        this.peticionPost(this.urlDarDeAltaSensorLocal, body);
+        this.peticionPost(this.urlDarDeAltaSensor, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -273,7 +264,7 @@ export class LogicaDeNegocioFake {
             .set('idUsuario', '' + data.idUsuario)
             .set('idSensor', '' + data.idSensor);
 
-        this.peticionPost(this.urlAsociarSensorUsuarioLocal, body);
+        this.peticionPost(this.urlAsociarSensorUsuario, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -285,7 +276,7 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idUsuario', '' + data.idUsuario);
 
-        this.peticionPost(this.urlDarDeBajaUsuarioLocal, body);
+        this.peticionPost(this.urlDarDeBajaUsuario, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -297,7 +288,7 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idSensor', '' + data.idSensor);
 
-        this.peticionPost(this.urlDarDeBajaSensorLocal, body);
+        this.peticionPost(this.urlDarDeBajaSensor, body);
     }
 }
 

@@ -39,6 +39,10 @@ export class UsuariosComponent implements OnInit {
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
   ) {
+    this.serve.getUsuarios().then(
+      res => this.users = res,
+      err => console.log(err)
+    )
   }
   // ----------------------------------------------------------------------------
 
@@ -52,8 +56,7 @@ export class UsuariosComponent implements OnInit {
     )
     console.log('---------------------------------GET USUARIOS COMPONENT---------------');
     console.log(this.users);
-    console.log('---------------------------------------------------');
-    // console.log(this.serve.getUsuarios());
+    console.log('----------------------------------------------------------------------');
 
     this.usersFiltrados = this.users;
   }

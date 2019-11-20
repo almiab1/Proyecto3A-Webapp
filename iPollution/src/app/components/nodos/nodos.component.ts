@@ -47,7 +47,12 @@ export class NodosComponent implements OnInit {
     public modalController: ModalController,
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
-  ) {}
+  ) {
+    this.serve.getNodos().then(
+      res => this.nodos = res,
+      err => console.log(err)
+    )
+  }
   // ----------------------------------------------------------------------------
 
 
