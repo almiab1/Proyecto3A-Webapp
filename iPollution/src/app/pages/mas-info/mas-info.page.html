@@ -9,7 +9,7 @@
         </ion-col>
         <ion-col size="10" class="ion-align-items-center ion-justify-content-center">
           <ion-title color="acentuado">
-            <h1>+Info</h1>
+            <h1>Medidas Oficiales</h1>
           </ion-title>
         </ion-col>
       </ion-row>
@@ -21,7 +21,11 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-list-header><ion-title>Última medida:</ion-title></ion-list-header>
+        <ion-item>
+          <ion-card-content>
+            <canvas #lineChart></canvas>
+          </ion-card-content>
+        </ion-item>
         <ion-item>
           <ion-label>hora: </ion-label>
           <ion-label slot="end">{{tiempo}}</ion-label>
@@ -33,4 +37,7 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
+  
+    
+  
 </ion-content>
