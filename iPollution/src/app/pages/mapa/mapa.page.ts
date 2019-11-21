@@ -59,9 +59,48 @@ export class MapaPage implements OnInit {
       this.mapa.anyadirMarcador(
         'Posicion Actual', {lat: this.currentLocation.lat, lng: this.currentLocation.long}, 'assets/icon/gpsIcon.svg'
       );
-      this.mapa.anyadirMarcador(
+      const estacionOficial = this.mapa.anyadirMarcador(
         'Estación oficial', {lat: 38.966754, lng: -0.185648}, 'assets/icon/courthouse.svg'
       );
+
+      let contenido = '<div align="center"><img src="assets/estacion_oficial.png" width="270" heigth="195"></div>' +
+      '<br>' +
+      '<p>Estación oficial de la red de vigilancia y control de la</p>' +
+      '<p>contaminación atmosférica(RVVCCA) situada en Gandia</p>' +
+      '<br>' +
+      '<style type="text/css">' +
+      '.tg  {border-collapse:collapse;border-spacing:0;border-color:#bbb;}' +
+      // tslint:disable-next-line: max-line-length
+      '.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#bbb;color:#594F4F;background-color:#E0FFEB;}' +
+      // tslint:disable-next-line: max-line-length
+      '.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#bbb;color:#493F3F;background-color:#9DE0AD;}' +
+      '.tg .tg-996f{background-color:#C2FFD6;border-color:inherit;text-align:center;vertical-align:top}' +
+      '.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}' +
+      '.tg .tg-wjr8{background-color:#9de0ad;border-color:inherit;text-align:center;vertical-align:top}' +
+      '.tg .tg-3xi5{background-color:#ffffff;border-color:inherit;text-align:center;vertical-align:top}' +
+      '</style>' +
+      '<div align="center">' +
+      '<table class="tg">' +
+       ' <tr>' +
+          '<th class="tg-baqh"><span style="font-weight:bold">GAS</span></th>' +
+          '<th class="tg-baqh"><span style="font-weight:bold">Valor</span></th>' +
+          '<th class="tg-baqh"><span style="font-weight:bold">Contaminación</span></th>' +
+          '<th class="tg-baqh"><span style="font-weight:bold">Calidad</span></th>' +
+        '</tr>' +
+        '<tr>' +
+          '<td class="tg-baqh">O3</td>' +
+          '<td class="tg-baqh">35</td>' +
+          '<td class="tg-baqh">MUY BAJA</td>' +
+          '<td class="tg-baqh">EXCELENTE</td>' +
+        '</tr>' +
+      '</table>' +
+      '</div>' +
+      '<br>' +
+      '<div><a href="/mas-info">Ver más</a></div>';
+
+      this.mapa.anyadirInformacionMarcador(estacionOficial, contenido);
+
+
 
       // Genero la capa donde pondre las medidas de ozono
       this.mapa.anyadirCapa({

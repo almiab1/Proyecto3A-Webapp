@@ -73,6 +73,8 @@ export class MapaService {
     });
 
     this.marcadores[nombre] = marcador;
+
+    return marcador;
     // -------------------------------------------
 
   }
@@ -152,5 +154,18 @@ export class MapaService {
   }
 
 // ------------------------------------------
+// ------------------------------------------
+  // tslint:disable-next-line: ban-types
+  anyadirInformacionMarcador(marcador: void, contenido: String) {
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: contenido
+    });
+
+    google.maps.event.addListener(marcador, 'click', () => {
+      infoWindow.open(this.mapa, marcador);
+    });
+
+  }
 
 }
