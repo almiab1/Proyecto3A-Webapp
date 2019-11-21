@@ -126,33 +126,33 @@ export class MasInfoPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.serve.getUltimaMedicion().subscribe(response => {
-      console.log("GET ULTIMA MEDICION")
-      console.log(response);
-      this.ngZone.run(() => {
-        this.ultimaMedicion_tiempo = response[0].tiempo;
-        this.ultimaMedicion_latitud = response[0].latitud;
-        this.ultimaMedicion_longitud = response[0].longitud;
-        this.ultimaMedicion_humedad = response[0].humedad;
-        this.ultimaMedicion_temperatura = response[0].temperatura;
-        this.ultimaMedicion_valorMedido = response[0].valorMedido;
-      });
-    });
+    // this.serve.getUltimaMedicion().subscribe(response => {
+    //   console.log("GET ULTIMA MEDICION")
+    //   console.log(response);
+    //   this.ngZone.run(() => {
+    //     this.ultimaMedicion_tiempo = response[0].tiempo;
+    //     this.ultimaMedicion_latitud = response[0].latitud;
+    //     this.ultimaMedicion_longitud = response[0].longitud;
+    //     this.ultimaMedicion_humedad = response[0].humedad;
+    //     this.ultimaMedicion_temperatura = response[0].temperatura;
+    //     this.ultimaMedicion_valorMedido = response[0].valorMedido;
+    //   });
+    // });
     // PETICION REST ULTIMA
-    setInterval(() => {
-      this.serve.getUltimaMedicion().subscribe(response => {
-        console.log("GET ULTIMA MEDICION")
-        console.log(response);
-        this.ngZone.run(() => {
-          this.ultimaMedicion_tiempo = response[0].tiempo;
-          this.ultimaMedicion_latitud = response[0].latitud;
-          this.ultimaMedicion_longitud = response[0].longitud;
-          this.ultimaMedicion_humedad = response[0].humedad;
-          this.ultimaMedicion_temperatura = response[0].temperatura;
-          this.ultimaMedicion_valorMedido = response[0].valorMedido;
-        });
-      });
-    }, 10000);
+  //   setInterval(() => {
+  //     this.serve.getUltimaMedicion().subscribe(response => {
+  //       console.log("GET ULTIMA MEDICION")
+  //       console.log(response);
+  //       this.ngZone.run(() => {
+  //         this.ultimaMedicion_tiempo = response[0].tiempo;
+  //         this.ultimaMedicion_latitud = response[0].latitud;
+  //         this.ultimaMedicion_longitud = response[0].longitud;
+  //         this.ultimaMedicion_humedad = response[0].humedad;
+  //         this.ultimaMedicion_temperatura = response[0].temperatura;
+  //         this.ultimaMedicion_valorMedido = response[0].valorMedido;
+  //       });
+  //     });
+  //   }, 10000);
   }
   */
 }
