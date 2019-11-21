@@ -34,6 +34,8 @@ export class LogicaDeNegocioFake {
     // URL server remoto
     urlPOST = this.urlServe + '/guardarMedida';
     urlGET = this.urlServe + '/getUltimaMedida';
+    urlGETAll = this.urlServe + '/getAllMedidas';
+
 
     // API de admin
     urlGetUsuarios = this.urlServe + '/admin/getUsuarios';
@@ -53,7 +55,7 @@ export class LogicaDeNegocioFake {
     // Http Options
     httpOptions = {
         headers: new HttpHeaders({
-            'Content-Type': 'application/x-url-encoded',
+            'Content-Type': 'application/json',
         })
     };
 
@@ -202,6 +204,17 @@ export class LogicaDeNegocioFake {
         //return this.nodosFicticios;
     }
 
+    // ------------------------------------------------------------------------------------
+    // GET getAllMedidas()
+    // ------------------------------------------------------------------------------------
+    getAllMedidas(): Observable < any > {
+        return this.http
+            .get(this.urlGETAll, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
     // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // POST guardarMedida
