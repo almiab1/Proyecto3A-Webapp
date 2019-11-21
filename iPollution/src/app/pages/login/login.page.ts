@@ -25,6 +25,7 @@ export class LoginPage implements OnInit {
   password: string;
   loading: any;
   mode: any;
+  private readonly tokenKey = 'token';
   // Cambia el modo según la plataforma en la que se encuentre
   ngOnInit() {
     if (this.platform.is('android')) {
@@ -47,12 +48,12 @@ export class LoginPage implements OnInit {
   onSubmitTemplate = () => {
     this.presentarLoading();
     this.loginService.autenticarUsuario(this.email, this.password).subscribe( data => {
-      this.loginCorrecto();
+      this.loginCorrecto(data.token);
     }, err => {
       if (err.status === 401) {
         this.loginIncorrecto();
       }
-      if (err) {
+      if (err !== 401) {
         this.desconectadoDelServidor();
       }
     });
@@ -83,7 +84,9 @@ export class LoginPage implements OnInit {
       this.presentarToast('Correo electronico y/o contraseña incorrectos', 'danger');
     }, 1000);
   }
-  loginCorrecto = () => {
+  loginCorrecto = (data: string) => {
+    // Guardamos el token en el Local Storage
+    localStorage.setItem(this.tokenKey, data);
     // Cerrar el loading
     setTimeout( () => {
       this.loadingController.dismiss();
