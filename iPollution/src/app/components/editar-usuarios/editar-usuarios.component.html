@@ -20,19 +20,19 @@
   <ion-list expand="full" slot="fixed">
     <ion-item>
       <ion-label position="floating">Nombre: </ion-label>
-      <ion-input type="text" value="{{nombreUser}}"></ion-input>
+      <ion-input type="text" value="{{nombreUser}}" [(ngModel)]="nombreUser" id="input"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">E-mail: </ion-label>
-      <ion-input type="text" value="{{emailUsuario}}"></ion-input>
+      <ion-input type="text" value="{{emailUsuario}}" [(ngModel)]="emailUsuario" id="input"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Telefono: </ion-label>
-      <ion-input type="text" value="{{telefono}}"></ion-input>
+      <ion-input type="text" value="{{telefono}}" [(ngModel)]="telefono" id="input" ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Nodos: </ion-label>
-      <ion-input type="number" value="{{nodos}}"></ion-input>
+      <ion-input type="number" value="{{nodos}}" [(ngModel)]="nodos" id="input"></ion-input>
     </ion-item>
   </ion-list>
 
