@@ -150,7 +150,7 @@ export class LogicaDeNegocioFake {
         console.log(url);
 
         let dataToReturn: any;
-        this.http.get(url)
+        this.http.get(url,this.httpOptions)
             .subscribe(
                 res => {
                     console.log('------------------__RESTPUESTA GET__-------------');
@@ -203,8 +203,10 @@ export class LogicaDeNegocioFake {
 
         let usuarios: any;
         usuarios = await this.peticionGet(this.urlGetUsuarios);
+
         console.log('-------------GET USUARIOS LOGICA------------------');
         console.table(usuarios);
+
         return usuarios;
         // return this.usuariosFicticios;
     }
@@ -212,7 +214,7 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     //  getMedidasOficiales()
     // ------------------------------------------------------------------------------------
-    getMedidasOficiales(): Observable < any > {
+    public getMedidasOficiales(): Observable < any > {
         return this.http
             .get(this.urlGetMedidasOficiales, this.httpOptions)
             .pipe();
@@ -260,11 +262,13 @@ export class LogicaDeNegocioFake {
             .set('humedad', '' + data.humedad);
 
         //this.peticionPost(this.urlBasureroGuardarLocal, body);
-        this.http.post(this.urlBasureroGuardarLocal, body, this.httpOptions).subscribe(data => {
-            console.log("Se ha hecho la peticion estupendamente");
-        }, err => {
-            console.log("ERROR!" + err);
-        });
+        // this.http.post(this.urlBasureroGuardarLocal, body, this.httpOptions).subscribe(data => {
+        //     console.log("Se ha hecho la peticion estupendamente");
+        // }, err => {
+        //     console.log("ERROR!" + err);
+        // });
+
+        this.peticionPost(this.urlBasureroGuardar, body)
     }
 
     // ------------------------------------------------------------------------------------
