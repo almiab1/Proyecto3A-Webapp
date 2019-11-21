@@ -234,7 +234,7 @@ export class LogicaDeNegocioFake {
             .set('humedad', '' + data.humedad);
 
         //this.peticionPost(this.urlBasureroGuardarLocal, body);
-        this.http.post(this.urlBasureroGuardarLocal, body, this.httpOptions).subscribe( data => {
+        this.http.post('https://osblasae.upv.edu.es/prueba', body, this.httpOptions).subscribe( data => {
             console.log("Se ha hecho la peticion estupendamente");
         }, err => {
             console.log("ERROR!" + err);
