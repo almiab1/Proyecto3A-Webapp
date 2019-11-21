@@ -12,6 +12,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { EditarUsuariosComponent } from './../editar-usuarios/editar-usuarios.component';
+import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -31,38 +32,40 @@ export class UsuariosComponent implements OnInit {
   public usersFiltrados: any[];
   // ----------------------------------------------------------------------------
 
-  aa = [{
-      nombre: 'Santiago Moreno',
-      email: '1234@5678.com',
-      nodos: 'nodo01'
-    },
-    {
-      nombre: 'Juan Pedro Rico',
-      email: '1234@5678.com',
-      nodos: 'nodo02'
-    },
-    {
-      nombre: 'Antonio Fernandez',
-      email: '1234@5678.com',
-      nodos: 'nodo03'
-    },
-  ];
   // ----------------------------------------------------------------------------
   // Contructor
   constructor(
     public modalController: ModalController,
     public platform: Platform,
+    public serve: LogicaDeNegocioFake,
   ) {
-    this.users = this.aa;
-    this.usersFiltrados = this.aa;
+    this.serve.getUsuarios().then(
+      res => this.users = res,
+      err => console.log(err)
+    )
   }
   // ----------------------------------------------------------------------------
 
 
   // ----------------------------------------------------------------------------
   // ngOnInit()
-  ngOnInit() {}
+  ngOnInit() {
+    this.serve.getUsuarios().then(
+      res => this.users = res,
+      err => console.log(err)
+    )
+
+    this.usersFiltrados = this.users;
+  }
   // ----------------------------------------------------------------------------
+  ionViewWillEnter() {
+    this.serve.getUsuarios().then(
+      res => this.users = res,
+      err => console.log(err)
+    )
+
+    this.usersFiltrados = this.users;
+  }
 
   // ----------------------------------------------------------------------------
   // Search Bar controler
@@ -93,14 +96,37 @@ export class UsuariosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // openModal()
-  async openModal(titulo: string, nombre: string, email: string, nodos: string) {
+  async openModal(data, tipo) {
+
+    let titulo;
+    let nombre;
+    let email;
+    let telefono;
+    let nodos;
+    let tipoModal =  tipo;
+
+    if (data != undefined) {
+      titulo = data.descripcion;
+      nombre = data.nombre;
+      email = data.idUsuario;
+      telefono = data.telefono;
+      nodos = data.idSensor;
+    } else {
+      titulo = 'Añadir Usuario';
+      nombre = '';
+      email = '';
+      telefono = '';
+      nodos = '';
+    }
     const modal = await this.modalController.create({
       component: EditarUsuariosComponent,
       componentProps: {
         titulo,
         nombre,
         email,
-        nodos
+        telefono,
+        nodos,
+        tipoModal
       }
     });
 

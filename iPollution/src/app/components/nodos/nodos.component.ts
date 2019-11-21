@@ -20,6 +20,9 @@ import {
   ModalController,
   Platform
 } from '@ionic/angular';
+import {
+  LogicaDeNegocioFake
+} from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -36,32 +39,19 @@ export class NodosComponent implements OnInit {
   dataReturned: any;
   public nodos: any[];
   public nodoFiltrados: any[];
-
   // ----------------------------------------------------------------------------
 
-  aa = [{
-      nombre: 'Nodo001',
-      tipo: '01',
-      usuario: 'user01'
-    },
-    {
-      nombre: 'Nodo002',
-      tipo: '02',
-      usuario: 'user02'
-    },
-    {
-      nombre: 'Nodo003',
-      tipo: '03',
-      usuario: 'user03'
-    },
-  ];
   // ----------------------------------------------------------------------------
   // Contructor
   constructor(
     public modalController: ModalController,
     public platform: Platform,
+    public serve: LogicaDeNegocioFake,
   ) {
-    this.nodos = this.aa;
+    this.serve.getNodos().then(
+      res => this.nodos = res,
+      err => console.log(err)
+    )
   }
   // ----------------------------------------------------------------------------
 
@@ -69,10 +59,20 @@ export class NodosComponent implements OnInit {
   // ----------------------------------------------------------------------------
   // ngOnInit()
   ngOnInit() {
-    this.nodos = this.aa;
-    this.nodoFiltrados = this.aa;
+    this.serve.getNodos().then(
+      res => this.nodos = res,
+      err => console.log(err)
+    )
+    this.nodoFiltrados = this.nodos;
   }
   // ----------------------------------------------------------------------------
+  ionViewWillEnter() {
+    this.serve.getNodos().then(
+      res => this.nodos = res,
+      err => console.log(err)
+    )
+    this.nodoFiltrados = this.nodos;
+  }
 
   // ----------------------------------------------------------------------------
   // Search Bar controler
@@ -102,15 +102,37 @@ export class NodosComponent implements OnInit {
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
-  // openModal()
-  async openModal(titulo: string, nombreNodo: string, tipoNodo: string, usuarioNodo: string) {
+  // titulo,nombreNodo,tipoNodo,openModal()
+  async openModal(data, tipo) {
+
+    let titulo;
+    let nombreNodo;
+    let tipoNodo;
+    let usuarioNodo;
+    let tipoModal;
+
+    if (data != undefined) {
+      titulo = 'Nodo' + data.idSensor;
+      nombreNodo = data.idSensor;
+      tipoNodo = data.descripcion;
+      usuarioNodo = data.idUsuario;
+      tipoModal = tipo;
+    } else {
+      titulo = 'Añadir Nodo ';
+      nombreNodo = '';
+      tipoNodo = '';
+      usuarioNodo = '';
+      tipoModal = tipo;
+    }
+
     const modal = await this.modalController.create({
       component: EditarComponent,
       componentProps: {
         titulo,
         nombreNodo,
         tipoNodo,
-        usuarioNodo
+        usuarioNodo,
+        tipoModal
       }
     });
 

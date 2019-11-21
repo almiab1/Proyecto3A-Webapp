@@ -13,10 +13,15 @@
 import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
-
-import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { ReceptorBLE } from '../../core/services/ReceptorBle.service';
+import {
+  Component
+} from '@angular/core';
+import {
+  Platform
+} from '@ionic/angular';
+import {
+  ReceptorBLE
+} from '../../core/services/ReceptorBle.service';
 // ----------------------------
 // Components
 // ----------------------------
@@ -35,11 +40,12 @@ export class HomePage {
     private ble: ReceptorBLE,
     private serve: LogicaDeNegocioFake,
   ) {
-    // this.ble.inizializar();
-    // ACTUALIZAR DATOS
-    setInterval(() => {
-      this.hayQueActualizarMedicionesYEnviarlasAlServidor();
-    }, 10000);
+    if (this.platform.is('mobile')) {
+      // ACTUALIZAR DATOS
+      setInterval(() => {
+        this.hayQueActualizarMedicionesYEnviarlasAlServidor();
+      }, 10000);
+    }
   }
 
   ngOnInit = () => {
@@ -48,7 +54,9 @@ export class HomePage {
   }
 
   ionViewDidEnter = () => {
-    this.ble.inizializar();
+    if (this.platform.is('mobile')) {
+      this.ble.inizializar();
+    }
   }
 
   // --------------------------------------------------------
