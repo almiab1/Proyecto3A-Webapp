@@ -78,6 +78,13 @@ export class MapaPage implements OnInit {
         maxIntensidad: 1000
       });
 
+      this.mapa.anyadirCapa({
+        nombre: 'so2',
+        disipado: true,
+        radio: 60,
+        maxIntensidad: 800
+      });
+
       // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
 
       this.server.getAllMedidas().toPromise().then((medidasOzono) => {
@@ -103,8 +110,27 @@ export class MapaPage implements OnInit {
         valorMedido: 703
     }];
 
+
+      const medidasSo2 = [{
+      latitud: 39.007554,
+      longitud:  -0.166646,
+      valorMedido: 620
+  }, {
+      latitud: 39.009055,
+      longitud:  -0.167912,
+      valorMedido: 130
+  }, {
+      latitud: 39.007703,
+      longitud:  -0.168824,
+      valorMedido: 270
+  }];
+
       medidasCo.forEach(medida => {
         this.mapa.anyadirMedicion('co', medida);
+      });
+
+      medidasSo2.forEach(medida => {
+        this.mapa.anyadirMedicion('so2', medida);
       });
 
       this.mapa.ocultarTodasLasCapas();
