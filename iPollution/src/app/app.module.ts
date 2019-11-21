@@ -27,6 +27,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import {LoginPage} from './pages/login/login.page';
 
+import {ChartsModule} from 'ng2-charts';
+
 @NgModule({
   declarations: [AppComponent, LoginPage, UsuariosComponent, NodosComponent, EditarComponent, EditarUsuariosComponent],
   entryComponents: [LoginPage],
@@ -37,6 +39,7 @@ import {LoginPage} from './pages/login/login.page';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ChartsModule,
   ],
   providers: [
     StatusBar,

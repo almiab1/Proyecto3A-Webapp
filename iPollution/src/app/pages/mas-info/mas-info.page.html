@@ -9,7 +9,7 @@
         </ion-col>
         <ion-col size="10" class="ion-align-items-center ion-justify-content-center">
           <ion-title color="acentuado">
-            <h1>+Info</h1>
+            <h1>Medidas Oficiales</h1>
           </ion-title>
         </ion-col>
       </ion-row>
@@ -21,32 +21,23 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-list-header><ion-title>Última medida:</ion-title></ion-list-header>
         <ion-item>
-          <ion-label>Valor medido: </ion-label>
-          <ion-label slot="end">{{ultimaMedicion_valorMedido}}</ion-label>
+          <ion-card-content>
+            <canvas #lineChart></canvas>
+          </ion-card-content>
         </ion-item>
         <ion-item>
-          <ion-label>Valor humedad: </ion-label>
-          <ion-label slot="end">{{ultimaMedicion_humedad}}</ion-label>
+          <ion-label>hora: </ion-label>
+          <ion-label slot="end">{{tiempo}}</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Valor temperatura: </ion-label>
-          <ion-label slot="end">{{ultimaMedicion_temperatura}}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Valor latitud: </ion-label>
-          <ion-label slot="end">{{ultimaMedicion_latitud}}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Valor longitud: </ion-label>
-          <ion-label slot="end">{{ultimaMedicion_longitud}}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Valor instante: </ion-label>
-          <ion-label slot="end">{{ultimaMedicion_tiempo}}</ion-label>
+          <ion-label>Valor ozono: </ion-label>
+          <ion-label slot="end">{{ozono}}</ion-label>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
+  
+    
+  
 </ion-content>

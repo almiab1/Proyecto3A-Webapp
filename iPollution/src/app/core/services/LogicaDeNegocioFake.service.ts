@@ -36,6 +36,8 @@ export class LogicaDeNegocioFake {
     urlGET = this.urlServe + '/getUltimaMedida';
     urlGETAll = this.urlServe + '/getAllMedidas';
 
+    urlGetMedidasOficiales = 'https://osblasae.upv.edu.es/getMedidasOficiales';
+
 
     // API de admin
     urlGetUsuarios = this.urlServe + '/admin/getUsuarios';
@@ -56,6 +58,7 @@ export class LogicaDeNegocioFake {
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
         })
     };
 
@@ -131,7 +134,7 @@ export class LogicaDeNegocioFake {
     // Funciones para GET y POS
     // POST
     private peticionPost(url, body) {
-        this.http.post(url, body)
+        this.http.post(url, body, this.httpOptions)
             .subscribe(
                 res => {
                     // console.log(res);
@@ -146,7 +149,7 @@ export class LogicaDeNegocioFake {
     private async peticionGet(url) {
 
         let dataToReturn: any;
-        this.http.get(url)
+        this.http.get(url,this.httpOptions)
             .subscribe(
                 res => {
                     dataToReturn = res;
@@ -162,6 +165,21 @@ export class LogicaDeNegocioFake {
         console.log(dataToReturn);
 
         return dataToReturn;
+    }
+
+    // GET
+    private peticionDelete(url, body) {
+
+        this.http.delete(url, body)
+            .subscribe(
+                res => {
+                    console.log(res);
+                },
+                err => {
+                    console.log('ERROR --> ');
+                    console.log(err);
+                }
+            );
     }
     // ------------------------------------------------------------------------------------
 
@@ -182,10 +200,21 @@ export class LogicaDeNegocioFake {
 
         let usuarios: any;
         usuarios = await this.peticionGet(this.urlGetUsuarios);
+
         console.log('-------------GET USUARIOS LOGICA------------------');
         console.table(usuarios);
+
         return usuarios;
         // return this.usuariosFicticios;
+    }
+
+    // ------------------------------------------------------------------------------------
+    //  getMedidasOficiales()
+    // ------------------------------------------------------------------------------------
+    public getMedidasOficiales(): Observable < any > {
+        return this.http
+            .get(this.urlGetMedidasOficiales, this.httpOptions)
+            .pipe();
     }
 
     // ------------------------------------------------------------------------------------
@@ -229,7 +258,14 @@ export class LogicaDeNegocioFake {
             .set('temperatura', '' + data.temperatura)
             .set('humedad', '' + data.humedad);
 
-        this.peticionPost(this.urlBasureroGuardar, body);
+        //this.peticionPost(this.urlBasureroGuardarLocal, body);
+        // this.http.post(this.urlBasureroGuardarLocal, body, this.httpOptions).subscribe(data => {
+        //     console.log("Se ha hecho la peticion estupendamente");
+        // }, err => {
+        //     console.log("ERROR!" + err);
+        // });
+
+        this.peticionPost(this.urlBasureroGuardar, body)
     }
 
     // ------------------------------------------------------------------------------------
@@ -311,7 +347,7 @@ export class LogicaDeNegocioFake {
         //     }
         // });
 
-        this.peticionPost(this.urlDarDeBajaUsuario, body);
+        this.peticionDelete(this.urlDarDeBajaUsuario, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -332,7 +368,7 @@ export class LogicaDeNegocioFake {
         //     }
         // });
 
-        this.peticionPost(this.urlDarDeBajaSensor, body);
+        this.peticionDelete(this.urlDarDeBajaSensor, body);
     }
 }
 

@@ -77,12 +77,12 @@ export class AppComponent {
           subPages: [{
             title: 'Tips',
             icon: 'add',
-            url: '/components/nodos'
+            url: '/mas-info'
           },
           {
             title: 'Medidas Oficiales',
             icon: 'add',
-            url: '/components/usuarios'
+            url: '/mas-info'
           }
         ]
         },
@@ -136,12 +136,12 @@ export class AppComponent {
           subPages: [{
             title: 'Tips',
             icon: 'add',
-            url: '/components/usuarios'
+            url: '/mas-info'
           },
           {
             title: 'Medidas Oficiales',
             icon: 'add',
-            url: '/components/nodos'
+            url: '/mas-info'
           }
         ]
         },

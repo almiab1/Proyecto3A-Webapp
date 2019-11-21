@@ -1,6 +1,9 @@
 import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
+import { ViewChild, ElementRef } from '@angular/core';
+// npm install chart.js --save
+import { Chart } from 'chart.js';
 // ----------------------------
 // config.page.ts
 // Controlador vista mas-info
@@ -29,7 +32,85 @@ import {
 // Clase MasInfoPage
 // ----------------------------
 export class MasInfoPage implements OnInit {
+  @ViewChild('lineChart', {static: true}) lineChart;
 
+
+
+  medidas: any;
+  tiempo: any[];
+  ozono: any[];
+
+
+  constructor(
+    private serve: LogicaDeNegocioFake,
+    private ngZone: NgZone,
+  ) {}
+
+  ngOnInit() {
+
+
+
+
+
+    this.serve.getMedidasOficiales().subscribe(response => {
+      console.log('GET MedidasOficiales');
+      console.log(response);
+      this.ngZone.run(() => {
+        // Registra los valores en una variable que luego enseñará
+        this.tiempo = response[response.length - 1].hora;
+        this.ozono = response[response.length - 1].o3;
+        console.log('Aqui guardo los valores de medidas oficiales');
+
+
+
+        // rellenamos todos los valores de ozono
+
+        this.createSimpleLineChart(response);
+      });
+    });
+    // PETICION REST ULTIMA
+    setInterval(() => {
+      this.serve.getMedidasOficiales().subscribe(response => {
+        console.log('GET MedidasOficiales');
+        console.log(response);
+        this.ngZone.run(() => {
+          // Registra los valores en una variable que luego enseñará
+          console.log('Aqui guardo los valores de medidas oficiales');
+        });
+      });
+    }, 10000);
+
+
+  }
+
+
+  createSimpleLineChart(response) {
+    this.lineChart = new Chart(this.lineChart.nativeElement, {
+      type: 'line',
+      data: {
+        labels: [response[14].hora, response[15].hora, response[16].hora, response[17].hora, response[18].hora, response[19].hora],
+        datasets: [{
+          label: 'Ozono',
+          data: [response[14].o3, response[15].o3, response[16].o3, response[17].o3, response[18].o3, response[19].o3],
+          backgroundColor: 'rgba(0, 0, 0, 0)',
+          borderColor: 'rgb(0,150,136)',
+          borderWidth: 4
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+
+
+/*
   // variable ultima medicion
   ultimaMedicion_tiempo: any;
   ultimaMedicion_latitud: any;
@@ -73,4 +154,5 @@ export class MasInfoPage implements OnInit {
   //     });
   //   }, 10000);
   }
+  */
 }
