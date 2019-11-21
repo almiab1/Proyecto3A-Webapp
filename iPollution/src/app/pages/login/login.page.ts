@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
       if (err.status === 401) {
         this.loginIncorrecto();
       }
-      if (err !== 401) {
+      if (err.status !== 401) {
         this.desconectadoDelServidor();
       }
     });

@@ -64,6 +64,7 @@ export class LogicaDeNegocioFake {
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
         })
     };
 
@@ -93,7 +94,7 @@ export class LogicaDeNegocioFake {
     // Funciones para GET y POS
     // POST
     private peticionPost(url, body) {
-        this.http.post(url, body)
+        this.http.post(url, body, this.httpOptions)
             .subscribe(
                 res => {
                     console.log(res);
@@ -170,7 +171,12 @@ export class LogicaDeNegocioFake {
             .set('temperatura', '' + data.temperatura)
             .set('humedad', '' + data.humedad);
 
-        this.peticionPost(this.urlBasureroGuardarLocal, body);
+        //this.peticionPost(this.urlBasureroGuardarLocal, body);
+        this.http.post(this.urlBasureroGuardarLocal, body, this.httpOptions).subscribe( data => {
+            console.log("Se ha hecho la peticion estupendamente");
+        }, err => {
+            console.log("ERROR!" + err);
+        });
     }
 
     // ------------------------------------------------------------------------------------
