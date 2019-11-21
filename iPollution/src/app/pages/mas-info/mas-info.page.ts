@@ -1,6 +1,8 @@
 import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
+import {  ViewChild } from '@angular/core';
+import { Chart } from 'chart.js';
 // ----------------------------
 // config.page.ts
 // Controlador vista mas-info
@@ -30,6 +32,48 @@ import {
 // ----------------------------
 export class MasInfoPage implements OnInit {
 
+
+  medidas: any;
+  tiempo: any[];
+  ozono: any[];
+
+  @ViewChild('lineCanvas', {static: false}) lineCanvas;
+
+  constructor(
+    private serve: LogicaDeNegocioFake,
+    private ngZone: NgZone,
+  ) {}
+
+  ngOnInit() {
+    this.serve.getMedidasOficiales().subscribe(response => {
+      console.log('GET MedidasOficiales');
+      console.log(response);
+      this.ngZone.run(() => {
+        // Registra los valores en una variable que luego enseñará
+        this.tiempo = response[0].hora;
+        this.ozono = response[3].o3;
+        console.log('la hora es:' + this.tiempo);
+        console.log('el ozono es:' + this.ozono);
+        console.log('Aqui guardo los valores de medidas oficiales');
+      });
+    });
+    // PETICION REST ULTIMA
+    setInterval(() => {
+      this.serve.getMedidasOficiales().subscribe(response => {
+        console.log('GET MedidasOficiales');
+        console.log(response);
+        this.ngZone.run(() => {
+          // Registra los valores en una variable que luego enseñará
+          console.log('Aqui guardo los valores de medidas oficiales');
+        });
+      });
+    }, 10000);
+
+
+  }
+
+
+/*
   // variable ultima medicion
   ultimaMedicion_tiempo: any;
   ultimaMedicion_latitud: any;
@@ -73,4 +117,5 @@ export class MasInfoPage implements OnInit {
       });
     }, 10000);
   }
+  */
 }

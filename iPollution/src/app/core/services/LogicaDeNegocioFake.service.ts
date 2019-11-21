@@ -34,6 +34,8 @@ export class LogicaDeNegocioFake {
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
     urlGET = 'https://192.168.0.109:8080/getUltimaMedida';
 
+    urlGetMedidasOficiales = 'https://osblasae.upv.edu.es/getMedidasOficiales';
+
     // API de admin
     urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
     urlAsociarSensorUsuario = 'https://osblasae.upv.edu.es/admin/asociarSensorAUsuario';
@@ -151,6 +153,15 @@ export class LogicaDeNegocioFake {
             'Juan'
         ];
         return datos;
+    }
+
+    // ------------------------------------------------------------------------------------
+    //  getMedidasOficiales()
+    // ------------------------------------------------------------------------------------
+    getMedidasOficiales(): Observable < any > {
+        return this.http
+            .get(this.urlGetMedidasOficiales, this.httpOptions)
+            .pipe();
     }
 
     // -----------------------------POST---------------------------------------------------
