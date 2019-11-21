@@ -142,11 +142,14 @@ export class LogicaDeNegocioFake {
     }
     // GET
     private peticionGet(url) {
+        console.log(url);
+
         let dataToReturn: any;
         this.http.get(url)
             .subscribe(
                 res => {
-                    // console.log(res);
+                    console.log('------------------__RESTPUESTA GET__-------------');
+                    console.log(res);
                     dataToReturn = res;
                 },
                 err => {
@@ -156,6 +159,9 @@ export class LogicaDeNegocioFake {
                     }
                 }
             );
+        console.log('--------------------__RETURN GET__-------------');
+        console.log(dataToReturn);
+
         return dataToReturn;
     }
     // ------------------------------------------------------------------------------------
@@ -183,7 +189,6 @@ export class LogicaDeNegocioFake {
         // return this.usuariosFicticios;
     }
 
-    // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // GET getNodos()
     // ------------------------------------------------------------------------------------
@@ -197,6 +202,7 @@ export class LogicaDeNegocioFake {
         //return this.nodosFicticios;
     }
 
+    // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // POST guardarMedida
     // ------------------------------------------------------------------------------------
@@ -320,4 +326,4 @@ export class LogicaDeNegocioFake {
     }
 }
 
-// ------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------

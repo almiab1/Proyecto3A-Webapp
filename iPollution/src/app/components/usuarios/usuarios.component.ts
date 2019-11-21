@@ -96,20 +96,21 @@ export class UsuariosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // openModal()
-  async openModal(data) {
+  async openModal(data, tipo) {
 
     let titulo;
     let nombre;
     let email;
     let telefono;
     let nodos;
+    let tipoModal =  tipo;
 
     if (data != undefined) {
       titulo = data.descripcion;
       nombre = data.nombre;
       email = data.idUsuario;
       telefono = data.telefono;
-      nodos = 'Nodo ' + data.idSensor;
+      nodos = data.idSensor;
     } else {
       titulo = 'Añadir Usuario';
       nombre = '';
@@ -125,6 +126,7 @@ export class UsuariosComponent implements OnInit {
         email,
         telefono,
         nodos,
+        tipoModal
       }
     });
 

@@ -24,8 +24,8 @@
         <ion-toolbar expand="block">
           <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras" (ionInput)="filterList($event)">
           </ion-searchbar>
-          <ion-button slot="end" color="success" disabled="false" (click)="openModal(undefined)">
-            <ion-icon name="add" size="large" expand="block" ></ion-icon>
+          <ion-button slot="end" color="success" disabled="false" (click)="openModal(undefined,'anyadir')">
+            <ion-icon name="person-add" size="large" expand="block" ></ion-icon>
           </ion-button>
         </ion-toolbar>
       </ion-col>
@@ -37,7 +37,7 @@
             <ion-list-header>
               <ion-title>Lista de Basureros:</ion-title>
             </ion-list-header>
-            <ion-item *ngFor="let item of users" (click)="openModal(item)">
+            <ion-item *ngFor="let item of users" (click)="openModal(item,'editar')">
               {{ item.nombre }}
             </ion-item>
           </ion-list>

@@ -103,23 +103,26 @@ export class NodosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // titulo,nombreNodo,tipoNodo,openModal()
-  async openModal(data) {
+  async openModal(data, tipo) {
 
     let titulo;
     let nombreNodo;
     let tipoNodo;
     let usuarioNodo;
+    let tipoModal;
 
     if (data != undefined) {
       titulo = 'Nodo' + data.idSensor;
       nombreNodo = data.idSensor;
       tipoNodo = data.descripcion;
       usuarioNodo = data.idUsuario;
+      tipoModal = tipo;
     } else {
       titulo = 'Añadir Nodo ';
       nombreNodo = '';
       tipoNodo = '';
       usuarioNodo = '';
+      tipoModal = tipo;
     }
 
     const modal = await this.modalController.create({
@@ -128,7 +131,8 @@ export class NodosComponent implements OnInit {
         titulo,
         nombreNodo,
         tipoNodo,
-        usuarioNodo
+        usuarioNodo,
+        tipoModal
       }
     });
 

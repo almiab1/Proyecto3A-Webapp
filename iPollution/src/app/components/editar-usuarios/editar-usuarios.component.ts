@@ -1,4 +1,6 @@
-import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
+import {
+  LogicaDeNegocioFake
+} from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // editar-usuarios.component.ts
 // Controlador modal editar usuarios
@@ -36,7 +38,8 @@ export class EditarUsuariosComponent implements OnInit {
   emailUsuario: string;
   telefono: string;
   tituloComponent: string;
-  nodos: string;
+  nodos: number;
+  tipoModal: string;
 
 
   // ----------------------------------------------------------------------------
@@ -59,6 +62,7 @@ export class EditarUsuariosComponent implements OnInit {
     this.telefono = this.navParams.data.telefono;
     this.tituloComponent = this.navParams.data.titulo;
     this.nodos = this.navParams.data.nodos;
+    this.tipoModal = this.navParams.data.tipoModal;
   }
   // ----------------------------------------------------------------------------
 
@@ -72,14 +76,18 @@ export class EditarUsuariosComponent implements OnInit {
       case 'guardar': {
         console.log('----------Boton guardar modal------------');
 
-        let nuevoUser = {
-          nombre: 'Creado',
-          descripcion: 'Creado',
-          idUsuario: 'Creado',
-          telefono: 'Creado',
-          idSensor: 'Creado',
+        let user = {
+          nombre: this.nombreUser,
+          descripcion: this.tituloComponent,
+          idUsuario: this.emailUsuario,
+          telefono: this.telefono,
+          idSensor: this.nodos,
         }
-        this.serve.darDeAltaUsuario(nuevoUser);
+        if (this.tipoModal === 'anyadir') {
+          this.serve.darDeAltaUsuario(user);
+        } else {
+          this.serve.editarUsuario(user);
+        }
 
         await this.modalController.dismiss(onClosedData);
         break;

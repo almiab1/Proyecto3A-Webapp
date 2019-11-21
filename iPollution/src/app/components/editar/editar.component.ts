@@ -74,9 +74,9 @@ export class EditarComponent implements OnInit {
         console.log('----------Boton guardar modal------------');
 
         let nuevoSensor = {
-            descripcion: 'Ozono',
-            idUsuario: '1234@gmail.com',
-            idSensor: 3
+            descripcion: this.tipoNodo,
+            idUsuario: this.usuarioNodo,
+            idSensor: this.nombreNodo
         };
         this.serve.darDeAltaSensor(nuevoSensor);
 
