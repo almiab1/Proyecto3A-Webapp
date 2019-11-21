@@ -107,7 +107,7 @@ export class MapaPage implements OnInit {
         nombre: 'o3',
         disipado: true, // Escalado del aspecto de los puntos en funcion del zoom
         radio: 70, // Radio de influencia de cada punto en pixeles sobre el mapa
-        maxIntensidad: 120 // Valor en el cual el color es máximo
+        maxIntensidad: 1500 // Valor en el cual el color es máximo
       });
 
       this.mapa.anyadirCapa({
