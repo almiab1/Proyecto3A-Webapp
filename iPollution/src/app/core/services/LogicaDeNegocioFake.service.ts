@@ -33,6 +33,7 @@ export class LogicaDeNegocioFake {
     // URL server remoto
     urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
     urlGET = 'https://osblasae.upv.edu.es/getUltimaMedida';
+    urlGETAll = 'https://osblasae.upv.edu.es/getAllMedidas';
 
     // API de admin
     urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';

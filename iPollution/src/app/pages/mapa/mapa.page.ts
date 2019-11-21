@@ -67,8 +67,8 @@ export class MapaPage implements OnInit {
       this.mapa.anyadirCapa({
         nombre: 'o3',
         disipado: true, // Escalado del aspecto de los puntos en funcion del zoom
-        radio: 80, // Radio de influencia de cada punto en pixeles sobre el mapa
-        maxIntensidad: 900 // Valor en el cual el color es máximo
+        radio: 70, // Radio de influencia de cada punto en pixeles sobre el mapa
+        maxIntensidad: 120 // Valor en el cual el color es máximo
       });
 
       this.mapa.anyadirCapa({
@@ -80,7 +80,16 @@ export class MapaPage implements OnInit {
 
       // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
 
-      const medidasOzono = [{
+      this.server.getAllMedidas().toPromise().then((medidasOzono) => {
+        try {
+          medidasOzono.forEach(medida => {
+            this.mapa.anyadirMedicion('o3', medida);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+      const medidasCo = [{
         latitud: 39.000466,
         longitud: -0.165349,
         valorMedido: 320
@@ -94,9 +103,12 @@ export class MapaPage implements OnInit {
         valorMedido: 703
     }];
 
-      medidasOzono.forEach(medicion => {
-        this.mapa.anyadirMedicion('o3', medicion);
+      medidasCo.forEach(medida => {
+        this.mapa.anyadirMedicion('co', medida);
       });
+
+      this.mapa.ocultarTodasLasCapas();
+      this.mapa.mostrarCapa('o3');
 
 
     }).catch((error) => {
@@ -111,5 +123,4 @@ export class MapaPage implements OnInit {
       this.mapa.mostrarCapa(capa);
     });
   }
-
 }
