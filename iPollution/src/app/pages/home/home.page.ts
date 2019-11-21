@@ -14,15 +14,9 @@ import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
 
-import {
-  Component
-} from '@angular/core';
-import {
-  Platform
-} from '@ionic/angular';
-import {
-  ReceptorBLE
-} from '../../core/services/ReceptorBle.service';
+import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { ReceptorBLE } from '../../core/services/ReceptorBle.service';
 // ----------------------------
 // Components
 // ----------------------------
@@ -41,6 +35,7 @@ export class HomePage {
     private ble: ReceptorBLE,
     private serve: LogicaDeNegocioFake,
   ) {
+    // this.ble.inizializar();
     // ACTUALIZAR DATOS
     setInterval(() => {
       this.hayQueActualizarMedicionesYEnviarlasAlServidor();
@@ -49,21 +44,23 @@ export class HomePage {
 
   ngOnInit = () => {
     // INICIALIZAR BLE
+    // this.ble.inizializar();
+  }
+
+  ionViewDidEnter = () => {
     this.ble.inizializar();
   }
+
   // --------------------------------------------------------
   // hayQueActualizarMedicionesYEnviarlasAlServidor()
   // --------------------------------------------------------
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
     const medicion = this.ble.obtenerO3();
 
-    // console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
-   /* this.serve.guardarMedida(medicion).subscribe(data => {
-      console.log(data);
-    }); */
+    console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
+    this.serve.guardarMedida(medicion);
 
     // --------------------------------------------------------
-
   }
 
 }

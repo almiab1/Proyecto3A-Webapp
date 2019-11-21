@@ -59,18 +59,28 @@ export class MapaPage implements OnInit {
       this.mapa.anyadirMarcador(
         'Posicion Actual', {lat: this.currentLocation.lat, lng: this.currentLocation.long}, 'assets/icon/gpsIcon.svg'
       );
+      this.mapa.anyadirMarcador(
+        'Estación oficial', {lat: 38.966754, lng: -0.185648}, 'assets/icon/courthouse.svg'
+      );
 
       // Genero la capa donde pondre las medidas de ozono
       this.mapa.anyadirCapa({
-        nombre: 'ozono',
+        nombre: 'o3',
         disipado: true, // Escalado del aspecto de los puntos en funcion del zoom
-        radio: 70, // Radio de influencia de cada punto en pixeles sobre el mapa
+        radio: 80, // Radio de influencia de cada punto en pixeles sobre el mapa
         maxIntensidad: 900 // Valor en el cual el color es máximo
+      });
+
+      this.mapa.anyadirCapa({
+        nombre: 'co',
+        disipado: true,
+        radio: 90,
+        maxIntensidad: 1000
       });
 
       // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
 
-      const medidas = [{
+      const medidasOzono = [{
         latitud: 39.000466,
         longitud: -0.165349,
         valorMedido: 320
@@ -84,8 +94,8 @@ export class MapaPage implements OnInit {
         valorMedido: 703
     }];
 
-      medidas.forEach(medicion => {
-        this.mapa.anyadirMedicion('ozono', medicion);
+      medidasOzono.forEach(medicion => {
+        this.mapa.anyadirMedicion('o3', medicion);
       });
 
 
@@ -94,5 +104,12 @@ export class MapaPage implements OnInit {
     });
   }
   // ----------------------------------------------------------------------------------------------
+
+   onSelectCapaChange(valores) {
+    this.mapa.ocultarTodasLasCapas();
+    valores.forEach(capa => {
+      this.mapa.mostrarCapa(capa);
+    });
+  }
 
 }
