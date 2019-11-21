@@ -67,8 +67,8 @@ export class HomePage {
 
     console.log('----------------GUARDAR MEDIDA----------------');
     // tslint:disable-next-line: max-line-length
-    if (medicion.valorMedido <= 0 || medicion.humedad <= 0 || medicion.temperatura <= 0 || medicion.latitud == undefined || medicion.longitud == undefined || medicion.tiempo == undefined || medicion.idTipoMedida <= 0) {
-      console.log('Medicion erronea')
+    if (medicion.valorMedido == -1 || medicion.humedad == -1 || medicion.temperatura == -1) {
+      console.log('Medicion erronea');
     } else {
       this.serve.guardarMedida(medicion);
     }

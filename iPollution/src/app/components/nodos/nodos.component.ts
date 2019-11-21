@@ -86,7 +86,7 @@ export class NodosComponent implements OnInit {
     this.nodos = this.nodos.filter(nodoDeseado => {
       let nodoDeseado1 = 'Nodo ' + nodoDeseado.idSensor;
       if (nodoDeseado1 && nodoBuscado) {
-        if (nodoDeseado.nombre.toLowerCase().indexOf(nodoBuscado.toLowerCase()) > -1) {
+        if (nodoDeseado1.toLowerCase().indexOf(nodoBuscado.toLowerCase()) > -1) {
           return true;
         }
         return false;
