@@ -40,12 +40,6 @@ export class EditarUsuariosComponent implements OnInit {
   tituloComponent: string;
   nodos: number;
   tipoModal: string;
-  // inputs
-  // nombre: string;
-  // nombre: string;
-  // nombre: string;
-  // nombre: string;
-  // nombre: string;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -91,7 +85,7 @@ export class EditarUsuariosComponent implements OnInit {
         if (this.tipoModal === 'anyadir') {
           console.log('--------------------AÑADIR USUARIO------------------------')
           console.table(user);
-          // this.serve.darDeAltaUsuario(user);
+          this.serve.darDeAltaUsuario(user);
         } else {
           console.log('--------------------EDITAR EDITAR------------------------')
           console.table(user);

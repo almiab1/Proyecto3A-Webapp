@@ -58,7 +58,7 @@ export class LogicaDeNegocioFake {
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            Authorization: localStorage.getItem('token')
         })
     };
 
@@ -171,15 +171,11 @@ export class LogicaDeNegocioFake {
     private peticionDelete(url, body) {
 
         this.http.delete(url, body)
-            .subscribe(
-                res => {
-                    console.log(res);
-                },
-                err => {
-                    console.log('ERROR --> ');
-                    console.log(err);
-                }
-            );
+            .subscribe(data => {
+                console.log('Se ha hecho la peticion post');
+            }, err => {
+                console.log('ERROR!' + err);
+            });
     }
     // ------------------------------------------------------------------------------------
 
@@ -193,7 +189,7 @@ export class LogicaDeNegocioFake {
             .get(this.urlGET, this.httpOptions)
             .pipe();
 
-            // return this.usuariosFicticios;
+        // return this.usuariosFicticios;
     }
 
     // ------------------------------------------------------------------------------------
@@ -204,7 +200,7 @@ export class LogicaDeNegocioFake {
             .get(this.urlGetUsuarios, this.httpOptions)
             .pipe();
 
-            // return this.usuariosFicticios;
+        // return this.usuariosFicticios;
     }
 
     // ------------------------------------------------------------------------------------
@@ -255,14 +251,14 @@ export class LogicaDeNegocioFake {
             .set('temperatura', '' + data.temperatura)
             .set('humedad', '' + data.humedad);
 
-        //this.peticionPost(this.urlBasureroGuardarLocal, body);
+        // this.peticionPost(this.urlBasureroGuardarLocal, body);
         // this.http.post(this.urlBasureroGuardarLocal, body, this.httpOptions).subscribe(data => {
         //     console.log("Se ha hecho la peticion estupendamente");
         // }, err => {
         //     console.log("ERROR!" + err);
         // });
 
-        this.peticionPost(this.urlBasureroGuardar, body)
+        this.peticionPost(this.urlBasureroGuardar, body);
     }
 
     // ------------------------------------------------------------------------------------
