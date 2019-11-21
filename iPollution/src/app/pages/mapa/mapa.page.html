@@ -18,9 +18,7 @@
   </ion-header>
 
 <ion-content>
-    <ion-row>
-        <ion-col class="ion-align-items-center ion-justify-content-center" expand="full">
-            <ion-item color="secundario" expand="full">
+            <ion-item color="secundario" class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed">
                 <ion-label>Capas</ion-label>
                 <ion-select name="selectCapa"  multiple="true" cancelText="Cancelar" okText="Aceptar"  (ionChange)="onSelectCapaChange($event.target.value)">
                   <ion-select-option selected="true" value="o3">Ozono</ion-select-option>
@@ -28,7 +26,5 @@
                   <ion-select-option value="so2">Dióxido de azufre</ion-select-option>
                 </ion-select>
               </ion-item>
-        </ion-col>
-      </ion-row>
   <div #mapElement class="mapElement"></div>
 </ion-content>

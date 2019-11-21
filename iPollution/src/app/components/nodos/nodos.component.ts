@@ -48,10 +48,6 @@ export class NodosComponent implements OnInit {
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
   ) {
-    this.serve.getNodos().then(
-      res => this.nodos = res,
-      err => console.log(err)
-    )
   }
   // ----------------------------------------------------------------------------
 
@@ -59,15 +55,10 @@ export class NodosComponent implements OnInit {
   // ----------------------------------------------------------------------------
   // ngOnInit()
   ngOnInit() {
-    this.serve.getNodos().then(
-      res => this.nodos = res,
-      err => console.log(err)
-    )
-    this.nodoFiltrados = this.nodos;
   }
   // ----------------------------------------------------------------------------
-  ionViewWillEnter() {
-    this.serve.getNodos().then(
+  async ionViewWillEnter() {
+    await this.serve.getNodos().then(
       res => this.nodos = res,
       err => console.log(err)
     )
