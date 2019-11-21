@@ -24,9 +24,6 @@
         <ion-toolbar expand="full">
           <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras" (ionInput)="filterList($event)">
           </ion-searchbar>
-          <ion-button slot="end" color="success" disabled="false" (click)="openModal('Añadir nodo','','','')">
-            <ion-icon name="add" size="large" expand="block" ></ion-icon>
-          </ion-button>
         </ion-toolbar>
       </ion-col>
     </ion-row>
@@ -37,18 +34,12 @@
             <ion-list-header>
               <ion-title>Lista de nodos:</ion-title>
             </ion-list-header>
-            <ion-item *ngFor="let item of nodos" (click)="openModal(item.nombre,item.nombre,item.tipo,item.usuario)">
-              {{ item.nombre }}
+            <ion-item *ngFor="let item of nodos" (click)="openModal(item)">
+              Nodo {{ item.idSensor }}
             </ion-item>
           </ion-list>
         </div>
       </ion-col>
     </ion-row>
-    <!--
-    <ion-row *ngIf="platform.is('android','ios')">
-      <ion-col>
-        <ion-button (click)="openModal()">Open Modal</ion-button>
-      </ion-col>
-    </ion-row>-->
   </ion-grid>
 </ion-content>

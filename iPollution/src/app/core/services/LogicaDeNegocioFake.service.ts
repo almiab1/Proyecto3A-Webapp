@@ -27,51 +27,90 @@ import {
 // ------------------------------------------------------------------------------------
 @Injectable()
 export class LogicaDeNegocioFake {
-    // URL server en local
-    urlGetLocal = 'https://192.168.100.205/getultimaMedicion';
-    urlPostLocal = 'https://192.168.100.103/guardarO3/';
+
+    // URL Base
+    private urlServe = 'https://osblasae.upv.edu.es';
+
     // URL server remoto
-    urlPOST = 'https://osblasae.upv.edu.es/guardarMedida';
-    urlGET = 'https://192.168.0.109:8080/getUltimaMedida';
+    urlPOST = this.urlServe + '/guardarMedida';
+    urlGET = this.urlServe + '/getUltimaMedida';
+    urlGETAll = this.urlServe + '/getAllMedidas';
 
     urlGetMedidasOficiales = 'https://osblasae.upv.edu.es/getMedidasOficiales';
 
+
     // API de admin
-    urlEditarUsuario = 'https://osblasae.upv.edu.es/admin/editarUsuario';
-    urlAsociarSensorUsuario = 'https://osblasae.upv.edu.es/admin/asociarSensorAUsuario';
-    urlDarDeBajaUsuario = 'https://osblasae.upv.edu.es/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuario = 'https://osblasae.upv.edu.es/admin/darDeAltaUsuario';
-    urlDarDeBajaSensor = 'https://osblasae.upv.edu.es/admin/darDeBajaSensor';
-    urlDarDeAltaSensor = 'https://osblasae.upv.edu.es/admin/darDeAltaSensor';
-    urlEditarUsuarioAdministrador = 'https://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
-
-    // API de técnico
-    urlBasureroGuardar = 'https://osblasae.upv.edu.es/basurero/guardarMedida';
-    urlEditarUsuarioBasurero = 'https://osblasae.upv.edu.es/admin/editarUsuarioBasurero';
-
-    // API de admin Local
-    urlEditarUsuarioLocal = 'https://osblasae/admin/editarUsuario';
-    urlAsociarSensorUsuarioLocal = 'https://osblasae.upv.edu.es/admin/asociarSensorUsuario';
-    urlDarDeBajaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuarioLocal = 'https://osblasae.upv.edu.es/admin/darDeAltaUsuario';
-    urlDarDeBajaSensorLocal = 'https://osblasae.upv.edu.es/admin/darDeBajaSensor';
-    urlDarDeAltaSensorLocal = 'https://osblasae.upv.edu.es/admin/darDeAltaSensor';
-    urlEditarUsuarioAdministradorLocal = 'https://osblasae.upv.edu.es/admin/editarUsuarioAdministrador';
+    urlGetUsuarios = this.urlServe + '/admin/getUsuarios';
+    urlGetNodos = this.urlServe + '/admin/getSensores';
+    urlEditarUsuario = this.urlServe + '/admin/editarUsuario';
+    urlAsociarSensorUsuario = this.urlServe + '/admin/asociarSensorUsuario';
+    urlDarDeBajaUsuario = this.urlServe + '/admin/darDeBajaUsuario';
+    urlDarDeAltaUsuario = this.urlServe + '/admin/darDeAltaUsuario';
+    urlDarDeBajaSensor = this.urlServe + '/admin/darDeBajaSensor';
+    urlDarDeAltaSensor = this.urlServe + '/admin/darDeAltaSensor';
+    urlEditarUsuarioAdministrador = this.urlServe + '/admin/editarUsuarioAdministrador';
 
     // Api de técnico local
-    urlBasureroGuardarLocal = 'https://osblasae.upv.edu.es/basurero/guardarMedida';
-    urlEditarUsuarioBasureroLocal = 'https://osblasae.upv.edu.es/basurero/editarUsuarioBasurero';
+    urlBasureroGuardar = this.urlServe + '/basurero/guardarMedida';
+    urlEditarUsuarioBasurero = this.urlServe + '/basurero/editarUsuarioBasurero';
 
     // Http Options
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
         })
     };
 
+    // PRUEBAS USERS Y NODOS
+    usuariosFicticios: any;
+
+    nodosFicticios: any;
+
     constructor(
         public http: HttpClient
-    ) {}
+    ) {
+        this.nodosFicticios = [{
+                descripcion: 'Ozono',
+                idUsuario: '1234@gmail.com',
+                idSensor: 1
+            },
+            {
+                descripcion: 'Ozono',
+                idUsuario: '4567@gmail.com',
+                idSensor: 2
+            }
+        ];
+        this.usuariosFicticios = [{
+                nombre: 'Santiago Moreno',
+                descripcion: 'Basurero',
+                idUsuario: '1234@5678.com',
+                telefono: '622584526',
+                idSensor: '01',
+            },
+            {
+                nombre: 'Juan Pedro Rico',
+                descripcion: 'Basurero',
+                idUsuario: '5678@5678.com',
+                telefono: '62525168',
+                idSensor: '01',
+            },
+            {
+                nombre: 'Antonio Fernandez',
+                descripcion: 'Basurero',
+                idUsuario: '9101@5678.com',
+                telefono: '6548156',
+                idSensor: '01',
+            },
+            {
+                nombre: 'Pedro Jose Fernandez',
+                descripcion: 'Basurero',
+                idUsuario: '1213@5678.com',
+                telefono: '6155895522',
+                idSensor: '01',
+            },
+        ];
+    }
 
     // Handle API errors
     handleError(error: HttpErrorResponse) {
@@ -95,10 +134,10 @@ export class LogicaDeNegocioFake {
     // Funciones para GET y POS
     // POST
     private peticionPost(url, body) {
-        this.http.post(url, body)
+        this.http.post(url, body, this.httpOptions)
             .subscribe(
                 res => {
-                    console.log(res);
+                    // console.log(res);
                 },
                 err => {
                     console.log('ERROR --> ');
@@ -108,17 +147,27 @@ export class LogicaDeNegocioFake {
     }
     // GET
     private peticionGet(url) {
+        console.log(url);
+
+        let dataToReturn: any;
         this.http.get(url)
             .subscribe(
                 res => {
+                    console.log('------------------__RESTPUESTA GET__-------------');
                     console.log(res);
+                    dataToReturn = res;
                 },
                 err => {
                     if (err.status != 200) {
                         console.log('ERROR --> ' + err);
+                        dataToReturn = err.status;
                     }
                 }
             );
+        console.log('--------------------__RETURN GET__-------------');
+        console.log(dataToReturn);
+
+        return dataToReturn;
     }
     // ------------------------------------------------------------------------------------
 
@@ -127,32 +176,22 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     // GET getUltimaMedicion()
     // ------------------------------------------------------------------------------------
-    getUltimaMedicion(): Observable < any > {
-        return this.http
-            .get(this.urlGET, this.httpOptions)
-            .pipe(
-                // retry(2),
-                // catchError(this.handleError)
-            );
+    public async getUltimaMedicion() {
+        const medicion: any = await this.peticionGet(this.urlGET);
+        return JSON.parse(medicion);
     }
 
-    // -----------------------------GET----------------------------------------------------
     // ------------------------------------------------------------------------------------
     // GET getUsuarios()
     // ------------------------------------------------------------------------------------
-    getUsuarios() {
-        // return this.http
-        //     .get(this.urlGET, this.httpOptions)
-        //     .pipe(
-        //         // retry(2),
-        //         // catchError(this.handleError)
-        //     );
-        const datos = [
-            'Alex',
-            'Pepe',
-            'Juan'
-        ];
-        return datos;
+    public async getUsuarios() {
+
+        let usuarios: any;
+        usuarios = await this.peticionGet(this.urlGetUsuarios);
+        console.log('-------------GET USUARIOS LOGICA------------------');
+        console.table(usuarios);
+        return usuarios;
+        // return this.usuariosFicticios;
     }
 
     // ------------------------------------------------------------------------------------
@@ -164,6 +203,30 @@ export class LogicaDeNegocioFake {
             .pipe();
     }
 
+    // ------------------------------------------------------------------------------------
+    // GET getNodos()
+    // ------------------------------------------------------------------------------------
+    public async getNodos() {
+
+        let nodos: any;
+        nodos = await this.peticionGet(this.urlGetNodos);
+        // console.log('-------------GET NODOS------------------');
+        // console.table(nodos);
+        return nodos;
+        //return this.nodosFicticios;
+    }
+
+    // ------------------------------------------------------------------------------------
+    // GET getAllMedidas()
+    // ------------------------------------------------------------------------------------
+    getAllMedidas(): Observable < any > {
+        return this.http
+            .get(this.urlGETAll, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
     // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // POST guardarMedida
@@ -181,7 +244,12 @@ export class LogicaDeNegocioFake {
             .set('temperatura', '' + data.temperatura)
             .set('humedad', '' + data.humedad);
 
-        this.peticionPost(this.urlBasureroGuardarLocal, body);
+        //this.peticionPost(this.urlBasureroGuardarLocal, body);
+        this.http.post('https://osblasae.upv.edu.es/prueba', body, this.httpOptions).subscribe( data => {
+            console.log("Se ha hecho la peticion estupendamente");
+        }, err => {
+            console.log("ERROR!" + err);
+        });
     }
 
     // ------------------------------------------------------------------------------------
@@ -196,7 +264,7 @@ export class LogicaDeNegocioFake {
             .set('tipoUsuario', '' + data.tipoUsuario)
             .set('telefono', '' + data.telefono);
 
-        this.peticionPost(this.urlEditarUsuarioAdministradorLocal, body);
+        this.peticionPost(this.urlEditarUsuarioAdministrador, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -211,7 +279,9 @@ export class LogicaDeNegocioFake {
             .set('tipoUsuario', '' + data.tipoUsuario)
             .set('telefono', '' + data.telefono);
 
-        this.peticionPost(this.urlDarDeAltaUsuarioLocal, body);
+        // this.usuariosFicticios.push(data);
+
+        this.peticionPost(this.urlDarDeAltaUsuario, body);
 
     }
 
@@ -224,7 +294,9 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idTipoSensor', '' + data.idTipoSensor);
 
-        this.peticionPost(this.urlDarDeAltaSensorLocal, body);
+        // this.nodosFicticios.push(data);
+
+        this.peticionPost(this.urlDarDeAltaSensor, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -237,7 +309,7 @@ export class LogicaDeNegocioFake {
             .set('idUsuario', '' + data.idUsuario)
             .set('idSensor', '' + data.idSensor);
 
-        this.peticionPost(this.urlAsociarSensorUsuarioLocal, body);
+        this.peticionPost(this.urlAsociarSensorUsuario, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -249,7 +321,17 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idUsuario', '' + data.idUsuario);
 
-        this.peticionPost(this.urlDarDeBajaUsuarioLocal, body);
+        // // Eleminar seleccionado ------- PRUEBA ----------------
+        // this.usuariosFicticios.forEach(element => {
+        //     console.log(element);
+        //     if (element.idUsuario === data) {
+        //         let index = this.usuariosFicticios.indexOf(element);
+        //         console.log(index);
+        //         this.usuariosFicticios.pop(index);
+        //     }
+        // });
+
+        this.peticionPost(this.urlDarDeBajaUsuario, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -261,8 +343,17 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idSensor', '' + data.idSensor);
 
-        this.peticionPost(this.urlDarDeBajaSensorLocal, body);
+        // // Eleminar seleccionado ------- PRUEBA
+        // this.nodosFicticios.forEach(element => {
+        //     console.log(element);
+        //     if (element.idSensor === data) {
+        //         let index = this.nodosFicticios.indexOf(element);
+        //         this.nodosFicticios.pop(index);
+        //     }
+        // });
+
+        this.peticionPost(this.urlDarDeBajaSensor, body);
     }
 }
 
-// ------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------

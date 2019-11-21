@@ -20,11 +20,11 @@
   <ion-list expand="full" slot="fixed">
     <ion-item>
       <ion-label position="floating">NobreNodo: </ion-label>
-      <ion-input type="text" value="{{modalTitle}}"></ion-input>
+      <ion-input type="text" value="{{nombreNodo}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Tipo nodo: </ion-label>
-      <ion-input type="number" value="{{tipoNodo}}"></ion-input>
+      <ion-input type="text" value="{{tipoNodo}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Usuario del nodo:: </ion-label>
@@ -33,7 +33,7 @@
   </ion-list>
   <!-- Botones comfirmacion -->
   <div class="ion-text-end" vertical="bottom" slot="fixed">
-    <ion-button color="success" (click)="closeModal('aceptar')">Aceptar</ion-button>
-    <ion-button color="danger" (click)="closeModal('cancelar')">Cancelar</ion-button>
+    <ion-button color="success" size="large" (click)="closeModal('guardar')"><ion-icon size="large" name="save"></ion-icon></ion-button>
+    <ion-button color="danger" size="large" (click)="closeModal('eliminar')"><ion-icon size="large" name="trash"></ion-icon></ion-button>
   </div>
 </ion-content>

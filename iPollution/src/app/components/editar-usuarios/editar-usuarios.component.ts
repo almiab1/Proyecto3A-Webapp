@@ -1,3 +1,6 @@
+import {
+  LogicaDeNegocioFake
+} from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // editar-usuarios.component.ts
 // Controlador modal editar usuarios
@@ -33,14 +36,18 @@ export class EditarUsuariosComponent implements OnInit {
   // Propiedades
   nombreUser: string;
   emailUsuario: string;
-  nodosUser: string;
+  telefono: string;
   tituloComponent: string;
+  nodos: number;
+  tipoModal: string;
+
 
   // ----------------------------------------------------------------------------
   // Constructor
   constructor(
     private modalController: ModalController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private serve: LogicaDeNegocioFake
   ) {}
   // ----------------------------------------------------------------------------
 
@@ -52,8 +59,10 @@ export class EditarUsuariosComponent implements OnInit {
     // tslint:disable-next-line: radix
     this.emailUsuario = this.navParams.data.email;
     this.nombreUser = this.navParams.data.nombre;
-    this.nodosUser = this.navParams.data.nodos;
+    this.telefono = this.navParams.data.telefono;
     this.tituloComponent = this.navParams.data.titulo;
+    this.nodos = this.navParams.data.nodos;
+    this.tipoModal = this.navParams.data.tipoModal;
   }
   // ----------------------------------------------------------------------------
 
@@ -64,18 +73,37 @@ export class EditarUsuariosComponent implements OnInit {
     const onClosedData = 'ModalCerrado';
 
     switch (tipoBoton) {
-      case 'aceptar': {
-        console.log('----------Boton aceptar modal------------');
+      case 'guardar': {
+        console.log('----------Boton guardar modal------------');
+
+        let user = {
+          nombre: this.nombreUser,
+          descripcion: this.tituloComponent,
+          idUsuario: this.emailUsuario,
+          telefono: this.telefono,
+          idSensor: this.nodos,
+        }
+        if (this.tipoModal === 'anyadir') {
+          this.serve.darDeAltaUsuario(user);
+        } else {
+          this.serve.editarUsuario(user);
+        }
+
         await this.modalController.dismiss(onClosedData);
         break;
       }
-      case 'cancelar': {
-        console.log('----------Boton cancelar modal------------');
+      case 'eliminar': {
+        console.log('----------Boton eliminar modal------------');
+
+        let user = this.emailUsuario;
+        this.serve.darDeBajaUsuario(user);
+
         await this.modalController.dismiss(onClosedData);
         break;
       }
       default: {
         console.log('----------Default------------');
+
         await this.modalController.dismiss(onClosedData);
         break;
       }
