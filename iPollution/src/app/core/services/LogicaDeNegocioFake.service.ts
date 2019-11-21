@@ -179,8 +179,8 @@ export class LogicaDeNegocioFake {
         usuarios = await this.peticionGet(this.urlGetUsuarios);
         console.log('-------------GET USUARIOS LOGICA------------------');
         console.table(usuarios);
-        // return usuarios;
-        return this.usuariosFicticios;
+        return usuarios;
+        // return this.usuariosFicticios;
     }
 
     // -----------------------------POST---------------------------------------------------
@@ -193,8 +193,8 @@ export class LogicaDeNegocioFake {
         nodos = await this.peticionGet(this.urlGetNodos);
         // console.log('-------------GET NODOS------------------');
         // console.table(nodos);
-        // return nodos;
-        return this.nodosFicticios;
+        return nodos;
+        //return this.nodosFicticios;
     }
 
     // ------------------------------------------------------------------------------------
@@ -243,9 +243,9 @@ export class LogicaDeNegocioFake {
             .set('tipoUsuario', '' + data.tipoUsuario)
             .set('telefono', '' + data.telefono);
 
-        this.usuariosFicticios.push(data);
+        // this.usuariosFicticios.push(data);
 
-        // this.peticionPost(this.urlDarDeAltaUsuario, body);
+        this.peticionPost(this.urlDarDeAltaUsuario, body);
 
     }
 
@@ -258,9 +258,9 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idTipoSensor', '' + data.idTipoSensor);
 
-        this.nodosFicticios.push(data);
+        // this.nodosFicticios.push(data);
 
-        // this.peticionPost(this.urlDarDeAltaSensor, body);
+        this.peticionPost(this.urlDarDeAltaSensor, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -285,17 +285,17 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idUsuario', '' + data.idUsuario);
 
-        // Eleminar seleccionado ------- PRUEBA ----------------
-        this.usuariosFicticios.forEach(element => {
-            console.log(element);
-            if (element.idUsuario === data) {
-                let index = this.usuariosFicticios.indexOf(element);
-                console.log(index);
-                this.usuariosFicticios.pop(index);
-            }
-        });
+        // // Eleminar seleccionado ------- PRUEBA ----------------
+        // this.usuariosFicticios.forEach(element => {
+        //     console.log(element);
+        //     if (element.idUsuario === data) {
+        //         let index = this.usuariosFicticios.indexOf(element);
+        //         console.log(index);
+        //         this.usuariosFicticios.pop(index);
+        //     }
+        // });
 
-        // this.peticionPost(this.urlDarDeBajaUsuario, body);
+        this.peticionPost(this.urlDarDeBajaUsuario, body);
     }
 
     // ------------------------------------------------------------------------------------
@@ -307,15 +307,16 @@ export class LogicaDeNegocioFake {
         const body = new HttpParams()
             .set('idSensor', '' + data.idSensor);
 
-        // Eleminar seleccionado ------- PRUEBA
-        this.nodosFicticios.forEach(element => {
-            console.log(element);
-            if (element.idSensor === data) {
-                let index = this.nodosFicticios.indexOf(element);
-                this.nodosFicticios.pop(index);
-            }
-        });
-        // this.peticionPost(this.urlDarDeBajaSensor, body);
+        // // Eleminar seleccionado ------- PRUEBA
+        // this.nodosFicticios.forEach(element => {
+        //     console.log(element);
+        //     if (element.idSensor === data) {
+        //         let index = this.nodosFicticios.indexOf(element);
+        //         this.nodosFicticios.pop(index);
+        //     }
+        // });
+
+        this.peticionPost(this.urlDarDeBajaSensor, body);
     }
 }
 
