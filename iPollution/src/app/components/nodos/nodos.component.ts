@@ -57,12 +57,14 @@ export class NodosComponent implements OnInit {
   ngOnInit() {
   }
   // ----------------------------------------------------------------------------
-  async ionViewWillEnter() {
-    await this.serve.getNodos().then(
-      res => this.nodos = res,
-      err => console.log(err)
+  ionViewWillEnter() {
+    this.serve.getNodos().subscribe(
+      res => {
+        this.nodos = res;
+        this.nodoFiltrados = this.nodos;
+      },
+      err => console.log(err),
     )
-    this.nodoFiltrados = this.nodos;
   }
 
   // ----------------------------------------------------------------------------
