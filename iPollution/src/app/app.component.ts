@@ -99,24 +99,24 @@ export class AppComponent {
         {
           title: 'Adinistración',
           url: '/admin',
-          icon: 'cog',
+          icon: 'folder',
           subPages: [{
               title: 'Usuarios',
-              icon: 'add',
+              icon: 'people',
               url: '/components/usuarios'
             },
             {
               title: 'Nodos',
-              icon: 'add',
+              icon: 'radio-button-on',
               url: '/components/nodos'
             }
           ]
         },
-        {
-          title: 'Configuración',
-          url: '/config',
-          icon: 'cog'
-        },
+        // {
+        //   title: 'Configuración',
+        //   url: '/config',
+        //   icon: 'options'
+        // },
       ];
     } else {
       this.appPages = [{
@@ -153,24 +153,24 @@ export class AppComponent {
         {
           title: 'Adinistración',
           url: '/admin',
-          icon: 'cog',
+          icon: 'folder',
           subPages: [{
               title: 'Usuarios',
-              icon: 'add',
+              icon: 'people',
               url: '/components/usuarios'
             },
             {
               title: 'Nodos',
-              icon: 'add',
+              icon: 'radio-button-on',
               url: '/components/nodos'
             }
           ]
         },
-        {
-          title: 'Configuración',
-          url: '/config',
-          icon: 'cog'
-        },
+        // {
+        //   title: 'Configuración',
+        //   url: '/config',
+        //   icon: 'options'
+        // },
       ];
     }
 

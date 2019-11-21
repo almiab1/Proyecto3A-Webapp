@@ -65,15 +65,38 @@ export class MapaPage implements OnInit {
 
       // Genero la capa donde pondre las medidas de ozono
       this.mapa.anyadirCapa({
-        nombre: 'ozono',
+        nombre: 'o3',
         disipado: true, // Escalado del aspecto de los puntos en funcion del zoom
         radio: 70, // Radio de influencia de cada punto en pixeles sobre el mapa
-        maxIntensidad: 900 // Valor en el cual el color es máximo
+        maxIntensidad: 120 // Valor en el cual el color es máximo
+      });
+
+      this.mapa.anyadirCapa({
+        nombre: 'co',
+        disipado: true,
+        radio: 90,
+        maxIntensidad: 1000
+      });
+
+      this.mapa.anyadirCapa({
+        nombre: 'so2',
+        disipado: true,
+        radio: 60,
+        maxIntensidad: 800
       });
 
       // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
 
-      const medidas = [{
+      this.server.getAllMedidas().toPromise().then((medidasOzono) => {
+        try {
+          medidasOzono.forEach(medida => {
+            this.mapa.anyadirMedicion('o3', medida);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      });
+      const medidasCo = [{
         latitud: 39.000466,
         longitud: -0.165349,
         valorMedido: 320
@@ -87,9 +110,31 @@ export class MapaPage implements OnInit {
         valorMedido: 703
     }];
 
-      medidas.forEach(medicion => {
-        this.mapa.anyadirMedicion('ozono', medicion);
+
+      const medidasSo2 = [{
+      latitud: 39.007554,
+      longitud:  -0.166646,
+      valorMedido: 620
+  }, {
+      latitud: 39.009055,
+      longitud:  -0.167912,
+      valorMedido: 130
+  }, {
+      latitud: 39.007703,
+      longitud:  -0.168824,
+      valorMedido: 270
+  }];
+
+      medidasCo.forEach(medida => {
+        this.mapa.anyadirMedicion('co', medida);
       });
+
+      medidasSo2.forEach(medida => {
+        this.mapa.anyadirMedicion('so2', medida);
+      });
+
+      this.mapa.ocultarTodasLasCapas();
+      this.mapa.mostrarCapa('o3');
 
 
     }).catch((error) => {
@@ -98,4 +143,10 @@ export class MapaPage implements OnInit {
   }
   // ----------------------------------------------------------------------------------------------
 
+   onSelectCapaChange(valores) {
+    this.mapa.ocultarTodasLasCapas();
+    valores.forEach(capa => {
+      this.mapa.mostrarCapa(capa);
+    });
+  }
 }
