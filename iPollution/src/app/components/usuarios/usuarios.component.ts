@@ -39,27 +39,16 @@ export class UsuariosComponent implements OnInit {
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
   ) {
-    this.serve.getUsuarios().then(
-      res => this.users = res,
-      err => console.log(err)
-    )
   }
   // ----------------------------------------------------------------------------
 
 
   // ----------------------------------------------------------------------------
   // ngOnInit()
-  ngOnInit() {
-    this.serve.getUsuarios().then(
-      res => this.users = res,
-      err => console.log(err)
-    )
-
-    this.usersFiltrados = this.users;
-  }
+  ngOnInit() {}
   // ----------------------------------------------------------------------------
-  ionViewWillEnter() {
-    this.serve.getUsuarios().then(
+  async ionViewWillEnter() {
+    await this.serve.getUsuarios().then(
       res => this.users = res,
       err => console.log(err)
     )

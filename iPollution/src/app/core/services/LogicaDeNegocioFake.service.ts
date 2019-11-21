@@ -143,15 +143,12 @@ export class LogicaDeNegocioFake {
             );
     }
     // GET
-    private peticionGet(url) {
-        console.log(url);
+    private async peticionGet(url) {
 
         let dataToReturn: any;
         this.http.get(url)
             .subscribe(
                 res => {
-                    console.log('------------------__RESTPUESTA GET__-------------');
-                    console.log(res);
                     dataToReturn = res;
                 },
                 err => {
