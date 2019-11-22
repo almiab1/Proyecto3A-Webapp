@@ -4,7 +4,7 @@
   "author": "Equipo4",
   "scripts": {
     "compileAndroid": "ionic cordova run android --device",
-    "compileServe": "ionic serve",
+    "compileServe": "ionic serve --livereload",
     "build-web": "ionic cordova run browser",
     "ng": "ng",
     "start": "ng serve",

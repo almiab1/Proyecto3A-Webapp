@@ -45,17 +45,24 @@ export class UsuariosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // ngOnInit()
-  ngOnInit() {}
-  // ----------------------------------------------------------------------------
-  ionViewWillEnter() {
-    this.serve.getUsuarios().subscribe(
+  async ngOnInit() {
+    await this.serve.getUsuarios().subscribe(
       res => {
         this.users = res;
         this.usersFiltrados = this.users;
       },
       err => console.log(err),
     )
-    this.usersFiltrados = this.users
+  }
+  // ----------------------------------------------------------------------------
+  async ionViewWillEnter() {
+    await this.serve.getUsuarios().subscribe(
+      res => {
+        this.users = res;
+        this.usersFiltrados = this.users;
+      },
+      err => console.log(err),
+    )
   }
 
   // ----------------------------------------------------------------------------
@@ -126,6 +133,13 @@ export class UsuariosComponent implements OnInit {
         this.dataReturned = dataReturned.data;
         // alert('Modal Sent Data :'+ dataReturned);
       }
+      this.serve.getUsuarios().subscribe(
+        res => {
+          this.users = res;
+          this.usersFiltrados = this.users;
+        },
+        err => console.log(err),
+      )
     });
 
     return await modal.present();

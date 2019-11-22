@@ -86,6 +86,11 @@ export class AppComponent {
           icon: 'locate'
         },
         {
+          title: 'Rutas',
+          url: '/rutas',
+          icon: 'navigate'
+        },
+        {
           title: '+Info',
           url: '/mas-info',
           icon: 'information-circle-outline',

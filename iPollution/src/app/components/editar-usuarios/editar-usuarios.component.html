@@ -8,7 +8,7 @@
         </ion-col>
 
         <ion-col size="10">
-            <ion-title color="acentuado" size="large" class="ion-text-center">{{tituloComponent}}</ion-title>
+          <ion-title color="acentuado" size="large" class="ion-text-center">{{tituloComponent}}</ion-title>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -19,26 +19,42 @@
 <ion-content>
   <ion-list expand="full" slot="fixed">
     <ion-item>
+      <ion-item *ngIf="tipoModal == 'anyadir'">
+        <ion-label position="floating">Tipo de Usuario: </ion-label>
+        <ion-input type="text" [(ngModel)]="tipoUsuario" id="input"></ion-input>
+      </ion-item>
       <ion-label position="floating">Nombre: </ion-label>
-      <ion-input type="text" value="{{nombreUser}}"></ion-input>
+      <ion-input type="text" value="{{nombreUser}}" [(ngModel)]="nombreUser" id="input"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">E-mail: </ion-label>
-      <ion-input type="text" value="{{emailUsuario}}"></ion-input>
+      <ion-input type="email" value="{{emailUsuario}}" [(ngModel)]="emailUsuario" id="input"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="tipoModal == 'anyadir'">
+      <ion-label position="floating">Contraseña: </ion-label>
+      <ion-input type="password" value="{{contrasenya}}" [(ngModel)]="contrasenya" id="input"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Telefono: </ion-label>
-      <ion-input type="text" value="{{telefono}}"></ion-input>
+      <ion-input type="text" value="{{telefono}}" [(ngModel)]="telefono" id="input"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="tipoModal != 'anyadir'">
       <ion-label position="floating">Nodos: </ion-label>
-      <ion-input type="number" value="{{nodos}}"></ion-input>
+      <ion-input type="number" value="{{nodos}}" [(ngModel)]="nodos" id="input"></ion-input>
     </ion-item>
   </ion-list>
 
   <!-- Botones comfirmacion -->
   <div class="ion-text-end" vertical="bottom" slot="fixed">
-    <ion-button color="success" size="large" (click)="closeModal('guardar')"><ion-icon size="large" name="save"></ion-icon></ion-button>
-    <ion-button color="danger" size="large" (click)="closeModal('eliminar')"><ion-icon  size="large" name="trash"></ion-icon></ion-button>
+    <div *ngIf="tipoModal == 'anyadir'">
+      <ion-button color="success" size="large" (click)="closeModal('guardar')">
+        <ion-icon size="large" name="save"></ion-icon>
+      </ion-button>
+    </div>
+    <div *ngIf="tipoModal != 'anyadir'">
+      <ion-button color="danger" size="large" (click)="closeModal('eliminar')">
+        <ion-icon size="large" name="trash"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 </ion-content>

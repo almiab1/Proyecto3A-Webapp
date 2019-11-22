@@ -40,7 +40,8 @@ export class EditarUsuariosComponent implements OnInit {
   tituloComponent: string;
   nodos: number;
   tipoModal: string;
-
+  contrasenya: any;
+  tipoUsuario: string;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -78,16 +79,14 @@ export class EditarUsuariosComponent implements OnInit {
 
         let user = {
           nombre: this.nombreUser,
-          descripcion: this.tituloComponent,
+          idTipoUsuario: this.tipoUsuario,
           idUsuario: this.emailUsuario,
           telefono: this.telefono,
           idSensor: this.nodos,
+          contrasenya: this.contrasenya
         }
-        if (this.tipoModal === 'anyadir') {
-          this.serve.darDeAltaUsuario(user);
-        } else {
-          this.serve.editarUsuario(user);
-        }
+
+        this.serve.darDeAltaUsuario(user);
 
         await this.modalController.dismiss(onClosedData);
         break;
@@ -96,6 +95,8 @@ export class EditarUsuariosComponent implements OnInit {
         console.log('----------Boton eliminar modal------------');
 
         let user = this.emailUsuario;
+        console.log('--------------------ElIMINAR USUARIO------------------------')
+        console.table(user);
         this.serve.darDeBajaUsuario(user);
 
         await this.modalController.dismiss(onClosedData);
