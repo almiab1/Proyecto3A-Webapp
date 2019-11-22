@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-tips',
@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TipsComponent implements OnInit {
 
-  constructor() { }
+  consejos: string[] = ['aaaaaaaaaaaaaaaaa', 'bbbbbbbbbbbbbbbbbbbbb'];
+
+  constructor(private ngZone: NgZone) { }
 
   ngOnInit() {}
 
