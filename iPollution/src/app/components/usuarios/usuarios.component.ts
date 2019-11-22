@@ -47,13 +47,15 @@ export class UsuariosComponent implements OnInit {
   // ngOnInit()
   ngOnInit() {}
   // ----------------------------------------------------------------------------
-  async ionViewWillEnter() {
-    await this.serve.getUsuarios().then(
-      res => this.users = res,
-      err => console.log(err)
+  ionViewWillEnter() {
+    this.serve.getUsuarios().subscribe(
+      res => {
+        this.users = res;
+        this.usersFiltrados = this.users;
+      },
+      err => console.log(err),
     )
-
-    this.usersFiltrados = this.users;
+    this.usersFiltrados = this.users
   }
 
   // ----------------------------------------------------------------------------

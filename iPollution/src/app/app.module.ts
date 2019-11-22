@@ -28,9 +28,18 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import {LoginPage} from './pages/login/login.page';
 
 import {ChartsModule} from 'ng2-charts';
+import { TipsComponent } from './components/tips/tips.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginPage, UsuariosComponent, NodosComponent, EditarComponent, EditarUsuariosComponent],
+  declarations: [
+    AppComponent,
+    LoginPage,
+    UsuariosComponent,
+    NodosComponent,
+    EditarComponent,
+    EditarUsuariosComponent,
+    TipsComponent
+  ],
   entryComponents: [LoginPage],
   imports: [
     BrowserModule,

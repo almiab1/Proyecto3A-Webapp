@@ -146,10 +146,10 @@ export class LogicaDeNegocioFake {
             );
     }
     // GET
-    private async peticionGet(url) {
+    private peticionGet(url) {
 
         let dataToReturn: any;
-        this.http.get(url,this.httpOptions)
+        this.http.get(url, this.httpOptions)
             .subscribe(
                 res => {
                     dataToReturn = res;
@@ -188,24 +188,23 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     // GET getUltimaMedicion()
     // ------------------------------------------------------------------------------------
-    public async getUltimaMedicion() {
-        const medicion: any = await this.peticionGet(this.urlGET);
-        return JSON.parse(medicion);
+    public getUltimaMedicion(): Observable < any > {
+        return this.http
+            .get(this.urlGET, this.httpOptions)
+            .pipe();
+
+            // return this.usuariosFicticios;
     }
 
     // ------------------------------------------------------------------------------------
-    // GET getUsuarios()
+    // GET getUsuarios() --> array de usurarios
     // ------------------------------------------------------------------------------------
-    public async getUsuarios() {
+    public getUsuarios(): Observable < any > {
+        return this.http
+            .get(this.urlGetUsuarios, this.httpOptions)
+            .pipe();
 
-        let usuarios: any;
-        usuarios = await this.peticionGet(this.urlGetUsuarios);
-
-        console.log('-------------GET USUARIOS LOGICA------------------');
-        console.table(usuarios);
-
-        return usuarios;
-        // return this.usuariosFicticios;
+            // return this.usuariosFicticios;
     }
 
     // ------------------------------------------------------------------------------------
@@ -218,16 +217,14 @@ export class LogicaDeNegocioFake {
     }
 
     // ------------------------------------------------------------------------------------
-    // GET getNodos()
+    // GET getNodos() --> array de nodos
     // ------------------------------------------------------------------------------------
-    public async getNodos() {
+    public getNodos(): Observable < any > {
+        return this.http
+            .get(this.urlGetNodos, this.httpOptions)
+            .pipe();
 
-        let nodos: any;
-        nodos = await this.peticionGet(this.urlGetNodos);
-        // console.log('-------------GET NODOS------------------');
-        // console.table(nodos);
-        return nodos;
-        //return this.nodosFicticios;
+        // return this.nodosFicticios;
     }
 
     // ------------------------------------------------------------------------------------

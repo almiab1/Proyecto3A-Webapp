@@ -1,30 +1,31 @@
 <ion-header>
-    <ion-toolbar color="secundario">
-      <ion-grid>
-        <ion-row class="ion-align-items-center ion-justify-content-center">
-          <ion-col size="2">
-            <ion-buttons>
-              <ion-menu-button color="acentuado"></ion-menu-button>
-            </ion-buttons>
-          </ion-col>
-          <ion-col size="10" class="ion-align-items-center ion-justify-content-center">
-            <ion-title color="acentuado">
-              <h1>Mapa</h1>
-            </ion-title>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="secundario">
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col size="2">
+          <ion-buttons>
+            <ion-menu-button color="acentuado"></ion-menu-button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="10" class="ion-align-items-center ion-justify-content-center">
+          <ion-title color="acentuado">
+            <h1>Mapa</h1>
+          </ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-            <ion-item color="secundario" class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed">
-                <ion-label>Capas</ion-label>
-                <ion-select name="selectCapa"  multiple="true" cancelText="Cancelar" okText="Aceptar"  (ionChange)="onSelectCapaChange($event.target.value)">
-                  <ion-select-option selected="true" value="o3">Ozono</ion-select-option>
-                  <ion-select-option value="co">Monóxido de carbono</ion-select-option>
-                  <ion-select-option value="so2">Dióxido de azufre</ion-select-option>
-                </ion-select>
-              </ion-item>
-  <div #mapElement class="mapElement"></div>
+  <ion-item color="secundario" class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed">
+    <ion-label>Capas</ion-label>
+    <ion-select name="selectCapa" multiple="true" cancelText="Cancelar" okText="Aceptar"
+      (ionChange)="onSelectCapaChange($event.target.value)">
+      <ion-select-option selected="true" value="o3">Ozono</ion-select-option>
+      <ion-select-option value="co">Monóxido de carbono</ion-select-option>
+      <ion-select-option value="so2">Dióxido de azufre</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div #mapElement class="mapElement" slot="fixed"></div>
 </ion-content>

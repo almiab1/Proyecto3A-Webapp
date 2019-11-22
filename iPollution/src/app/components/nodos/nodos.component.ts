@@ -57,12 +57,14 @@ export class NodosComponent implements OnInit {
   ngOnInit() {
   }
   // ----------------------------------------------------------------------------
-  async ionViewWillEnter() {
-    await this.serve.getNodos().then(
-      res => this.nodos = res,
-      err => console.log(err)
+  ionViewWillEnter() {
+    this.serve.getNodos().subscribe(
+      res => {
+        this.nodos = res;
+        this.nodoFiltrados = this.nodos;
+      },
+      err => console.log(err),
     )
-    this.nodoFiltrados = this.nodos;
   }
 
   // ----------------------------------------------------------------------------
@@ -82,8 +84,9 @@ export class NodosComponent implements OnInit {
     }
 
     this.nodos = this.nodos.filter(nodoDeseado => {
-      if (nodoDeseado.nombre && nodoBuscado) {
-        if (nodoDeseado.nombre.toLowerCase().indexOf(nodoBuscado.toLowerCase()) > -1) {
+      let nodoDeseado1 = 'Nodo ' + nodoDeseado.idSensor;
+      if (nodoDeseado1 && nodoBuscado) {
+        if (nodoDeseado1.toLowerCase().indexOf(nodoBuscado.toLowerCase()) > -1) {
           return true;
         }
         return false;

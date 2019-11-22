@@ -91,12 +91,12 @@ export class AppComponent {
           icon: 'information-circle-outline',
           subPages: [{
             title: 'Tips',
-            icon: 'add',
-            url: '/mas-info'
+            icon: 'leaf',
+            url: '/components/tips'
           },
           {
             title: 'Medidas Oficiales',
-            icon: 'add',
+            icon: 'information',
             url: '/mas-info'
           }
         ]
@@ -129,12 +129,12 @@ export class AppComponent {
           icon: 'information-circle-outline',
           subPages: [{
             title: 'Tips',
-            icon: 'add',
-            url: '/mas-info'
+            icon: 'leaf',
+            url: '/components/tips'
           },
           {
             title: 'Medidas Oficiales',
-            icon: 'add',
+            icon: 'information',
             url: '/mas-info'
           }
         ]

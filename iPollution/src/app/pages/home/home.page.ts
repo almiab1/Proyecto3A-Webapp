@@ -65,8 +65,13 @@ export class HomePage {
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
     const medicion = this.ble.obtenerO3();
 
-    console.log('----------------LLAMAR GUARDAR MEDIDA----------------');
-    this.serve.guardarMedida(medicion);
+    console.log('----------------GUARDAR MEDIDA----------------');
+    // tslint:disable-next-line: max-line-length
+    if (medicion.valorMedido == -1 || medicion.humedad == -1 || medicion.temperatura == -1) {
+      console.log('Medicion erronea');
+    } else {
+      this.serve.guardarMedida(medicion);
+    }
 
     // --------------------------------------------------------
   }
