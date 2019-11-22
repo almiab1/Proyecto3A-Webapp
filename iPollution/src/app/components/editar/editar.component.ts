@@ -39,6 +39,7 @@ export class EditarComponent implements OnInit {
   tipoNodo: string;
   usuarioNodo: string;
   tituloComponent: string;
+  tipoModal: string;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -59,6 +60,7 @@ export class EditarComponent implements OnInit {
     this.nombreNodo = this.navParams.data.nombreNodo;
     this.usuarioNodo = this.navParams.data.usuarioNodo;
     this.tituloComponent = this.navParams.data.titulo;
+    this.tipoModal = this.navParams.data.tipoModal;
   }
   // ----------------------------------------------------------------------------
 
@@ -87,6 +89,7 @@ export class EditarComponent implements OnInit {
         console.log('----------Boton eliminar modal------------');
 
         let sensor = this.nombreNodo;
+
         this.serve.darDeBajaSensor(sensor);
 
         await this.modalController.dismiss(onClosedData);

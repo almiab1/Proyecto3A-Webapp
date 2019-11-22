@@ -135,6 +135,13 @@ export class NodosComponent implements OnInit {
         this.dataReturned = dataReturned.data;
         // alert('Modal Sent Data :'+ dataReturned);
       }
+      this.serve.getNodos().subscribe(
+        res => {
+          this.nodos = res;
+          this.nodoFiltrados = this.nodos;
+        },
+        err => console.log(err),
+      )
     });
 
     return await modal.present();

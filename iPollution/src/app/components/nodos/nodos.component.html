@@ -24,6 +24,9 @@
         <ion-toolbar expand="full">
           <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras" (ionInput)="filterList($event)">
           </ion-searchbar>
+          <ion-button slot="end" color="success" disabled="false" (click)="openModal(undefined,'anyadir')">
+            <ion-icon name="person-add" size="large" expand="block" ></ion-icon>
+          </ion-button>
         </ion-toolbar>
       </ion-col>
     </ion-row>
@@ -34,7 +37,7 @@
             <ion-list-header>
               <ion-title>Lista de nodos:</ion-title>
             </ion-list-header>
-            <ion-item *ngFor="let item of nodos" (click)="openModal(item)">
+            <ion-item *ngFor="let item of nodos" (click)="openModal(item,'editar')">
               Nodo {{ item.idSensor }}
             </ion-item>
           </ion-list>

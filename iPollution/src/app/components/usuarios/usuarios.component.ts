@@ -55,7 +55,6 @@ export class UsuariosComponent implements OnInit {
       },
       err => console.log(err),
     )
-    this.usersFiltrados = this.users
   }
 
   // ----------------------------------------------------------------------------
@@ -126,6 +125,13 @@ export class UsuariosComponent implements OnInit {
         this.dataReturned = dataReturned.data;
         // alert('Modal Sent Data :'+ dataReturned);
       }
+      this.serve.getUsuarios().subscribe(
+        res => {
+          this.users = res;
+          this.usersFiltrados = this.users;
+        },
+        err => console.log(err),
+      )
     });
 
     return await modal.present();

@@ -44,10 +44,10 @@ export class LogicaDeNegocioFake {
     urlGetNodos = this.urlServe + '/admin/getSensores';
     urlEditarUsuario = this.urlServe + '/admin/editarUsuario';
     urlAsociarSensorUsuario = this.urlServe + '/admin/asociarSensorUsuario';
-    urlDarDeBajaUsuario = this.urlServe + '/admin/darDeBajaUsuario';
-    urlDarDeAltaUsuario = this.urlServe + '/admin/darDeAltaUsuario';
-    urlDarDeBajaSensor = this.urlServe + '/admin/darDeBajaSensor';
-    urlDarDeAltaSensor = this.urlServe + '/admin/darDeAltaSensor';
+    urlDarDeBajaUsuario = this.urlServe + '/admin/darBajaUsuario';
+    urlDarDeAltaUsuario = this.urlServe + '/admin/darAltaUsuario';
+    urlDarDeBajaSensor = this.urlServe + '/admin/darBajaSensor';
+    urlDarDeAltaSensor = this.urlServe + '/admin/darAltaSensor';
     urlEditarUsuarioAdministrador = this.urlServe + '/admin/editarUsuarioAdministrador';
 
     // Api de técnico local
@@ -137,7 +137,8 @@ export class LogicaDeNegocioFake {
         this.http.post(url, body, this.httpOptions)
             .subscribe(
                 res => {
-                    // console.log(res);
+                    console.log('RES --> ');
+                    console.log(res);
                 },
                 err => {
                     console.log('ERROR --> ');
@@ -265,16 +266,16 @@ export class LogicaDeNegocioFake {
     // POST editarUsuario()
     // Enviar datos para editar el usuario
     // ------------------------------------------------------------------------------------
-    public editarUsuario(data) {
+    // public editarUsuario(data) {
 
-        const body = new HttpParams()
-            .set('idUsuario', '' + data.idUsuario)
-            .set('password', '' + data.password)
-            .set('tipoUsuario', '' + data.tipoUsuario)
-            .set('telefono', '' + data.telefono);
+    //     const body = new HttpParams()
+    //         .set('idUsuario', '' + data.idUsuario)
+    //         .set('password', '' + 1234)
+    //         .set('tipoUsuario', '' + data.tipoUsuario)
+    //         .set('telefono', '' + data.telefono);
 
-        this.peticionPost(this.urlEditarUsuarioAdministrador, body);
-    }
+    //     this.peticionPost(this.urlEditarUsuarioAdministrador, body);
+    // }
 
     // ------------------------------------------------------------------------------------
     // POST darDeAltaUsuario()
@@ -283,10 +284,10 @@ export class LogicaDeNegocioFake {
     public darDeAltaUsuario(data) {
 
         const body = new HttpParams()
-            .set('idUsuario', '' + data.idUsuario)
-            .set('password', '' + data.password)
-            .set('tipoUsuario', '' + data.tipoUsuario)
-            .set('telefono', '' + data.telefono);
+            .set('idUsuario', data.idUsuario)
+            .set('contrasenya', data.contrasenya)
+            .set('idTipoUsuario', data.idTipoUsuario)
+            .set('telefono', data.telefono);
 
         // this.usuariosFicticios.push(data);
 
@@ -301,7 +302,7 @@ export class LogicaDeNegocioFake {
     public darDeAltaSensor(data) {
 
         const body = new HttpParams()
-            .set('idTipoSensor', '' + data.idTipoSensor);
+            .set('idTipoSensor', '' + data.idSensor);
 
         // this.nodosFicticios.push(data);
 

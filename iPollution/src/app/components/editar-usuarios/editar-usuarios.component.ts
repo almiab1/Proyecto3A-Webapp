@@ -40,6 +40,8 @@ export class EditarUsuariosComponent implements OnInit {
   tituloComponent: string;
   nodos: number;
   tipoModal: string;
+  contrasenya: any;
+  tipoUsuario: string;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -77,20 +79,14 @@ export class EditarUsuariosComponent implements OnInit {
 
         let user = {
           nombre: this.nombreUser,
-          descripcion: this.tituloComponent,
+          idTipoUsuario: this.tipoUsuario,
           idUsuario: this.emailUsuario,
           telefono: this.telefono,
           idSensor: this.nodos,
+          contrasenya: this.contrasenya
         }
-        if (this.tipoModal === 'anyadir') {
-          console.log('--------------------AÑADIR USUARIO------------------------')
-          console.table(user);
-          this.serve.darDeAltaUsuario(user);
-        } else {
-          console.log('--------------------EDITAR EDITAR------------------------')
-          console.table(user);
-          this.serve.editarUsuario(user);
-        }
+
+        this.serve.darDeAltaUsuario(user);
 
         await this.modalController.dismiss(onClosedData);
         break;
