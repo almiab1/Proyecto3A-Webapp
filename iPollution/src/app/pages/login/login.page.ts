@@ -2,10 +2,10 @@
  * @description: Logica de la vista LoginPage
  * Sprint 2
  */
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
-
+import * as  jwt_decode from 'jwt-decode';
 import { Platform } from '@ionic/angular';
 import {LoginService} from '../../core/services/login.service';
 
@@ -25,6 +25,7 @@ export class LoginPage implements OnInit {
   password: string;
   loading: any;
   mode: any;
+  rolUser: number;
   private readonly tokenKey = 'token';
   // Cambia el modo según la plataforma en la que se encuentre
   ngOnInit() {
@@ -50,18 +51,16 @@ export class LoginPage implements OnInit {
     this.loginService.autenticarUsuario(this.email, this.password).subscribe( data => {
       this.loginCorrecto(data.token);
     }, err => {
-      if (err.status === 401) {
+      if (err.status === 404) {
         this.loginIncorrecto();
       }
-      if (err.status !== 401) {
+      if (err.status !== 404) {
         this.desconectadoDelServidor();
       }
     });
   }
   cerrarModal = () => {
-    this.modalCtrl.dismiss({
-      dismissed: true
-    });
+    this.modalCtrl.dismiss(this.rolUser);
   }
   presentarToast = async (mensaje: string, color: string)  => {
     const toast = await this.toastCtrl.create({
@@ -85,6 +84,7 @@ export class LoginPage implements OnInit {
     }, 1000);
   }
   loginCorrecto = (data: string) => {
+    this.rolUser = jwt_decode(data).idTipoUsuario;
     // Guardamos el token en el Local Storage
     localStorage.setItem(this.tokenKey, data);
     // Cerrar el loading
@@ -93,6 +93,7 @@ export class LoginPage implements OnInit {
     }, 1000);
     // Cerrar el modal
     setTimeout( () => {
+      this.password = '';
       this.cerrarModal();
     }, 1150);
     // Colocar el toast

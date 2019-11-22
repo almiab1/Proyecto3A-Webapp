@@ -66,7 +66,7 @@
         <ion-row class="ion-align-items-baseline">
           <ion-col class="ion-margin">
             <div>
-              <ion-button (click)="loginModal()" size="large" expand="block" background="secundario-contrast" class="boton-login">
+              <ion-button  *ngIf="rolUser == false" (click)="loginModal()" size="large" expand="block" background="secundario-contrast" class="boton-login">
                 <img src="../assets/icon/login.png" alt="login" class="login-icon" style="color: #fff">
                 Entrar</ion-button>
             </div>
