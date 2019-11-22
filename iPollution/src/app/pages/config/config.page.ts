@@ -25,6 +25,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
+import {Router} from "@angular/router";
 // ----------------------------
 // Component
 // ----------------------------
@@ -44,7 +45,6 @@ export class ConfigPage implements OnInit {
   @ViewChild('bleToogle', {
     static: false
   }) bleToogle: ElementRef;
-
   // ----------------------------
   // Constructor
   // ----------------------------
@@ -52,6 +52,7 @@ export class ConfigPage implements OnInit {
     private ble: ReceptorBLE,
     private gps: LocalizadorGPS,
     private platform: Platform,
+    private router: Router
   ) {
     // if (this.platform.is('mobile')) {
     //   if (this.ble.estaBLEactivado()) {
@@ -76,5 +77,8 @@ export class ConfigPage implements OnInit {
       // this.estaActivoBle = false;
     }*/
   }
-
+  logout = () => {
+    localStorage.removeItem('token');
+    this.router.navigate(['/config']));
+  }
 }

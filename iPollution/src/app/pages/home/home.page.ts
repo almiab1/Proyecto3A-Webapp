@@ -14,7 +14,7 @@ import {
   LogicaDeNegocioFake
 } from './../../core/services/LogicaDeNegocioFake.service';
 import {
-  Component
+  Component, Input
 } from '@angular/core';
 import {
   Platform
@@ -34,7 +34,7 @@ import {
 // Clase HomePage
 // ----------------------------
 export class HomePage {
-
+  @Input() rolUser: number;
   constructor(
     public platform: Platform,
     private ble: ReceptorBLE,

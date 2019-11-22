@@ -10,9 +10,10 @@
 // Includes
 // ----------------------------
 import {
-  Component
+  Component, OnInit
 } from '@angular/core';
 import {
+  MenuController,
   ModalController,
   Platform
 } from '@ionic/angular';
@@ -23,6 +24,8 @@ import {
   StatusBar
 } from '@ionic-native/status-bar/ngx';
 import {LoginPage} from './pages/login/login.page';
+import * as  jwt_decode from 'jwt-decode';
+import {Router} from '@angular/router';
 // ----------------------------
 // Components
 // ----------------------------
@@ -37,14 +40,17 @@ import {LoginPage} from './pages/login/login.page';
 export class AppComponent {
 
   public appPages: any;
+  public rolUser: number;
   // ----------------------------
   // Constructor()
   // ----------------------------
   constructor(
     private platform: Platform,
+    private router: Router,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public menuCtrl: MenuController
   ) {
     this.initializeApp();
   }
@@ -52,6 +58,15 @@ export class AppComponent {
   // initializeApp()
   // ----------------------------
   initializeApp() {
+
+    // Nada mas iniciar el componente, revisamos
+    // si el usuario ya tiene el token
+    const token = localStorage.getItem('token');
+    if (token == null) {
+      this.rolUser = 0;
+    } else {
+      this.rolUser = jwt_decode(token).idTipoUsuario;
+    }
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -90,28 +105,7 @@ export class AppComponent {
           title: 'Scaner',
           url: '/scaner',
           icon: 'camera'
-        },
-        {
-          title: 'Rutas',
-          url: '/rutas',
-          icon: 'navigate'
-        },
-        {
-          title: 'Adinistración',
-          url: '/admin',
-          icon: 'folder',
-          subPages: [{
-              title: 'Usuarios',
-              icon: 'people',
-              url: '/components/usuarios'
-            },
-            {
-              title: 'Nodos',
-              icon: 'radio-button-on',
-              url: '/components/nodos'
-            }
-          ]
-        },
+        }
         // {
         //   title: 'Configuración',
         //   url: '/config',
@@ -151,7 +145,7 @@ export class AppComponent {
           icon: 'navigate'
         },
         {
-          title: 'Adinistración',
+          title: 'Administración',
           url: '/admin',
           icon: 'folder',
           subPages: [{
@@ -173,12 +167,59 @@ export class AppComponent {
         // },
       ];
     }
-
+    if (this.rolUser === 1 || this.rolUser === 2) {
+      this.appPages.push(
+          {
+            title: 'Rutas',
+            url: '/rutas',
+            icon: 'navigate'
+          },
+          {
+            title: 'Configuracion',
+            url: '/config',
+            icon: 'settings'
+          });
+    }
+    if (this.rolUser === 2) {
+      this.appPages.push(
+          {
+            title: 'Administración',
+            url: '/admin',
+            icon: 'folder',
+            subPages: [{
+              title: 'Usuarios',
+              icon: 'people',
+              url: '/components/usuarios'
+            },
+              {
+                title: 'Nodos',
+                icon: 'radio-button-on',
+                url: '/components/nodos'
+              }
+            ]
+          }
+      );
+    }
   }
   loginModal = async ()  => {
+    this.menuCtrl.close();
     const modal = await this.modalController.create({
-      component: LoginPage
+      component: LoginPage,
+      mode: 'ios',
+      componentProps: {
+        rolUser: 0
+      }
     });
+    modal.onDidDismiss()
+        .then( (data => {
+          if (data.data === undefined) {
+            this.rolUser = 0;
+            return;
+          }
+          this.rolUser = data.data;
+          console.log("CAMBIAR RUTA");
+          this.router.navigate(['/home']);
+        }));
     modal.present();
   }
 }
