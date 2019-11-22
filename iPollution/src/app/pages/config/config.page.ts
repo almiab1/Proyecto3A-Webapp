@@ -79,6 +79,6 @@ export class ConfigPage implements OnInit {
   }
   logout = () => {
     localStorage.removeItem('token');
-    this.router.navigate(['/config']));
+    this.router.navigate(['/config']);
   }
 }
