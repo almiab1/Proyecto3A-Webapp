@@ -158,7 +158,7 @@
       </ion-col>
     </ion-row>
     <!-- Card rutas -->
-    <ion-row>
+    <ion-row *ngIf="this.rolUser == 1 || this.rolUser == 2">
       <ion-col>
         <ion-card color="primario" type="button">
           <ion-card-content [routerLink]="['/rutas']" routerLinkActive="router-link-active">

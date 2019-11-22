@@ -4,6 +4,7 @@ import { NodosComponent } from './components/nodos/nodos.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { TipsComponent } from './components/tips/tips.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,9 @@ const routes: Routes = [
   { path: 'components/usuarios', component: UsuariosComponent},
   { path: 'components/nodos', component: NodosComponent},
   { path: 'components/editar', component: EditarComponent},
-  { path: 'components/editarUsuarios', component: EditarUsuariosComponent}
+  { path: 'components/editarUsuarios', component: EditarUsuariosComponent},
+  { path: 'components/tips', component: TipsComponent}
+
 
 
 ];

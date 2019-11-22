@@ -46,6 +46,7 @@
     "cordova-plugin-ibeacon": "^3.8.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "jwt-decode": "^2.2.0",
     "ng2-charts": "^2.3.0",
     "primeicons": "^2.0.0",
     "primeng": "^8.1.1",
