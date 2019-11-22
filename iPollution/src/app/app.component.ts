@@ -71,6 +71,11 @@ export class AppComponent {
           icon: 'locate'
         },
         {
+          title: 'Rutas',
+          url: '/rutas',
+          icon: 'navigate'
+        },
+        {
           title: '+Info',
           url: '/mas-info',
           icon: 'information-circle-outline',
@@ -90,11 +95,6 @@ export class AppComponent {
           title: 'Scaner',
           url: '/scaner',
           icon: 'camera'
-        },
-        {
-          title: 'Rutas',
-          url: '/rutas',
-          icon: 'navigate'
         },
         {
           title: 'Adinistración',
@@ -120,59 +120,59 @@ export class AppComponent {
       ];
     } else {
       this.appPages = [{
-          title: 'Home',
-          url: '/home',
-          icon: 'home'
+        title: 'Home',
+        url: '/home',
+        icon: 'home'
+      },
+      {
+        title: 'Mapa',
+        url: '/mapa',
+        icon: 'locate'
+      },
+      {
+        title: 'Rutas',
+        url: '/rutas',
+        icon: 'navigate'
+      },
+      {
+        title: '+Info',
+        url: '/mas-info',
+        icon: 'information-circle-outline',
+        subPages: [{
+          title: 'Tips',
+          icon: 'add',
+          url: '/mas-info'
         },
         {
-          title: 'Mapa',
-          url: '/mapa',
-          icon: 'locate'
-        },
-        {
-          title: '+Info',
-          url: '/mas-info',
-          icon: 'information-circle-outline',
-          subPages: [{
-            title: 'Tips',
-            icon: 'add',
-            url: '/mas-info'
+          title: 'Medidas Oficiales',
+          icon: 'add',
+          url: '/mas-info'
+        }
+      ]
+      },
+      {
+        title: 'Adinistración',
+        url: '/admin',
+        icon: 'folder',
+        subPages: [{
+            title: 'Usuarios',
+            icon: 'people',
+            url: '/components/usuarios'
           },
           {
-            title: 'Medidas Oficiales',
-            icon: 'add',
-            url: '/mas-info'
+            title: 'Nodos',
+            icon: 'radio-button-on',
+            url: '/components/nodos'
           }
         ]
-        },
-        {
-          title: 'Rutas',
-          url: '/rutas',
-          icon: 'navigate'
-        },
-        {
-          title: 'Adinistración',
-          url: '/admin',
-          icon: 'folder',
-          subPages: [{
-              title: 'Usuarios',
-              icon: 'people',
-              url: '/components/usuarios'
-            },
-            {
-              title: 'Nodos',
-              icon: 'radio-button-on',
-              url: '/components/nodos'
-            }
-          ]
-        },
-        // {
-        //   title: 'Configuración',
-        //   url: '/config',
-        //   icon: 'options'
-        // },
-      ];
-    }
+      },
+      // {
+      //   title: 'Configuración',
+      //   url: '/config',
+      //   icon: 'options'
+      // },
+    ];
+  }
 
   }
   loginModal = async ()  => {

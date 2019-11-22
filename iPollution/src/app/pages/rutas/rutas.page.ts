@@ -40,8 +40,8 @@ export class RutasPage implements OnInit {
   }) mapElement: ElementRef;
   // Actual localizacion
   currentLocation: any = {
-    lat: 0,
-    lng: 0
+    lat: 38.996394,
+    lng: -0.166196
   };
   // Direcciones
   directionsService = new google.maps.DirectionsService;
@@ -121,7 +121,7 @@ export class RutasPage implements OnInit {
     const that = this;
     this.directionsService.route({
       // origin: this.currentLocation,
-      origin: '{lat:38.997239,long: -0.166362}',
+      origin: {lat: this.currentLocation.lat, lng: this.currentLocation.long},
       destination: this.correctRute,
       travelMode: 'DRIVING'
     }, (response, status) => {
