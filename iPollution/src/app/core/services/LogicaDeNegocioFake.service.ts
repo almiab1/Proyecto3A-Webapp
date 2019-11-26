@@ -62,6 +62,12 @@ export class LogicaDeNegocioFake {
         })
     };
 
+    httpOptionsGet = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+        })
+    }
+
     // PRUEBAS USERS Y NODOS
     usuariosFicticios: any;
 
@@ -228,12 +234,7 @@ export class LogicaDeNegocioFake {
     // GET getAllMedidas()
     // ------------------------------------------------------------------------------------
     getAllMedidas(): Observable < any > {
-        return this.http
-            .get(this.urlGETAll, this.httpOptions)
-            .pipe(
-                // retry(2),
-                // catchError(this.handleError)
-            );
+        return this.http.get(this.urlGETAll, this.httpOptionsGet).pipe();
     }
     // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------

@@ -148,15 +148,17 @@ export class MapaPage implements OnInit {
 
       // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
 
-      this.server.getAllMedidas().toPromise().then((medidasOzono) => {
-        try {
-          medidasOzono.forEach(medida => {
+      try {
+        this.server.getAllMedidas().toPromise().then(data => {
+          for (const medida of data) {
             this.mapa.anyadirMedicion('o3', medida);
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      });
+          }
+        });
+      } catch (erro) {
+        console.error('Error Mapa: ' + erro);
+      }
+
+
       const medidasCo = [{
         latitud: 39.000466,
         longitud: -0.165349,
