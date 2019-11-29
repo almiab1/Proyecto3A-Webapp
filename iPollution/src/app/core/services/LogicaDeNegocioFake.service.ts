@@ -211,13 +211,15 @@ export class LogicaDeNegocioFake {
     }
 
     // ------------------------------------------------------------------------------------
-    //  getMedidasOficiales()
+    //  GET getMedidasOficiales()
+    //  -> List<MedidasOficiales> (MedidasOficiales = json: {hora, s02, co, no, no2, nox, o3})
+    //  obtener medidas oficiales de la estación de contaminación de Gandia
     // ------------------------------------------------------------------------------------
     public getMedidasOficiales(): Observable < any > {
         return this.http
-            .get(this.urlGetMedidasOficiales, this.httpOptions)
+            .get(this.urlGetMedidasOficiales, this.httpOptionsGet)
             .pipe();
-    }
+    }   // /getMedidasOficiales
 
     // ------------------------------------------------------------------------------------
     // GET getNodos() --> array de nodos
