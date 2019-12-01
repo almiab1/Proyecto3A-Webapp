@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {MenuController, ModalController} from '@ionic/angular';
+import {Component, Input, OnInit} from '@angular/core';
+import {MenuController, ModalController, Platform} from '@ionic/angular';
+import {LoginComponent} from '../login/login.component';
 
 @Component({
   selector: 'app-menu',
@@ -7,6 +8,7 @@ import {MenuController, ModalController} from '@ionic/angular';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
+  @Input() mode: string;
   public appPages = [
     {
       title: 'Home',
@@ -55,7 +57,16 @@ export class MenuComponent implements OnInit {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {}
-  loginModal() {
-
+  async loginModal() {
+    await this.menuCtrl.close();
+    const modal = await this.modalCtrl.create({
+      component: LoginComponent,
+      mode: 'ios',
+      componentProps: {
+        rolUser: 0,
+        mode: this.mode
+      }
+    });
+    await modal.present();
   }
 }

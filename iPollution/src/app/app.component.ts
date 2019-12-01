@@ -10,12 +10,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-
+  mode: string;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
+    this.comprobarPlataforma();
     this.initializeApp();
   }
 
@@ -24,5 +25,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+  comprobarPlataforma() {
+    if (this.platform.is('ios')) { this.mode = 'ios'; }
+    if (this.platform.is('android')) { this.mode = 'md'; }
   }
 }
