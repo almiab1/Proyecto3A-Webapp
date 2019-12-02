@@ -8,6 +8,9 @@ import { IonicModule } from '@ionic/angular';
 import { HomePage } from './home.page';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../../../components/shared/shared.module';
+import {TiempoCardComponent} from '../../../components/tiempo-card/tiempo-card.component';
+import {PollutionLevelsCardComponent} from '../../../components/pollution-levels-card/pollution-levels-card.component';
+import {WidgetActionComponent} from '../../../components/widget-action/widget-action.component';
 
 @NgModule({
   imports: [
@@ -17,8 +20,11 @@ import {SharedModule} from '../../../components/shared/shared.module';
     RouterModule.forChild([
       {path: '', component: HomePage}
     ]),
-    SharedModule
+    SharedModule,
   ],
-  declarations: [HomePage]
+  declarations: [HomePage,
+    TiempoCardComponent,
+    PollutionLevelsCardComponent,
+    WidgetActionComponent]
 })
 export class HomePageModule {}
