@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MenuController, ModalController, Platform} from '@ionic/angular';
+import {MenuController, ModalController} from '@ionic/angular';
 import {LoginComponent} from '../login/login.component';
+import {LoginService} from '../../../core/services/login.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,6 +10,7 @@ import {LoginComponent} from '../login/login.component';
 })
 export class MenuComponent implements OnInit {
   @Input() mode: string;
+  private rolUser: any;
   public appPages = [
     {
       title: 'Home',
@@ -54,7 +56,10 @@ export class MenuComponent implements OnInit {
     }
   ];
   constructor(private menuCtrl: MenuController,
-              private modalCtrl: ModalController) { }
+              private modalCtrl: ModalController,
+              private loginService: LoginService) {
+    this.rolUser = loginService.rolUser;
+  }
 
   ngOnInit() {}
   async loginModal() {
@@ -63,10 +68,10 @@ export class MenuComponent implements OnInit {
       component: LoginComponent,
       mode: 'ios',
       componentProps: {
-        rolUser: 0,
         mode: this.mode
       }
     });
     await modal.present();
+    this.rolUser = await modal.onDidDismiss();
   }
 }

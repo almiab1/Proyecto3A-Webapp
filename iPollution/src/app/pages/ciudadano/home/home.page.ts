@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {LoginService} from '../../../core/services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
-  constructor() { }
+  rolUser: number;
+  constructor(private loginService: LoginService) {
+    this.rolUser = loginService.rolUser;
+  }
 
   ngOnInit() {
   }

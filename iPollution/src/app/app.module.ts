@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {SharedModule} from './components/shared/shared.module';
 import {LoginComponent} from './components/shared/login/login.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,8 @@ import {LoginComponent} from './components/shared/login/login.component';
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        SharedModule
+        SharedModule,
+        HttpClientModule
     ],
   providers: [
     StatusBar,

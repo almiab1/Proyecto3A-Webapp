@@ -1,6 +1,6 @@
 <ion-app>
     <app-header></app-header>
-    <app-menu [mode]="mode"></app-menu>
+    <app-menu [mode]="mode" (loginRolUser)="cambiarRol($event)"></app-menu>
     <ion-content>
         <ion-router-outlet id="main-content"></ion-router-outlet>
     </ion-content>

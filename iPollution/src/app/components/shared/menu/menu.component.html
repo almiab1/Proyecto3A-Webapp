@@ -37,7 +37,6 @@
                     </ion-item>
                   </ion-menu-toggle>
                 </div>
-
               </div>
             </ion-list>
           </div>
@@ -47,7 +46,7 @@
       <ion-row class="ion-align-items-baseline">
         <ion-col class="ion-margin">
           <div>
-            <ion-button (click)="loginModal()" size="large" expand="block" class="login-button" mode="ios">
+            <ion-button *ngIf="rolUser === 0" (click)="loginModal()" size="large" expand="block" class="login-button" mode="ios">
               <ion-icon name="log-in" class="larger"></ion-icon>
               <p color="secondary">Entrar</p>
             </ion-button>
