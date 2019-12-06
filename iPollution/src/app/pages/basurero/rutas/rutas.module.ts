@@ -4,16 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RutasPageRoutingModule } from './rutas-routing.module';
 
 import { RutasPage } from './rutas.page';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RutasPageRoutingModule
+    RouterModule.forChild([
+      {path: '', component: RutasPage}
+    ])
   ],
   declarations: [RutasPage]
 })
