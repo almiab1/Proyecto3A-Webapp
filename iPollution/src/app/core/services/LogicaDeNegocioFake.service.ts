@@ -30,6 +30,7 @@ export class LogicaDeNegocioFake {
 
     // URL Base
     private urlServe = 'https://osblasae.upv.edu.es';
+    private urlServeLocal = '192.168.43.205';
 
     // URL server remoto
     urlPOST = this.urlServe + '/guardarMedida';
@@ -55,27 +56,22 @@ export class LogicaDeNegocioFake {
     urlEditarUsuarioBasurero = this.urlServe + '/basurero/editarUsuarioBasurero';
 
     // Http Options
-    httpOptions = {
+    protected httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            'Authorization': localStorage.getItem('token')
         })
     };
-
-    httpOptionsGet = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json'
-        })
-    }
-
+/*
     // PRUEBAS USERS Y NODOS
     usuariosFicticios: any;
 
     nodosFicticios: any;
-
+*/
     constructor(
         public http: HttpClient
     ) {
+/*
         this.nodosFicticios = [{
                 descripcion: 'Ozono',
                 idUsuario: '1234@gmail.com',
@@ -116,8 +112,9 @@ export class LogicaDeNegocioFake {
                 idSensor: '01',
             },
         ];
+*/
     }
-
+/*
     // Handle API errors
     handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
@@ -135,7 +132,7 @@ export class LogicaDeNegocioFake {
             'Something bad happened; please try again later.');
     }
     // ------------------------------------------------------------------------------------
-
+*/
     // ------------------------------------------------------------------------------------
     // Funciones para GET y POS
     // POST
@@ -173,16 +170,9 @@ export class LogicaDeNegocioFake {
 
         return dataToReturn;
     }
-
-    // GET
-    private peticionDelete(url, body) {
-
-        this.http.delete(url, body)
-            .subscribe(data => {
-                console.log('Se ha hecho la peticion post');
-            }, err => {
-                console.log('ERROR!' + err);
-            });
+    // DELETE
+    private peticionDelete(url): Observable<any> {
+        return this.http.delete(url, this.httpOptions);
     }
     // ------------------------------------------------------------------------------------
 
@@ -234,8 +224,15 @@ export class LogicaDeNegocioFake {
     // GET getAllMedidas()
     // ------------------------------------------------------------------------------------
     getAllMedidas(): Observable < any > {
-        return this.http.get(this.urlGETAll, this.httpOptionsGet).pipe();
+        return this.http
+            .get(this.urlGETAll, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
     }
+
+
     // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // POST guardarMedida
@@ -253,30 +250,14 @@ export class LogicaDeNegocioFake {
             .set('temperatura', '' + data.temperatura)
             .set('humedad', '' + data.humedad);
 
-        // this.peticionPost(this.urlBasureroGuardarLocal, body);
-        // this.http.post(this.urlBasureroGuardarLocal, body, this.httpOptions).subscribe(data => {
-        //     console.log("Se ha hecho la peticion estupendamente");
-        // }, err => {
-        //     console.log("ERROR!" + err);
-        // });
+        this.http.post(this.urlBasureroGuardar, body, this.httpOptions).subscribe(data => {
+            console.log('Se ha hecho la peticion');
+        }, err => {
+            console.log('ERROR!' + err);
+        });
 
-        this.peticionPost(this.urlBasureroGuardar, body);
+        // this.peticionPost(this.urlBasureroGuardar, body);
     }
-
-    // ------------------------------------------------------------------------------------
-    // POST editarUsuario()
-    // Enviar datos para editar el usuario
-    // ------------------------------------------------------------------------------------
-    // public editarUsuario(data) {
-
-    //     const body = new HttpParams()
-    //         .set('idUsuario', '' + data.idUsuario)
-    //         .set('password', '' + 1234)
-    //         .set('tipoUsuario', '' + data.tipoUsuario)
-    //         .set('telefono', '' + data.telefono);
-
-    //     this.peticionPost(this.urlEditarUsuarioAdministrador, body);
-    // }
 
     // ------------------------------------------------------------------------------------
     // POST darDeAltaUsuario()
@@ -284,15 +265,23 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     public darDeAltaUsuario(data) {
 
-        const body = new HttpParams()
-            .set('idUsuario', data.idUsuario)
-            .set('contrasenya', data.contrasenya)
-            .set('idTipoUsuario', data.idTipoUsuario)
-            .set('telefono', data.telefono);
-
+        const body = {
+            nombre: data.nombre,
+            idUsuario: data.idUsuario,
+            contrasenya: data.contrasenya,
+            idTipoUsuario: data.idTipoUsuario,
+            telefono: data.telefono,
+        }
         // this.usuariosFicticios.push(data);
 
-        this.peticionPost(this.urlDarDeAltaUsuario, body);
+        this.http.post(this.urlDarDeAltaUsuario, JSON.stringify(body), this.httpOptions).subscribe(
+            data => console.log('--------------Se ha hecho la peticion--------------'),
+            err => {
+            console.log('ERROR! -->');
+            console.log(err);
+        });
+
+        // this.peticionPost(this.urlDarDeAltaUsuario, body);
 
     }
 
@@ -302,35 +291,29 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     public darDeAltaSensor(data) {
 
-        const body = new HttpParams()
-            .set('idTipoSensor', '' + data.idSensor);
-
+        const body = {
+            idTipoSensor: data.idTipoSensor,
+            idSensor: data.idSensor,
+            idUsuario: data.idUsuario
+        };
         // this.nodosFicticios.push(data);
 
-        this.peticionPost(this.urlDarDeAltaSensor, body);
-    }
-
-    // ------------------------------------------------------------------------------------
-    // POST asociarSensorAUsuario()
-    // Asociar sensor con Usuario
-    // ------------------------------------------------------------------------------------
-    public asociarSensorAUsuario(data) {
-
-        const body = new HttpParams()
-            .set('idUsuario', '' + data.idUsuario)
-            .set('idSensor', '' + data.idSensor);
-
-        this.peticionPost(this.urlAsociarSensorUsuario, body);
+        this.http.post(this.urlDarDeAltaSensor, JSON.stringify(body), this.httpOptions)
+        .subscribe(
+            data => console.log('Se ha hecho la peticion'),
+            err => {
+            console.log('ERROR!' + err);
+            console.log(err);
+        });
+        // this.peticionPost(this.urlDarDeAltaSensor, body);
     }
 
     // ------------------------------------------------------------------------------------
     // POST darDeBajaUsuario()
     // Dar de baja Usuario
+    // idUsuario --> darDeBajaUsuario()
     // ------------------------------------------------------------------------------------
-    public darDeBajaUsuario(data) {
-
-        const body = new HttpParams()
-            .set('idUsuario', '' + data.idUsuario);
+    public darDeBajaUsuario(data){
 
         // // Eleminar seleccionado ------- PRUEBA ----------------
         // this.usuariosFicticios.forEach(element => {
@@ -341,8 +324,13 @@ export class LogicaDeNegocioFake {
         //         this.usuariosFicticios.pop(index);
         //     }
         // });
-
-        this.peticionDelete(this.urlDarDeBajaUsuario, body);
+        this.peticionDelete(this.urlDarDeBajaUsuario + '/' + data)
+        .subscribe(
+            data => console.log('--------------Se ha hecho la peticion--------------'),
+            err => {
+            console.log('ERROR --> ');
+            console.log(err);
+        });
     }
 
     // ------------------------------------------------------------------------------------
@@ -350,9 +338,6 @@ export class LogicaDeNegocioFake {
     // Dar de baja Sensor
     // ------------------------------------------------------------------------------------
     public darDeBajaSensor(data) {
-
-        const body = new HttpParams()
-            .set('idSensor', '' + data.idSensor);
 
         // // Eleminar seleccionado ------- PRUEBA
         // this.nodosFicticios.forEach(element => {
@@ -363,7 +348,19 @@ export class LogicaDeNegocioFake {
         //     }
         // });
 
-        this.peticionDelete(this.urlDarDeBajaSensor, body);
+        // this.http.delete(this.urlDarDeBajaSensor, body).subscribe(data => {
+        //     console.log("Se ha hecho la peticion");
+        // }, err => {
+        //     console.log("ERROR!" + err);
+        // });
+
+        this.peticionDelete(this.urlDarDeBajaSensor + '/' + data)
+        .subscribe(
+            data => console.log('--------------Se ha hecho la peticion--------------'),
+            err => {
+            console.log('ERROR --> ');
+            console.log(err);
+        });
     }
 }
 
