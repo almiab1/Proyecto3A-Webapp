@@ -17,9 +17,8 @@ import {
 import {
   LogicaDeNegocioFake
 } from 'src/app/core/services/LogicaDeNegocioFake.service';
-import {
-  EditarComponent
-} from './../editar/editar.component';  //Aqui iria el modaNodos
+import { ModalNodosComponent } from './../../../components/components-admin/modal-nodos/modal-nodos.component';
+
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -126,7 +125,7 @@ export class NodosPage implements OnInit {
     }
 
     const modal = await this.modalController.create({
-      component: EditarComponent,
+      component: ModalNodosComponent,
       componentProps: {
         titulo,
         nombreNodo,

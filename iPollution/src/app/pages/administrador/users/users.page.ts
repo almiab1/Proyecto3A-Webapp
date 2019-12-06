@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------------
 import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
-import { EditarUsuariosComponent } from './../editar-usuarios/editar-usuarios.component'; // Aqui iria modal usuarios
+import { ModalUsuariosComponent } from './../../../components/components-admin/modal-usuarios/modal-usuarios.component';
 import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // Component
@@ -117,7 +117,7 @@ export class UsersPage implements OnInit {
       nodos = '';
     }
     const modal = await this.modalController.create({
-      component: EditarUsuariosComponent,
+      component: ModalUsuariosComponent,
       componentProps: {
         titulo,
         nombre,

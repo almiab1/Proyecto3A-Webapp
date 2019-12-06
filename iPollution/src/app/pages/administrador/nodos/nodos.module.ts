@@ -9,6 +9,7 @@ import { NodosPage } from './nodos.page';
 import { Router, RouterModule } from '@angular/router';
 
 import { AdministradorModule } from './../administrador.module';
+import { ModalNodosComponent } from 'src/app/components/components-admin/modal-nodos/modal-nodos.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,9 @@ import { AdministradorModule } from './../administrador.module';
     }]),
     AdministradorModule
   ],
-  declarations: [NodosPage]
+  declarations: [
+    NodosPage,
+    ModalNodosComponent
+  ]
 })
 export class NodosPageModule {}
