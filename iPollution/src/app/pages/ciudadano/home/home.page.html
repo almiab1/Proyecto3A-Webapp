@@ -1,0 +1,35 @@
+<ion-content>
+    <ion-row>
+        <ion-col size-xs="12" size-md="6" size-lg="6">
+                <app-tiempo-card></app-tiempo-card>
+        </ion-col>
+        <ion-col size-xs="12" size-md="6" size-lg="6">
+                <app-pollution-levels-card></app-pollution-levels-card>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+            <app-widget-action titulo="Rutas" ruta="/rutas"
+                               descripcion="Accede a las rutas menos contaminantes"
+                               color="widget-mapa" backgroundColor="widget-rutas-background"
+                               icono="assets/rutas.svg">
+                ></app-widget-action>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+            <app-widget-action titulo="Mapa" ruta="/mapa"
+                               descripcion="Visualiza los diferentes contaminantes."
+                               color="widget-mapa" backgroundColor="widget-mapa-background"
+                               icono="assets/map-location.svg">
+                ></app-widget-action>
+        </ion-col>
+        <ion-col size-xs="12" size-md="4" size-lg="4">
+            <app-widget-action titulo="Scaner" ruta="/escaner"
+                               descripcion="Visualiza los diferentes contaminantes."
+                               color="widget-mapa" backgroundColor="widget-escaner-background"
+                               icono="assets/escaner.svg">
+                ></app-widget-action>
+        </ion-col>
+    </ion-row>
+</ion-content>
+
+

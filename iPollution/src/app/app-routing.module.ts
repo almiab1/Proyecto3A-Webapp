@@ -1,58 +1,22 @@
-import { EditarUsuariosComponent } from './components/editar-usuarios/editar-usuarios.component';
-import { EditarComponent } from './components/editar/editar.component';
-import { NodosComponent } from './components/nodos/nodos.component';
-import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TipsComponent } from './components/tips/tips.component';
+import {NoPreloading, PreloadAllModules, RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-  },
-  {
-    path: 'mapa',
-    loadChildren: () => import('./pages/mapa/mapa.module').then(m => m.MapaPageModule)
-  },
-  {
-    path: 'mas-info',
-    loadChildren: () => import('./pages/mas-info/mas-info.module').then(m => m.MasInfoPageModule)
-  },
-  {
-    path: 'scaner',
-    loadChildren: () => import('./pages/scaner/scaner.module').then(m => m.ScanerPageModule)
-  },
-  {
-    path: 'config',
-    loadChildren: () => import('./pages/config/config.module').then(m => m.ConfigPageModule)
-  },
-  {
-    path: 'rutas',
-    loadChildren: () => import('./pages/rutas/rutas.module').then(m => m.RutasPageModule)
-  },
-  {
-    path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule)
-  },
-  { path: 'components/usuarios', component: UsuariosComponent},
-  { path: 'components/nodos', component: NodosComponent},
-  { path: 'components/editar', component: EditarComponent},
-  { path: 'components/editarUsuarios', component: EditarUsuariosComponent},
-  { path: 'components/tips', component: TipsComponent}
-
-
-
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', loadChildren: './pages/ciudadano/home/home.module#HomePageModule'},
+  {path: 'mapa', loadChildren: './pages/ciudadano/mapa/mapa.module#MapaPageModule'},
+  {path: 'mas-info', loadChildren: './pages/ciudadano/mas-info/mas-info.module#MasInfoPageModule'},
+  {path: 'tips', loadChildren: './pages/ciudadano/tips/tips.module#TipsPageModule'},
+  {path: 'escaner', loadChildren: './pages/ciudadano/escaner/escaner.module#EscanerPageModule'},
+  {path: 'rutas', loadChildren: './pages/basurero/rutas/rutas.module#RutasPageModule'},
+  {path: 'config', loadChildren: './pages/basurero/configuracion/configuracion.module#ConfiguracionPageModule'},
+  {path: 'admin', loadChildren: './pages/administrador/administrador.module#AdministradorModule'},
+  {path: '**', redirectTo: 'home'},
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: NoPreloading })
   ],
   exports: [RouterModule]
 })

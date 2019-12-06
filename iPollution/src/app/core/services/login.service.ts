@@ -1,29 +1,41 @@
-/* @author: Oscar Blanquez
- * @description: Servicio de angular para hacer login
- * Sprint 2
- */
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {EventEmitter, Injectable, Output} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
+
+import * as  jwt_decode from 'jwt-decode';
+import {DataService} from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private reqHeader: HttpHeaders;
+  rolUser: number;
   private url = 'https://osblasae.upv.edu.es';
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+              private dataService: DataService) { }
   /* ********* autenticarUsuario()  ***************
   *  Oscar Blanquez
   *  description: peticion POST al servidor con el
   *  email y la contraseña para logear al usuario.
   *  @params: usuario: string, password: string
-  *  @return: Observable: any
+  *  @return: Token / Error
   *  */
   autenticarUsuario(username, password): Observable<any> {
     const body = new HttpParams()
         .set('idUsuario', username)
         .set('contrasenya', password);
     return this.httpClient.post(`${this.url}/login`, body);
+  }
+  comprobarLogin() {
+    const token = localStorage.getItem('token');
+    if (token === null) {
+      this.rolUser = 0;
+      return;
+    }
+    this.rolUser = jwt_decode(token).idTipoUsuario;
+  }
+  procesarToken(token) {
+    this.dataService.guardarToken(token);
+    return this.rolUser = jwt_decode(token).idTipoUsuario;
   }
 }

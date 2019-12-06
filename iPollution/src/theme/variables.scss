@@ -12,12 +12,12 @@
   --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --ion-color-secondary: #0cd1e8;
+  --ion-color-secondary: #023047;
   --ion-color-secondary-rgb: 12, 209, 232;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #0bb8cc;
-  --ion-color-secondary-tint: #24d6ea;
+  --ion-color-secondary-shade: #022a3e;
+  --ion-color-secondary-tint: #1b4559;
 
   /** tertiary **/
   --ion-color-tertiary: #7044ff;
@@ -27,8 +27,16 @@
   --ion-color-tertiary-shade: #633ce0;
   --ion-color-tertiary-tint: #7e57ff;
 
+  /** accent **/
+  --ion-color-accent: #009688;
+  --ion-color-accent-rgb: 0, 150, 136;
+  --ion-color-accent-contrast: #ffffff;
+  --ion-color-accent-contrast-rgb: 255, 255, 255;
+  --ion-color-accent-shade: #008478;
+  --ion-color-accent-tint: #1aa194;
+
   /** success **/
-  --ion-color-success: #4caf50;
+  --ion-color-success: #10dc60;
   --ion-color-success-rgb: 16, 220, 96;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
@@ -75,67 +83,35 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  // ---------------------------------------------------------------------------
-  // Colores app
-  // ---------------------------------------------------------------------------
+  /** widget-mapa **/
+  --ion-color-widget-mapa: #b3e5fc;
+  --ion-color-widget-mapa-rgb: 179,229,252;
+  --ion-color-widget-mapa-contrast: #000000;
+  --ion-color-widget-mapa-contrast-rgb: 0,0,0;
+  --ion-color-widget-mapa-shade: #9ecade;
+  --ion-color-widget-mapa-tint: #bbe8fc;
 
-  // Primario
-  --ion-color-primario: #1de9b6;
-  --ion-color-primario-rgb: 29, 233, 182;
-  --ion-color-primario-contrast: #000000;
-  --ion-color-primario-contrast-rgb: 0, 0, 0;
-  --ion-color-primario-shade: #1acda0;
-  --ion-color-primario-tint: #34ebbd;
+  /** widget-mapa-background **/
+  --ion-color-widget-mapa-background: #0276bd;
+  --ion-color-widget-mapa-background-rgb: 2,118,189;
+  --ion-color-widget-mapa-background-contrast: #ffffff;
+  --ion-color-widget-mapa-background-contrast-rgb: 255,255,255;
+  --ion-color-widget-mapa-background-shade: #0268a6;
+  --ion-color-widget-mapa-background-tint: #1b84c4;
 
+  /** widget-rutas-background **/
+  --ion-color-widget-rutas-background: #2196f2;
+  --ion-color-widget-rutas-background-rgb: 33,150,242;
+  --ion-color-widget-rutas-background-contrast: #ffffff;
+  --ion-color-widget-rutas-background-contrast-rgb: 255,255,255;
+  --ion-color-widget-rutas-background-shade: #1d84d5;
+  --ion-color-widget-rutas-background-tint: #37a1f3;
 
-  // Secundario
-  --ion-color-secundario: #023047;
-  --ion-color-secundario-rgb: 2, 48, 71;
-  --ion-color-secundario-contrast: #ffffff;
-  --ion-color-secundario-contrast-rgb: 255, 255, 255;
-  --ion-color-secundario-shade: #022a3e;
-  --ion-color-secundario-tint: #1b4559;
-
-  // Acenturado
-  --ion-color-acentuado: #009688;
-  --ion-color-acentuado-rgb: 0, 150, 136;
-  --ion-color-acentuado-contrast: #ffffff;
-  --ion-color-acentuado-contrast-rgb: 255, 255, 255;
-  --ion-color-acentuado-shade: #008478;
-  --ion-color-acentuado-tint: #1aa194;
-
-
-  // Texto
-  --ion-color-texto: #272727;
-  --ion-color-texto-rgb: 39, 39, 39;
-  --ion-color-texto-contrast: #ffffff;
-  --ion-color-texto-contrast-rgb: 255, 255, 255;
-  --ion-color-texto-shade: #222222;
-  --ion-color-texto-tint: #3d3d3d;
-
-
-  // Titulo
-  --ion-color-titulo: #00695c;
-  --ion-color-titulo-rgb: 0, 105, 92;
-  --ion-color-titulo-contrast: #ffffff;
-  --ion-color-titulo-contrast-rgb: 255, 255, 255;
-  --ion-color-titulo-shade: #005c51;
-  --ion-color-titulo-tint: #1a786c;
-
-  // Subtitulo
-  --ion-color-subtitulo: #4db6ac;
-  --ion-color-subtitulo-rgb: 77, 182, 172;
-  --ion-color-subtitulo-contrast: #000000;
-  --ion-color-subtitulo-contrast-rgb: 0, 0, 0;
-  --ion-color-subtitulo-shade: #44a097;
-  --ion-color-subtitulo-tint: #5fbdb4;
-
-  // Normal y pequeño
-
-  --ion-color-normal: #80cbc4;
-  --ion-color-normal-rgb: 128, 203, 196;
-  --ion-color-normal-contrast: #000000;
-  --ion-color-normal-contrast-rgb: 0, 0, 0;
-  --ion-color-normal-shade: #71b3ac;
-  --ion-color-normal-tint: #8dd0ca;
+  /** widget-escaner-background **/
+  --ion-color-widget-escaner-background: #1b6069;
+  --ion-color-widget-escaner-background-rgb: 27,96,105;
+  --ion-color-widget-escaner-background-contrast: #ffffff;
+  --ion-color-widget-escaner-background-contrast-rgb: 255,255,255;
+  --ion-color-widget-escaner-background-shade: #18545c;
+  --ion-color-widget-escaner-background-tint: #327078;
 }
