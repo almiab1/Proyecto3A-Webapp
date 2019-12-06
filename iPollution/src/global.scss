@@ -33,3 +33,43 @@
   --ion-color-shade: var(--ion-color-accent-shade);
   --ion-color-tint: var(--ion-color-accent-tint);
 }
+
+.ion-color-widget-mapa {
+  --ion-color-base: var(--ion-color-widget-mapa);
+  --ion-color-base-rgb: var(--ion-color-widget-mapa-rgb);
+  --ion-color-contrast: var(--ion-color-widget-mapa-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-widget-mapa-contrast-rgb);
+  --ion-color-shade: var(--ion-color-widget-mapa-shade);
+  --ion-color-tint: var(--ion-color-widget-mapa-tint);
+}
+
+.ion-color-widget-mapa-background {
+  --ion-color-base: var(--ion-color-widget-mapa-background);
+  --ion-color-base-rgb: var(--ion-color-widget-mapa-background-rgb);
+  --ion-color-contrast: var(--ion-color-widget-mapa-background-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-widget-mapa-background-contrast-rgb);
+  --ion-color-shade: var(--ion-color-widget-mapa-background-shade);
+  --ion-color-tint: var(--ion-color-widget-mapa-background-tint);
+}
+
+.ion-color-widget-rutas-background {
+  --ion-color-base: var(--ion-color-widget-rutas-background);
+  --ion-color-base-rgb: var(--ion-color-widget-rutas-background-rgb);
+  --ion-color-contrast: var(--ion-color-widget-rutas-background-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-widget-rutas-background-contrast-rgb);
+  --ion-color-shade: var(--ion-color-widget-rutas-background-shade);
+  --ion-color-tint: var(--ion-color-widget-rutas-background-tint);
+}
+
+.ion-color-widget-escaner-background {
+  --ion-color-base: var(--ion-color-widget-escaner-background);
+  --ion-color-base-rgb: var(--ion-color-widget-escaner-background-rgb);
+  --ion-color-contrast: var(--ion-color-widget-escaner-background-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-widget-escaner-background-contrast-rgb);
+  --ion-color-shade: var(--ion-color-widget-escaner-background-shade);
+  --ion-color-tint: var(--ion-color-widget-escaner-background-tint);
+}
+
+.sc-ion-card-ios-h {
+  margin-bottom: 0;
+}

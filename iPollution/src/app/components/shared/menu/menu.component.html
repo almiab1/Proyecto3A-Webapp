@@ -30,7 +30,7 @@
                   <ion-menu-toggle auto-hide="false">
                     <ion-item *ngFor="let s of p.subPages" [routerDirection]="'root'" [routerLink]="[s.url]"
                               color="secondary" expand="full">
-                      <ion-icon [name]="s.icon" color="acentuado" class="ion-margin-horizontal"></ion-icon>
+                      <ion-icon [name]="s.icon" color="accent" class="ion-margin-horizontal"></ion-icon>
                       <ion-label color="accent">
                         {{s.title}}
                       </ion-label>
@@ -48,7 +48,7 @@
           <div>
             <ion-button *ngIf="rolUser === 0" (click)="loginModal()" size="large" expand="block" class="login-button" mode="ios">
               <ion-icon name="log-in" class="larger"></ion-icon>
-              <p color="secondary">Entrar</p>
+              <p>Entrar</p>
             </ion-button>
           </div>
         </ion-col>

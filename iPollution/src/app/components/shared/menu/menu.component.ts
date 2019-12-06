@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
         {
           title: 'Tips',
           icon: 'leaf',
-          url: '/components/tips',
+          url: '/tips',
         },
         {
           title: 'Medidas oficiales',
@@ -46,14 +46,29 @@ export class MenuComponent implements OnInit {
     },
     {
       title: 'Scaner',
-      url: '/scaner',
+      url: '/escaner',
       icon: 'camera'
     },
     {
       title: 'Configuración',
       url: '/config',
       icon: 'options'
-    }
+    },
+    {
+      title: 'Administración',
+      url: '/admin',
+      icon: 'folder',
+      subPages: [{
+        title: 'Usuarios',
+        icon: 'people',
+        url: '/admin/users'
+      },
+        {
+          title: 'Nodos',
+          icon: 'radio-button-on',
+          url: '/admin/nodos'
+        }]
+    },
   ];
   constructor(private menuCtrl: MenuController,
               private modalCtrl: ModalController,
@@ -72,6 +87,11 @@ export class MenuComponent implements OnInit {
       }
     });
     await modal.present();
-    this.rolUser = await modal.onDidDismiss();
+    const dataModal = await modal.onDidDismiss();
+    if (dataModal.data === undefined) {
+      this.rolUser = 0;
+      return;
+    }
+    this.rolUser = dataModal.data;
   }
 }
