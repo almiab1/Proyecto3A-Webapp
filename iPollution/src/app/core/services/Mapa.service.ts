@@ -5,7 +5,10 @@
   iPollution
 */
 
-import { Injectable, ElementRef } from '@angular/core';
+import {
+  Injectable,
+  ElementRef
+} from '@angular/core';
 
 declare var google;
 @Injectable({
@@ -19,13 +22,13 @@ export class MapaService {
 
   private mapa: any;
   private puntoCentral: any;
-  private capasDeMediciones: Array<any>;
-  private marcadores: Array<any>;
+  private capasDeMediciones: Array < any > ;
+  private marcadores: Array < any > ;
 
   //////////////////////
 
 
-  constructor(posicion: any , settings: any, elementoHtml: ElementRef) {
+  constructor(posicion: any, settings: any, elementoHtml: ElementRef) {
     this.puntoCentral = posicion;
     this.mapa = new google.maps.Map(elementoHtml, {
       zoom: settings.zoom,
@@ -34,9 +37,9 @@ export class MapaService {
 
     this.centrarEn(this.puntoCentral);
 
-    this.capasDeMediciones = new Array<any>();
+    this.capasDeMediciones = new Array < any > ();
 
-    this.marcadores = new Array<any>();
+    this.marcadores = new Array < any > ();
   }
 
 
@@ -60,7 +63,7 @@ export class MapaService {
   // -----------------------------------------
   // posicion:Posicion -> anyadirMarcador -> void
   // ------------------------------------------
-  anyadirMarcador(nombre: string , posicion: any, iconoUrl: string) {
+  anyadirMarcador(nombre: string, posicion: any, iconoUrl: string) {
     const icono = {
       url: iconoUrl,
       scaledSize: new google.maps.Size(40, 40)
@@ -84,10 +87,10 @@ export class MapaService {
   // ------------------------------------------
   anyadirMedicion(nombreDelGas: string, medicion: any) {
 
-   this.capasDeMediciones[nombreDelGas].layer.data.push({
-    location: new google.maps.LatLng(medicion.latitud, medicion.longitud),
-    weight: medicion.valorMedido
-   });
+    this.capasDeMediciones[nombreDelGas].layer.data.push({
+      location: new google.maps.LatLng(medicion.latitud, medicion.longitud),
+      weight: medicion.valorMedido
+    });
 
   }
   // ------------------------------------------
@@ -114,14 +117,14 @@ export class MapaService {
   // nombreGas:string -> mostrarCapa() -> void
   // ------------------------------------------
 
-    mostrarCapa(nombreGas: string) {
-      if (this.capasDeMediciones[nombreGas]) {
+  mostrarCapa(nombreGas: string) {
+    if (this.capasDeMediciones[nombreGas]) {
 
-        this.capasDeMediciones[nombreGas].layer.setMap(this.mapa);
-        this.refrescarMapa();
+      this.capasDeMediciones[nombreGas].layer.setMap(this.mapa);
+      this.refrescarMapa();
 
-      }
     }
+  }
 
   // ------------------------------------------
 
@@ -130,14 +133,14 @@ export class MapaService {
   // nombreGas:string -> ocultarCapa() -> void
   // ------------------------------------------
 
-    ocultarCapa(nombreGas: string) {
-      if (this.capasDeMediciones[nombreGas]) {
+  ocultarCapa(nombreGas: string) {
+    if (this.capasDeMediciones[nombreGas]) {
 
-        this.capasDeMediciones[nombreGas].layer.setMap(null);
-        this.refrescarMapa();
+      this.capasDeMediciones[nombreGas].layer.setMap(null);
+      this.refrescarMapa();
 
-      }
     }
+  }
 
   // ------------------------------------------
 
@@ -153,8 +156,8 @@ export class MapaService {
     }
   }
 
-// ------------------------------------------
-// ------------------------------------------
+  // ------------------------------------------
+  // ------------------------------------------
   // tslint:disable-next-line: ban-types
   anyadirInformacionMarcador(marcador: void, contenido: String) {
 
