@@ -16,7 +16,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
-import { LocalizadorGPS } from 'src/app/core/services/LocalizadorGPS.service';
+import { LocalizadorGPS } from './../../../core/services/LocalizadorGPS.service';
 // Variable global
 declare var google;
 // ----------------------------
