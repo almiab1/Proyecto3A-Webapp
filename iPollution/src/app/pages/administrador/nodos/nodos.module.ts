@@ -7,16 +7,18 @@ import { IonicModule } from '@ionic/angular';
 
 import { NodosPage } from './nodos.page';
 import {Router, RouterModule} from '@angular/router';
+import {SharedModule} from '../../../components/shared/shared.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild([
-      {path: '', component: NodosPage}
-    ])
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild([
+            {path: '', component: NodosPage}
+        ]),
+        SharedModule
+    ],
   declarations: [NodosPage]
 })
 export class NodosPageModule {}

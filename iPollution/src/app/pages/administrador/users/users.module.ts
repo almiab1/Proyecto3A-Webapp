@@ -7,16 +7,18 @@ import { IonicModule } from '@ionic/angular';
 
 import { UsersPage } from './users.page';
 import {RouterModule} from '@angular/router';
+import {SharedModule} from '../../../components/shared/shared.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild([
-      {path: '', component: UsersPage}
-    ])
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild([
+            {path: '', component: UsersPage}
+        ]),
+        SharedModule
+    ],
   declarations: [UsersPage]
 })
 export class UsersPageModule {}
