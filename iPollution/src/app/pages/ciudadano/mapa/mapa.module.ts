@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MapaPage } from './mapa.page';
 import {RouterModule} from '@angular/router';
+import {LocalizadorGPS} from '../../../core/services/LocalizadorGPS.service';
 
 @NgModule({
   imports: [
