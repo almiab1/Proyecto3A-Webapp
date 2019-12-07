@@ -1,4 +1,3 @@
-import { ReceptorBLE } from './core/services/ReceptorBle.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -17,7 +16,8 @@ import { BeaconProvider } from './core/services/BeaconProvider.service';
 import { IBeacon } from '@ionic-native/ibeacon/ngx';
 import { LogicaDeNegocioFake } from './core/services/LogicaDeNegocioFake.service';
 import { LocalizadorGPS } from './core/services/LocalizadorGPS.service';
-import {AdminModule} from './components/admin/admin.module';
+import { AdminModule } from './components/admin/admin.module';
+import { ReceptorBLE } from './core/services/ReceptorBle.service';
 
 @NgModule({
   declarations: [AppComponent],
