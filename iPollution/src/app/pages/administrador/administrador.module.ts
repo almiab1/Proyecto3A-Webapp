@@ -15,11 +15,10 @@ import {
   UsersPageModule
 } from './users/users.module';
 import { NodosPageModule } from './nodos/nodos.module';
-import { TolBarAdminComponent } from './../../components/components-admin/tol-bar-admin/tol-bar-admin.component';
-import { ListaObjetosComponent } from './../../components/components-admin/lista-objetos/lista-objetos.component';
+
 
 @NgModule({
-  declarations: [TolBarAdminComponent, ListaObjetosComponent],
+  declarations: [],
   imports: [
     CommonModule,
     AdministradorRoutingModule,

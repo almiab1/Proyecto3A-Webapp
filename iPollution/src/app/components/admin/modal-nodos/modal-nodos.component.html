@@ -101,12 +101,12 @@
   <!-- Botones comfirmacion -->
   <div class="ion-text-end" vertical="bottom" slot="fixed">
     <div *ngIf="tipoModal == 'anyadir'">
-      <ion-button color="success" size="large" (click)="closeModal('guardar')">
+      <ion-button color="success" size="large" (click)="closeModa()">
         <ion-icon size="large" name="save"></ion-icon>
       </ion-button>
     </div>
     <div *ngIf="tipoModal != 'anyadir'">
-      <ion-button color="danger" (click)="closeModal('eliminar')">
+      <ion-button color="danger" (click)="closeModa()">
         <ion-icon size="large" name="trash"></ion-icon>
       </ion-button>
     </div>

@@ -17,6 +17,7 @@ import { BeaconProvider } from './core/services/BeaconProvider.service';
 import { IBeacon } from '@ionic-native/ibeacon/ngx';
 import { LogicaDeNegocioFake } from './core/services/LogicaDeNegocioFake.service';
 import { LocalizadorGPS } from './core/services/LocalizadorGPS.service';
+import {AdminModule} from './components/admin/admin.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,7 @@ import { LocalizadorGPS } from './core/services/LocalizadorGPS.service';
     ReceptorBLE,
     LogicaDeNegocioFake,
     HttpClientModule,
-    IBeacon, BeaconProvider,
+    IBeacon, BeaconProvider
   ],
   bootstrap: [AppComponent]
 })

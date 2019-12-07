@@ -11,7 +11,7 @@
 // ----------------------------------------------------------------------------
 import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
-import { ModalUsuariosComponent } from './../../../components/components-admin/modal-usuarios/modal-usuarios.component';
+import { ModalUsuariosComponent } from '../../../components/admin/modal-usuarios/modal-usuarios.component';
 import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ----------------------------------------------------------------------------
 // Component

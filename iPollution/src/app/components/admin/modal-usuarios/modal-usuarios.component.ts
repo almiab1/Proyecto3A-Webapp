@@ -80,14 +80,14 @@ export class ModalUsuariosComponent implements OnInit {
   async closeModal(tipoBoton: string) {
     const onClosedData = 'ModalCerrado';
 
-    let user = {
+    const user = {
       nombre: this.nombreUser,
       idTipoUsuario: this.tipoUsuario,
       idUsuario: this.emailUsuario,
       telefono: this.telefono,
       idSensor: this.nodos,
       contrasenya: this.contrasenya
-    }
+    };
 
     switch (tipoBoton) {
       case 'guardar': {

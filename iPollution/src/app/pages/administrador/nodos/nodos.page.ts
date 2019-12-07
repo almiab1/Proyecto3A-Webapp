@@ -17,7 +17,7 @@ import {
 import {
   LogicaDeNegocioFake
 } from 'src/app/core/services/LogicaDeNegocioFake.service';
-import { ModalNodosComponent } from './../../../components/components-admin/modal-nodos/modal-nodos.component';
+import { ModalNodosComponent } from '../../../components/admin/modal-nodos/modal-nodos.component';
 
 // ----------------------------------------------------------------------------
 // Component
