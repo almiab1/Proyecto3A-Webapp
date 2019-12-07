@@ -1,4 +1,15 @@
 <app-header title="Rutas"></app-header>
 <ion-content>
-  
+    <ion-item color="secundario" class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed">
+        <ion-label>
+            <h3>Selecciona tu ruta</h3>
+        </ion-label>
+        <ion-select name="selectRute" [selectedText]="selectedRute" [(ngModel)]="selectedRute"
+            (ionChange)="ruteSelected()" multiple="false" required>
+            <ion-select-option *ngFor="let rute of rutes" value="{{rute.name}}" color="acentuado">
+                {{rute.name}}
+            </ion-select-option>
+        </ion-select>
+    </ion-item>
+    <div #mapElement class="mapElement" expand="full" slot="fixed"></div>
 </ion-content>
