@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
     },
     {
       title: 'Rutas',
-      url: '/rutas',
+      url: 'user/rutas',
       icon: 'navigate'
     },
     {
@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
     },
     {
       title: 'Configuración',
-      url: '/config',
+      url: '/user/config',
       icon: 'options'
     },
     {
