@@ -74,7 +74,7 @@ export class ModalNodosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // tipoBoton --> closeModal()
-  async closeModa() {
+  async closeModa(tipoBoton: string) {
     const onClosedData = 'ModalCerrado';
 
     switch (tipoBoton) {
