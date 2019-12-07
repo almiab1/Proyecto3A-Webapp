@@ -1,5 +1,16 @@
 <app-header title="Rutas"></app-header>
 <ion-content>
+    <ion-item class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed" color="secundario">
+        <ion-label>
+            <h3>Capas</h3>
+        </ion-label>
+        <ion-select name="selectCapa" multiple="true" cancelText="Cancelar" okText="Aceptar"
+            (ionChange)="onSelectCapaChange($event.target.value)" color="secundario">
+            <ion-select-option selected="true" value="o3" color="acentuado">Ozono</ion-select-option>
+            <ion-select-option value="co" color="acentuado">Monóxido de carbono</ion-select-option>
+            <ion-select-option value="so2" color="acentuado">Dióxido de azufre</ion-select-option>
+        </ion-select>
+    </ion-item>
     <ion-item color="secundario" class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed">
         <ion-label>
             <h3>Selecciona tu ruta</h3>
