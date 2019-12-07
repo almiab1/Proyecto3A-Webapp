@@ -9,6 +9,9 @@ import { UsersPage } from './users.page';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../../../components/shared/shared.module';
 
+import { ModalUsuariosComponent } from './../../../components/components-admin/modal-usuarios/modal-usuarios.component';
+import { AdministradorModule } from './../administrador.module';
+
 @NgModule({
     imports: [
         CommonModule,

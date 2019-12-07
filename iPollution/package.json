@@ -4,6 +4,8 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
+    "ionicServe": "ionic serve",
+    "compileAndroid": "ionic cordova run android --device",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

@@ -1,0 +1,9 @@
+<ion-list>
+  <ion-list-header>
+    <ion-title>Lista de {{tituloLista}}:</ion-title>
+  </ion-list-header>
+  <ion-item *ngFor="let item of users" (click)="abrirModal">
+    {{ item.{{nombreObjecto}} }}
+  </ion-item>
+</ion-list>
+

@@ -1,5 +1,6 @@
 <app-header title="Admin | Nodos"></app-header>
 
 <ion-content>
-
+  <app-tol-bar-admin iconoAnyadir="person-add"  placeholder="Busca el nodo deseado" funcionFiltrado="filterList($event)" abrirModalAnyadir="openModal(undefined,'anyadir')"></app-tol-bar-admin>
+  <app-lista-objetos objects="nodos" abrirModal="openModal(item,'editar')" tituloLista="Nodos" nombreObjecto="idSensor"> </app-lista-objetos>
 </ion-content>
