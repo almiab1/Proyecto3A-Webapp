@@ -44,7 +44,7 @@
                             <ion-list-header color="acentuado" expand="block">Rutas previas:</ion-list-header>
                             <ion-item *ngFor="let route of previousTracks" expand="block">
                                 <ion-label color="acentuado" expand="block">{{ route.finished | date }}, {{ route.path.length }}
-                                    Waypoints</ion-label>
+                                    Puntos de Control</ion-label>
                                 <button ion-button clear item-end (click)="showHistoryRoute(route.path)" slot="end" expand="block">View
                                     Route</button>
                             </ion-item>
