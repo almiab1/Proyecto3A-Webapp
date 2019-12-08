@@ -9,8 +9,6 @@ import { NodosPage } from './nodos.page';
 import {Router, RouterModule} from '@angular/router';
 import {SharedModule} from '../../../components/shared/shared.module';
 
-import { AdministradorModule } from './../administrador.module';
-import { ModalNodosComponent } from 'src/app/components/admin/modal-nodos/modal-nodos.component';
 import {AdminModule} from '../../../components/admin/admin.module';
 
 @NgModule({
