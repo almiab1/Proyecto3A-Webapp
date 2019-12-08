@@ -14,7 +14,9 @@ import {
   Injectable
 } from '@angular/core';
 // GPS
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+import {
+  Geolocation
+} from '@ionic-native/geolocation/ngx';
 
 // ----------------------------
 // LocalizadorGPS
@@ -40,6 +42,20 @@ export class LocalizadorGPS {
 
     // console.log('Lat: ' + this.lat + ' , Long: ' + this.long);
 
-    return {lat: this.lat, long: this.long};
+    return {
+      lat: this.lat,
+      long: this.long
+    };
+  }
+
+  watchLocation(watchUpdate: any) {
+
+    watchUpdate = this.geolocation.watchPosition();
+
+    return watchUpdate;
+  }
+
+  async stopLocationWatch(watch: any) {
+    await watch.unsubscribe();
   }
 }

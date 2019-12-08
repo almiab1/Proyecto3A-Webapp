@@ -32,6 +32,13 @@ export class RutasPage implements OnInit {
   @ViewChild('mapElement', { static: false }) mapElement: ElementRef;
   currentLocation: any = { lat: 0, long: 0 };
 
+  // Updates position
+  watchUpdates: any;
+  currentMapTrack = null;
+  isTracking = false;
+  trackedRoute = [];
+  previousTracks = [];
+
   // Constructor
   constructor(
     private gps: LocalizadorGPS,
@@ -148,10 +155,44 @@ export class RutasPage implements OnInit {
   }
   // ----------------------------------------------------------------------------------------------
 
+  // ----------------------------------------------------------------------------------------------
   onSelectCapaChange(valores) {
     this.mapa.ocultarTodasLasCapas();
     valores.forEach(capa => {
       this.mapa.mostrarCapa(capa);
     });
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  startTracking() {
+    this.isTracking = true; // cambiamos el estado a monitoreo
+    this.trackedRoute = [];
+
+    this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
+      if (resp != undefined) {
+        this.trackedRoute.push({ lat: resp.coords.latitude, lng: resp.coords.longitude }); // Añadimos un punto en la ruta
+        this.mapa.pintarRuta(this.trackedRoute,this.currentMapTrack); // Pintamos la ruta
+      }
+    });
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  stopTracking() {
+    let newRoute = { finished: new Date().getTime(), path: this.trackedRoute };
+    this.previousTracks.push(newRoute);
+    this.storage.set('routes', this.previousTracks);
+
+    this.isTracking = false; // cambiamos el estado a no monitoreo
+    this.gps.stopLocationWatch(this.watchUpdates); // paramos de monitorear
+    this.currentMapTrack.setMap(null);
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  showHistoryRoute(route) {
+    this.mapa.pintarRuta(route, undefined);
+    this.mapa.refrescarMapa();
   }
 }

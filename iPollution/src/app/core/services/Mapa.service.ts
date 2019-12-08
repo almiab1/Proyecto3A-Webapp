@@ -170,5 +170,26 @@ export class MapaService {
     });
 
   }
+  // ------------------------------------------
 
+  // -----------------------------------------
+  // ruta:sarray -> pintarRuta() -> void
+  // ------------------------------------------
+  pintarRuta(ruta, currentMapTrack) {
+    if (currentMapTrack) {
+      currentMapTrack.setMap(null);
+    }
+
+    if (ruta.length > 1) {
+      currentMapTrack = new google.maps.Polyline({
+        path: ruta,
+        geodesic: true,
+        strokeColor: '#ff00ff',
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+      });
+      currentMapTrack.setMap(this.mapa);
+    }
+    this.refrescarMapa();
+  }
 }
