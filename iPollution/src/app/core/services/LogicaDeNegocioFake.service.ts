@@ -63,7 +63,7 @@ export class LogicaDeNegocioFake {
         })
     };
 
-    httpOptionsGet = {
+    protected httpOptionsGet = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
         })
@@ -231,7 +231,7 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     getAllMedidas(): Observable < any > {
         return this.http
-            .get(this.urlGETAll, this.httpOptions)
+            .get(this.urlGETAll, this.httpOptionsGet)
             .pipe(
                 // retry(2),
                 // catchError(this.handleError)
