@@ -173,7 +173,7 @@ export class MapaService {
   // ------------------------------------------
 
   // -----------------------------------------
-  // ruta:sarray -> pintarRuta() -> void
+  // ruta: array -> pintarRuta() -> void
   // ------------------------------------------
   pintarRuta(ruta, currentMapTrack) {
     if (currentMapTrack) {
@@ -184,12 +184,21 @@ export class MapaService {
       currentMapTrack = new google.maps.Polyline({
         path: ruta,
         geodesic: true,
-        strokeColor: '#ff00ff',
+        strokeColor: '#2196f2',
         strokeOpacity: 1.0,
         strokeWeight: 3
       });
       currentMapTrack.setMap(this.mapa);
     }
+    this.refrescarMapa();
+  }
+  // ------------------------------------------
+
+  // -----------------------------------------
+  // ruta:sarray -> quitarRuta() -> void
+  // ------------------------------------------
+  quitarRuta(currentMapTrack) {
+    currentMapTrack.setMap(null);
     this.refrescarMapa();
   }
 }

@@ -59,6 +59,9 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
+
+    this.loadHistoricRoutes();
+
     this.gps.obtenerMiPosicionGPS().then((resp) => {
       this.currentLocation.lat = resp.lat;
       this.currentLocation.long = resp.long;
@@ -186,7 +189,7 @@ export class RutasPage implements OnInit {
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
     this.gps.stopLocationWatch(this.watchUpdates); // paramos de monitorear
-    this.currentMapTrack.setMap(null);
+    this.mapa.quitarRuta(this.currentMapTrack);
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -194,5 +197,15 @@ export class RutasPage implements OnInit {
   showHistoryRoute(route) {
     this.mapa.pintarRuta(route, undefined);
     this.mapa.refrescarMapa();
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  loadHistoricRoutes() {
+    this.storage.get('routes').then(data => {
+      if (data) {
+        this.previousTracks = data;
+      }
+    });
   }
 }
