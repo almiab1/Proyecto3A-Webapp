@@ -10,11 +10,24 @@
 // ----------------------------
 // Includes
 // ----------------------------
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MapaService} from '../../../core/services/Mapa.service';
-import {LocalizadorGPS} from '../../../core/services/LocalizadorGPS.service';
-import {LogicaDeNegocioFake} from '../../../core/services/LogicaDeNegocioFake.service';
-import { Storage } from '@ionic/storage';// ----------------------------
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  MapaService
+} from '../../../core/services/Mapa.service';
+import {
+  LocalizadorGPS
+} from '../../../core/services/LocalizadorGPS.service';
+import {
+  LogicaDeNegocioFake
+} from '../../../core/services/LogicaDeNegocioFake.service';
+import {
+  Storage
+} from '@ionic/storage'; // ----------------------------
 // Components
 // ----------------------------
 @Component({
@@ -29,8 +42,13 @@ export class RutasPage implements OnInit {
 
   // Propiedades
   mapa: MapaService;
-  @ViewChild('mapElement', { static: false }) mapElement: ElementRef;
-  currentLocation: any = { lat: 0, long: 0 };
+  @ViewChild('mapElement', {
+    static: false
+  }) mapElement: ElementRef;
+  currentLocation: any = {
+    lat: 0,
+    long: 0
+  };
 
   // Updates position
   watchUpdates: any;
@@ -75,10 +93,10 @@ export class RutasPage implements OnInit {
 
       // Marcador posicion actual
       this.mapa.anyadirMarcador(
-          'Posicion Actual', {
-            lat: this.currentLocation.lat,
-            lng: this.currentLocation.long
-          }, 'assets/icon/gpsIcon.svg'
+        'Posicion Actual', {
+          lat: this.currentLocation.lat,
+          lng: this.currentLocation.long
+        }, 'assets/icon/gpsIcon.svg'
       );
 
       // Genero la capa donde pondre las medidas de ozono
@@ -174,8 +192,13 @@ export class RutasPage implements OnInit {
 
     this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
       if (resp != undefined) {
-        this.trackedRoute.push({ lat: resp.coords.latitude, lng: resp.coords.longitude }); // Añadimos un punto en la ruta
-        this.mapa.pintarRuta(this.trackedRoute,this.currentMapTrack); // Pintamos la ruta
+        this.trackedRoute.push({
+          lat: resp.coords.latitude,
+          lng: resp.coords.longitude
+        }); // Añadimos un punto en la ruta
+        this.currentLocation.lat = resp.coords.latitude;
+        this.currentLocation.long = resp.coords.longitude;
+        this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
       }
     });
   }
@@ -183,7 +206,10 @@ export class RutasPage implements OnInit {
 
   // ----------------------------------------------------------------------------------------------
   stopTracking() {
-    let newRoute = { finished: new Date().getTime(), path: this.trackedRoute };
+    let newRoute = {
+      finished: new Date().getTime(),
+      path: this.trackedRoute
+    };
     this.previousTracks.push(newRoute);
     this.storage.set('routes', this.previousTracks);
 
