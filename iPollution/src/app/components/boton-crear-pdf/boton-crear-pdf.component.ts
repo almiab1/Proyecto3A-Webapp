@@ -32,7 +32,7 @@ export class BotonCrearPdfComponent implements OnInit {
 
     this.pdfObj = pdfMake.createPdf(docDefinition);
 
-    this.pdfObj.download();
+    this.pdfObj.download
 
     /*
     let headers: any = new HttpHeaders({'Content-Type':'application/json'}),
