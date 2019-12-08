@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { MasInfoPage } from './mas-info.page';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../../../components/shared/shared.module';
+import { MedidasOficialesComponent } from 'src/app/components/medidas-oficiales/medidas-oficiales.component';
 
 @NgModule({
     imports: [
@@ -19,6 +20,6 @@ import {SharedModule} from '../../../components/shared/shared.module';
         ]),
         SharedModule
     ],
-  declarations: [MasInfoPage]
+  declarations: [MasInfoPage, MedidasOficialesComponent]
 })
 export class MasInfoPageModule {}

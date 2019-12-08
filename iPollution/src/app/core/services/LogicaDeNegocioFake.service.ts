@@ -37,7 +37,7 @@ export class LogicaDeNegocioFake {
     urlGET = this.urlServe + '/getUltimaMedida';
     urlGETAll = this.urlServe + '/getAllMedidas';
 
-    urlGetMedidasOficiales = 'https://osblasae.upv.edu.es/getMedidasOficiales';
+    urlGetMedidasOficiales = 'http://localhost:8080/getMedidasOficiales';
 
 
     // API de admin
@@ -62,6 +62,12 @@ export class LogicaDeNegocioFake {
             'Authorization': localStorage.getItem('token')
         })
     };
+
+    httpOptionsGet = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+        })
+      }
 /*
     // PRUEBAS USERS Y NODOS
     usuariosFicticios: any;
@@ -205,7 +211,7 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     public getMedidasOficiales(): Observable < any > {
         return this.http
-            .get(this.urlGetMedidasOficiales, this.httpOptions)
+            .get(this.urlGetMedidasOficiales, this.httpOptionsGet)
             .pipe();
     }
 
