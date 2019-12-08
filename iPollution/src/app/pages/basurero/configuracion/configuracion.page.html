@@ -1,5 +1,20 @@
 <app-header title="Configuración"></app-header>
 
 <ion-content>
-
+    <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-title>Configurciones herramientas:</ion-title>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-list>
+              <ion-item button="true" (click)="logout()" detail="true">
+                <ion-label>Cerrar sesion</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 </ion-content>
