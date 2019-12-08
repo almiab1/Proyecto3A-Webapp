@@ -12,6 +12,7 @@ import {SharedModule} from '../../../components/shared/shared.module';
 import { AdministradorModule } from './../administrador.module';
 import { ModalNodosComponent } from 'src/app/components/admin/modal-nodos/modal-nodos.component';
 import {AdminModule} from '../../../components/admin/admin.module';
+import { BotonCrearPdfComponent } from 'src/app/components/boton-crear-pdf/boton-crear-pdf.component';
 
 @NgModule({
     imports: [
@@ -24,6 +25,6 @@ import {AdminModule} from '../../../components/admin/admin.module';
         SharedModule,
         AdminModule
     ],
-  declarations: [NodosPage]
+  declarations: [NodosPage, BotonCrearPdfComponent]
 })
 export class NodosPageModule {}
