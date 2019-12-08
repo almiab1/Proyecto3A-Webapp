@@ -63,10 +63,10 @@ export class RutasPage implements OnInit {
     private server: LogicaDeNegocioFake,
     private storage: Storage
   ) {
-    storage.set('rute', '1');
-    storage.get('rute').then((val) => {
-      console.log('Your age is' + val);
-    });
+    // storage.set('rute', '1');
+    // storage.get('rute').then((val) => {
+    //   console.log('Your age is' + val);
+    // });
   }
   // ----------------------------------------------------------------------------------------------
 
