@@ -10,25 +10,11 @@
 // ----------------------------
 // Includes
 // ----------------------------
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
-// Services
-import {
-  LocalizadorGPS
-} from './../../../core/services/LocalizadorGPS.service';
-import {
-  MapaService
-} from './../../../core/services/Mapa.service';
-import {
-  LogicaDeNegocioFake
-} from 'src/app/core/services/LogicaDeNegocioFake.service';
-// Variable global
-declare var google;
-// ----------------------------
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {MapaService} from '../../../core/services/Mapa.service';
+import {LocalizadorGPS} from '../../../core/services/LocalizadorGPS.service';
+import {LogicaDeNegocioFake} from '../../../core/services/LogicaDeNegocioFake.service';
+import { Storage } from '@ionic/storage';// ----------------------------
 // Components
 // ----------------------------
 @Component({
@@ -41,51 +27,21 @@ declare var google;
 // ----------------------------
 export class RutasPage implements OnInit {
 
-  // Mapa
+  // Propiedades
   mapa: MapaService;
-  // Referencia elemento vista mapa
-  @ViewChild('mapElement', {
-    static: false
-  }) mapElement: ElementRef;
-  currentLocation: any = {
-    lat: 38.996394,
-    lng: -0.166196
-  };
-  // Lista de rutas
-  public rutes: any;
-  // Direcciones
-  directionsService = new google.maps.DirectionsService;
-  directionsDisplay = new google.maps.DirectionsRenderer;
-  selectedRute: any;
-  correctRute: any;
+  @ViewChild('mapElement', { static: false }) mapElement: ElementRef;
+  currentLocation: any = { lat: 0, long: 0 };
+
   // Constructor
   constructor(
-    private geolocation: LocalizadorGPS,
-    private server: LogicaDeNegocioFake
+    private gps: LocalizadorGPS,
+    private server: LogicaDeNegocioFake,
+    private storage: Storage
   ) {
-
-    this.rutes = [{
-        name: 'Grau i Platja Gandia - ida',
-        posicion: {
-          lat: 39.019929,
-          lng: -0.177311
-        },
-      },
-      {
-        name: 'Grau i Platja Gandia - vuelta',
-        posicion: {
-          lat: 38.984524,
-          lng: -0.164641
-        },
-      },
-      {
-        name: 'Gandia',
-        posicion: {
-          lat: 38.959545,
-          lng: -0.187941
-        },
-      },
-    ];
+    storage.set('rute', '1');
+    storage.get('rute').then((val) => {
+      console.log('Your age is' + val);
+    });
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -94,40 +50,9 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ruteSelected() {
-    console.log('MetodoRutaSeleccionado y ruta select ' + this.selectedRute);
-    this.rutes.forEach(element => {
-      if (element.name === this.selectedRute) {
-        this.correctRute = element.posicion;
-        console.log('Ruta puesta - ' + this.correctRute);
-        this.calculateAndDisplayRoute();
-      }
-    });
-  }
-
-  calculateAndDisplayRoute() {
-    const that = this;
-    this.directionsService.route({
-      // origin: this.currentLocation,
-      origin: {
-        lat: this.currentLocation.lat,
-        lng: this.currentLocation.long
-      },
-      destination: this.correctRute,
-      travelMode: 'DRIVING'
-    }, (response, status) => {
-      if (status === 'OK') {
-        that.directionsDisplay.setDirections(response);
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });
-  }
-
-  // ----------------------------------------------------------------------------------------------
-  // tslint:disable-next-line: use-lifecycle-interface
+  // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
-    this.geolocation.obtenerMiPosicionGPS().then((resp) => {
+    this.gps.obtenerMiPosicionGPS().then((resp) => {
       this.currentLocation.lat = resp.lat;
       this.currentLocation.long = resp.long;
 
@@ -137,12 +62,96 @@ export class RutasPage implements OnInit {
       }, {
         zoom: 15
       }, this.mapElement.nativeElement);
+
+      // Marcador posicion actual
       this.mapa.anyadirMarcador(
-        'Posicion Actual', {
-          lat: this.currentLocation.lat,
-          lng: this.currentLocation.long
-        }, 'assets/icon/gpsIcon.svg'
+          'Posicion Actual', {
+            lat: this.currentLocation.lat,
+            lng: this.currentLocation.long
+          }, 'assets/icon/gpsIcon.svg'
       );
-    })
+
+      // Genero la capa donde pondre las medidas de ozono
+      this.mapa.anyadirCapa({
+        nombre: 'o3',
+        disipado: true, // Escalado del aspecto de los puntos en funcion del zoom
+        radio: 70, // Radio de influencia de cada punto en pixeles sobre el mapa
+        maxIntensidad: 1500 // Valor en el cual el color es máximo
+      });
+
+      this.mapa.anyadirCapa({
+        nombre: 'co',
+        disipado: true,
+        radio: 90,
+        maxIntensidad: 1000
+      });
+
+      this.mapa.anyadirCapa({
+        nombre: 'so2',
+        disipado: true,
+        radio: 60,
+        maxIntensidad: 800
+      });
+
+      // Pido las medidas al servidor y por cada una la añado a la capa de ozono en este caso
+      try {
+        this.server.getAllMedidas().toPromise().then(data => {
+          for (const medida of data) {
+            this.mapa.anyadirMedicion('o3', medida);
+          }
+        });
+      } catch (erro) {
+        console.error('Error Mapa: ' + erro);
+      }
+      const medidasCo = [{
+        latitud: 39.000466,
+        longitud: -0.165349,
+        valorMedido: 320
+      }, {
+        latitud: 39.002577,
+        longitud: -0.161285,
+        valorMedido: 500
+      }, {
+        latitud: 38.999102,
+        longitud: -0.160547,
+        valorMedido: 703
+      }];
+      const medidasSo2 = [{
+        latitud: 39.007554,
+        longitud: -0.166646,
+        valorMedido: 620
+      }, {
+        latitud: 39.009055,
+        longitud: -0.167912,
+        valorMedido: 130
+      }, {
+        latitud: 39.007703,
+        longitud: -0.168824,
+        valorMedido: 270
+      }];
+
+      medidasCo.forEach(medida => {
+        this.mapa.anyadirMedicion('co', medida);
+      });
+
+      medidasSo2.forEach(medida => {
+        this.mapa.anyadirMedicion('so2', medida);
+      });
+
+      this.mapa.ocultarTodasLasCapas();
+      this.mapa.mostrarCapa('o3');
+
+
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  onSelectCapaChange(valores) {
+    this.mapa.ocultarTodasLasCapas();
+    valores.forEach(capa => {
+      this.mapa.mostrarCapa(capa);
+    });
   }
 }

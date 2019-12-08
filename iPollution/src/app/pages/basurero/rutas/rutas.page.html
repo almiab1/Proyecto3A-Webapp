@@ -1,26 +1,42 @@
 <app-header title="Rutas"></app-header>
 <ion-content>
-    <ion-item class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed" color="secundario">
-        <ion-label>
-            <h3>Capas</h3>
-        </ion-label>
-        <ion-select name="selectCapa" multiple="true" cancelText="Cancelar" okText="Aceptar"
-            (ionChange)="onSelectCapaChange($event.target.value)" color="secundario">
-            <ion-select-option selected="true" value="o3" color="acentuado">Ozono</ion-select-option>
-            <ion-select-option value="co" color="acentuado">Monóxido de carbono</ion-select-option>
-            <ion-select-option value="so2" color="acentuado">Dióxido de azufre</ion-select-option>
-        </ion-select>
+    <ion-item expand="full" slot="fixed" color="secundario">
+        <ion-grid>
+            <ion-row class="ion-align-items-center ion-justify-content-center">
+                <ion-col size="8">
+                    <div>
+                        <ion-item class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed"
+                            color="secundario">
+                            <ion-label>
+                                <h3>Capas</h3>
+                            </ion-label>
+                            <ion-select name="selectCapa" multiple="true" cancelText="Cancelar" okText="Aceptar"
+                                (ionChange)="onSelectCapaChange($event.target.value)" color="secundario" expand="block">
+                                <ion-select-option selected="true" value="o3" color="acentuado">Ozono
+                                </ion-select-option>
+                                <ion-select-option value="co" color="acentuado">Monóxido de carbono</ion-select-option>
+                                <ion-select-option value="so2" color="acentuado">Dióxido de azufre</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </div>
+                </ion-col>
+
+                <ion-col size="4">
+                    <div colo="secundario">
+                        <ion-button expand="block" (click)="startTracking()" *ngIf="!isTracking">
+                            <ion-icon name="locate" slot="start"></ion-icon>
+                            Start Tracking
+                        </ion-button>
+
+                        <ion-button expand="block" (click)="stopTracking()" *ngIf="isTracking">
+                            <ion-icon name="hand" slot="start"></ion-icon>
+                            Stop Tracking
+                        </ion-button>
+                    </div>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
     </ion-item>
-    <ion-item color="secundario" class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed">
-        <ion-label>
-            <h3>Selecciona tu ruta</h3>
-        </ion-label>
-        <ion-select name="selectRute" [selectedText]="selectedRute" [(ngModel)]="selectedRute"
-            (ionChange)="ruteSelected()" multiple="false" required>
-            <ion-select-option *ngFor="let rute of rutes" value="{{rute.name}}" color="acentuado">
-                {{rute.name}}
-            </ion-select-option>
-        </ion-select>
-    </ion-item>
-    <div #mapElement class="mapElement"></div>
+    <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
 </ion-content>

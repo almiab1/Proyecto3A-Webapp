@@ -1,7 +1,7 @@
 <ion-toolbar>
-  <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="placeHolder" (ionInput)="funcionFiltrado">
+  <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="placeHolder" (ionInput)="filterList($event)">
   </ion-searchbar>
-  <ion-button slot="end" color="success" disabled="false" (click)="abrirModalAnyadir">
+  <ion-button slot="end" color="success" disabled="false" (click)="openModal(undefined,'anyadir')">
     <ion-icon name="add" size="large" expand="block" ></ion-icon>
   </ion-button>
 </ion-toolbar>

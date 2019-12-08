@@ -18,6 +18,7 @@ import { LogicaDeNegocioFake } from './core/services/LogicaDeNegocioFake.service
 import { LocalizadorGPS } from './core/services/LocalizadorGPS.service';
 import { AdminModule } from './components/admin/admin.module';
 import { ReceptorBLE } from './core/services/ReceptorBle.service';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,8 @@ import { ReceptorBLE } from './core/services/ReceptorBle.service';
         IonicModule.forRoot(),
         AppRoutingModule,
         SharedModule,
-        HttpClientModule
+        HttpClientModule,
+        IonicStorageModule.forRoot()
     ],
   providers: [
     StatusBar,
