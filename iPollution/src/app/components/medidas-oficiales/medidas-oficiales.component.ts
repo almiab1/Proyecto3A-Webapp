@@ -86,10 +86,10 @@ export class MedidasOficialesComponent implements OnInit {
     this.lineChart = new Chart(this.lineChart.nativeElement, {
       type: 'line',
       data: {
-        labels: [response[response.length - 10].hora, response[response.length - 9].hora, response[response.length - 8].hora, response[response.length - 7].hora, response[response.length - 6].hora, response[response.length - 5].hora,response[response.length - 4].hora,response[response.length - 3].hora,response[response.length - 2].hora, response[response.length - 1].hora],
+        labels: [response[response.length - 8].hora, response[response.length - 7].hora, response[response.length - 6].hora, response[response.length - 5].hora, response[response.length - 4].hora, response[response.length - 3].hora,response[response.length - 2].hora,response[response.length - 1].hora],
         datasets: [{
           label: 'Ozono',
-          data: [response[response.length - 10].o3, response[response.length - 9].o3, response[response.length - 8].o3, response[response.length - 7].o3, response[response.length - 6].o3, response[response.length - 5].o3, response[response.length - 4].o3, response[response.length - 3].o3, response[response.length - 2].o3, response[response.length - 1].o3],
+          data: [response[response.length - 8].o3, response[response.length - 7].o3, response[response.length - 6].o3, response[response.length - 5].o3, response[response.length - 4].o3, response[response.length - 3].o3, response[response.length - 2].o3, response[response.length - 1].o3],
           backgroundColor: 'rgba(0, 0, 0, 0)',
           borderColor: 'rgb(0,150,136)',
           borderWidth: 2

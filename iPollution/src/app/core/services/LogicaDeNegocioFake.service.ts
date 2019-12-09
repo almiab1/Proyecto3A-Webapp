@@ -37,7 +37,7 @@ export class LogicaDeNegocioFake {
     urlGET = this.urlServe + '/getUltimaMedida';
     urlGETAll = this.urlServe + '/getAllMedidas';
 
-    urlGetMedidasOficiales = 'http://localhost:8080/getMedidasOficiales';
+    urlGetMedidasOficiales = 'https://osblasae.upv.edu.es/getMedidasOficiales';
 
 
     // API de admin
