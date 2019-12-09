@@ -27,7 +27,9 @@ import {
 } from '../../../core/services/LogicaDeNegocioFake.service';
 import {
   Storage
-} from '@ionic/storage'; // ----------------------------
+} from '@ionic/storage'; 
+import { ToastController } from '@ionic/angular';
+// ----------------------------
 // Components
 // ----------------------------
 @Component({
@@ -61,17 +63,16 @@ export class RutasPage implements OnInit {
   constructor(
     private gps: LocalizadorGPS,
     private server: LogicaDeNegocioFake,
-    private storage: Storage
+    private storage: Storage,
+    public toastController: ToastController
   ) {
-    // storage.set('rute', '1');
-    // storage.get('rute').then((val) => {
-    //   console.log('Your age is' + val);
-    // });
   }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.presentToast();
+  }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
@@ -186,6 +187,16 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
+  onSelectRuta(valores) {
+    console.log('INICIO ONSELECTRUTA');
+    console.table(valores);
+    this.mapa.refrescarMapa();
+    this.showHistoryRoute(this.previousTracks[this.previousTracks.length - 1].path);
+    console.log('FIN ONSELECTRUTA');
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
   startTracking() {
     this.isTracking = true; // cambiamos el estado a monitoreo
     this.trackedRoute = [];
@@ -215,13 +226,14 @@ export class RutasPage implements OnInit {
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
     this.gps.stopLocationWatch(this.watchUpdates); // paramos de monitorear
-    this.mapa.quitarRuta(this.currentMapTrack);
+    // this.mapa.quitarRuta(this.currentMapTrack);
+    this.currentMapTrack.setMap(null);
   }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
   showHistoryRoute(route) {
-    this.mapa.pintarRuta(route, undefined);
+    this.mapa.pintarRuta(route, null);
     this.mapa.refrescarMapa();
   }
   // ----------------------------------------------------------------------------------------------
@@ -233,5 +245,32 @@ export class RutasPage implements OnInit {
         this.previousTracks = data;
       }
     });
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // Testing
+  // ----------------------------------------------------------------------------------------------
+  async presentToast() {
+    let testData;
+
+    this.storage.set('test', [{lat:1,long:2},{lat:3,long:4}]);
+
+    this.storage.get('test').then(data => {
+      if (data) {
+        testData = data;
+        console.log('------------DENTRO DE ASIGNACION DATA------------------');
+        console.table(testData);
+        console.log('------------------------------');
+      }
+    });
+    const toast = await this.toastController.create({
+      message: 'TEST VER RUTAS PREVIAS',
+      duration: 2000
+    });
+    console.log('------------FUERA DE ASIGNACION DATA------------------');
+    console.table(testData);
+    console.log('------------------------------');
+    toast.present();
   }
 }
