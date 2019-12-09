@@ -9,22 +9,22 @@
         </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col size-xs="12" size-md="4" size-lg="4">
+        <ion-col *ngIf="rolUser === 1 || rolUser === 2" size-xs="12" [sizeMd]="tamanyoWidget" [sizeLg]="tamanyoWidget">
             <app-widget-action titulo="Rutas" ruta="/user/rutas"
                                descripcion="Accede a las rutas menos contaminantes"
                                color="widget-mapa" backgroundColor="widget-rutas-background"
                                icono="assets/rutas.svg">
                 ></app-widget-action>
         </ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4">
+        <ion-col size-xs="12" [sizeMd]="tamanyoWidget" [sizeLg]="tamanyoWidget">
             <app-widget-action titulo="Mapa" ruta="/mapa"
                                descripcion="Visualiza los diferentes contaminantes."
                                color="widget-mapa" backgroundColor="widget-mapa-background"
                                icono="assets/map-location.svg">
                 ></app-widget-action>
         </ion-col>
-        <ion-col size-xs="12" size-md="4" size-lg="4">
-            <app-widget-action titulo="Scaner" ruta="/escaner"
+        <ion-col size-xs="12" [sizeMd]="tamanyoWidget" [sizeLg]="tamanyoWidget">
+            <app-widget-action *ngIf="platform.is('mobile')" titulo="Scaner" ruta="/escaner"
                                descripcion="Visualiza los diferentes contaminantes."
                                color="widget-mapa" backgroundColor="widget-escaner-background"
                                icono="assets/escaner.svg">
@@ -32,5 +32,4 @@
         </ion-col>
     </ion-row>
 </ion-content>
-
 

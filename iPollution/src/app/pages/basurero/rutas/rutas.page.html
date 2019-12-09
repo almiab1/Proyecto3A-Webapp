@@ -27,7 +27,6 @@
                             <ion-icon name="locate" slot="start"></ion-icon>
                             Start Tracking
                         </ion-button>
-
                         <ion-button expand="block" (click)="stopTracking()" *ngIf="isTracking">
                             <ion-icon name="hand" slot="start"></ion-icon>
                             Stop Tracking
@@ -43,33 +42,36 @@
 
             <ion-row>
                 <ion-col>
-                    <ion-item color="secundario">
-                        <!-- <ion-list expand="full" color="secundario">
-                            <ion-list-header color="acentuado" expand="block">Rutas previas:</ion-list-header>
+                    <ion-item color="secondary">
+                        <ion-list expand="full" color="secondary">
+                            <ion-list-header color="secondary" expand="block">Rutas previas:</ion-list-header>
                             <ion-item-sliding *ngFor="let route of previousTracks" expand="block">
-                                <ion-label color="acentuado" expand="block">{{ route.finished | date }},
+                                <ion-label color="accent" expand="block">{{ route.finished | date }},
                                     {{ route.path.length }}
                                     Puntos de Control</ion-label>
                                 <button ion-button clear item-end (click)="showHistoryRoute(route.path)" slot="end"
                                     expand="block">View
                                     Route</button>
                             </ion-item-sliding>
-                        </ion-list> -->
+                        </ion-list>
+                        <!--
                         <ion-label>
                             <h3>Rutas previas:</h3>
                         </ion-label>
+                        -->
+                        <!--
                         <ion-select name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
                             (ionChange)="onSelectRuta($event)" color="secundario" expand="full">
                             <ion-select-option *ngFor="let route of previousTracks" value="route.path" color="acentuado">
-                                <ion-label color="acentuado" expand="full">{{ route.finished | date }},
+                                <ion-label color="accent" expand="full">{{ route.finished | date }},
                                     {{ route.path.length }}
                                     Puntos de Control</ion-label>
                             </ion-select-option>
                         </ion-select>
+                        -->
                     </ion-item>
                 </ion-col>
             </ion-row>
-
         </ion-grid>
     </ion-item>
     <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
@@ -77,6 +79,4 @@
         <ion-fab-button color="accent">
         </ion-fab-button>
     </ion-fab>
-
-
 </ion-content>
