@@ -1,0 +1,39 @@
+[
+  {
+    "title": "Home",
+    "url": "/home",
+    "icon": "home"
+  },
+  {
+    "title": "Mapa",
+    "url": "/mapa",
+    "icon": "locate"
+  },
+  {
+    "title": "Rutas",
+    "url": "user/rutas",
+    "icon": "navigate"
+  },
+  {
+    "title": "+Info",
+    "url": "/mas-info",
+    "icon": "information-circle-outline",
+    "subPages": [
+      {
+        "title": "Tips",
+        "icon": "leaf",
+        "url": "/tips"
+      },
+      {
+        "title": "Medidas oficiales",
+        "icon": "information",
+        "url": "/mas-info"
+      }
+    ]
+  },
+  {
+    "title": "Configuración",
+    "url": "/user/config",
+    "icon": "options"
+  }
+]
