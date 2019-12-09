@@ -50,6 +50,12 @@ export class LogicaDeNegocioFake {
     urlDarDeBajaSensor = this.urlServe + '/admin/darBajaSensor';
     urlDarDeAltaSensor = this.urlServe + '/admin/darAltaSensor';
     urlEditarUsuarioAdministrador = this.urlServe + '/admin/editarUsuarioAdministrador';
+    urlDistanciaUsuario = this.urlServe + '/admin/distanciaActividad/';
+    urlEstadoUnSensor = this.urlServe + '/admin/estadoUnSensor';
+    urlEstadoSensores = this.urlServe + '/admin/estadoSensores';
+    urlPrecisionUnSensor = this.urlServe + '/admin/precisionUnSensor';
+    urlPrecisionSensores = this.urlServe + '/admin/precisionTodosSensores';
+
 
     // Api de técnico local
     urlBasureroGuardar = this.urlServe + '/basurero/guardarMedida';
@@ -67,7 +73,7 @@ export class LogicaDeNegocioFake {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
         })
-      }
+      };
 /*
     // PRUEBAS USERS Y NODOS
     usuariosFicticios: any;
@@ -232,6 +238,66 @@ export class LogicaDeNegocioFake {
     getAllMedidas(): Observable < any > {
         return this.http
             .get(this.urlGETAll, this.httpOptionsGet)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
+
+    // ------------------------------------------------------------------------------------
+    // GET getDistanciaUsuario()
+    // ------------------------------------------------------------------------------------
+    getDistanciaUsuario(data): Observable < any > {
+        return this.http
+            .get(this.urlDistanciaUsuario + data, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
+
+    // ------------------------------------------------------------------------------------
+    // GET getEstadoUnSensor()
+    // ------------------------------------------------------------------------------------
+    getEstadoUnSensor(data): Observable < any > {
+        return this.http
+            .get(this.urlEstadoUnSensor + '/' + data, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
+
+    // ------------------------------------------------------------------------------------
+    // GET getPrecisionUnSensor()
+    // ------------------------------------------------------------------------------------
+    getPrecisionUnSensor(data): Observable < any > {
+        return this.http
+            .get(this.urlPrecisionUnSensor + '/' + data, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
+
+    // ------------------------------------------------------------------------------------
+    // GET getEstadoSensores()
+    // ------------------------------------------------------------------------------------
+    getEstadoSensores(): Observable < any > {
+        return this.http
+            .get(this.urlEstadoSensores, this.httpOptions)
+            .pipe(
+                // retry(2),
+                // catchError(this.handleError)
+            );
+    }
+
+    // ------------------------------------------------------------------------------------
+    // GET getPrecisionSensores()
+    // ------------------------------------------------------------------------------------
+    getPrecisionSensores(): Observable < any > {
+        return this.http
+            .get(this.urlPrecisionSensores, this.httpOptions)
             .pipe(
                 // retry(2),
                 // catchError(this.handleError)

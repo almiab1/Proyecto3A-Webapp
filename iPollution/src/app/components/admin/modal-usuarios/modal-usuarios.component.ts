@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 // ----------------------------------------------------------------------------
 // editar-usuarios.component.ts
 // Controlador modal editar usuarios
@@ -11,14 +12,16 @@
 // ----------------------------------------------------------------------------
 import {
   Component,
-  OnInit
+  OnInit,
+  NgZone,
+  OnChanges
 } from '@angular/core';
 import {
   LogicaDeNegocioFake
 } from 'src/app/core/services/LogicaDeNegocioFake.service';
 import {
   ModalController,
-  NavParams
+  NavParams,
 } from '@ionic/angular';
 // ----------------------------------------------------------------------------
 // Component
@@ -31,7 +34,7 @@ import {
 // ----------------------------------------------------------------------------
 // Class ModalUsuariosComponent
 // ----------------------------------------------------------------------------
-export class ModalUsuariosComponent implements OnInit {
+export class ModalUsuariosComponent implements OnInit, OnChanges {
 
   // Propiedades
   nombreUser: string;
@@ -42,13 +45,15 @@ export class ModalUsuariosComponent implements OnInit {
   tipoModal: string;
   contrasenya: any;
   tipoUsuario: string;
+  distancia: any;
 
   // ----------------------------------------------------------------------------
   // Constructor
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private serve: LogicaDeNegocioFake
+    private serve: LogicaDeNegocioFake,
+    private ngZone: NgZone,
   ) {}
   // ----------------------------------------------------------------------------
 
@@ -116,5 +121,20 @@ export class ModalUsuariosComponent implements OnInit {
     }
   }
   // ----------------------------------------------------------------------------
+
+  async calcularDistancia() {
+
+    const idUsuario = this.emailUsuario;
+
+    this.distancia = this.serve.getDistanciaUsuario(idUsuario).subscribe(response => {
+      this.ngZone.run(() => {
+          this.distancia = response;
+          console.log(response);
+        });
+    });
+  }
+  ngOnChanges() {
+    
+  }
 
 }
