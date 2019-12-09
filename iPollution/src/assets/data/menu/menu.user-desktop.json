@@ -10,6 +10,11 @@
     "icon": "locate"
   },
   {
+    "title": "Rutas",
+    "url": "user/rutas",
+    "icon": "navigate"
+  },
+  {
     "title": "+Info",
     "url": "/mas-info",
     "icon": "information-circle-outline",

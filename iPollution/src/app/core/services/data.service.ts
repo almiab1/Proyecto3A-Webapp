@@ -14,12 +14,15 @@ export class DataService {
   }
   getMenu(): Observable<MenuItem[]> {
     if ((this.platform === 'ios' || this.platform === 'md') && this.rolUser === 0) {
+      console.log("MOVIL USUARIO")
       return this.http.get<MenuItem[]>('/assets/data/menu/menu.user-mobile.json');
     }
     if (this.platform === 'desktop' && this.rolUser === 0) {
+      console.log("MOVIL DESKTOP")
       return this.http.get<MenuItem[]>('/assets/data/menu/menu.user-desktop.json');
     }
     if ((this.platform === 'ios' || this.platform === 'md') && this.rolUser === 1) {
+      console.log("MENU BASURERO MOVIL");
       return this.http.get<MenuItem[]>('/assets/data/menu/menu.basurero-mobile.json');
     }
     if (this.platform === 'desktop' && this.rolUser === 1) {
