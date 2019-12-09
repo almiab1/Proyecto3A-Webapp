@@ -27,8 +27,10 @@ import {
 } from '../../../core/services/LogicaDeNegocioFake.service';
 import {
   Storage
-} from '@ionic/storage'; 
-import { ToastController } from '@ionic/angular';
+} from '@ionic/storage';
+import {
+  ToastController
+} from '@ionic/angular';
 // ----------------------------
 // Components
 // ----------------------------
@@ -66,13 +68,33 @@ export class RutasPage implements OnInit {
     private storage: Storage,
     public toastController: ToastController
   ) {
+    if (this.currentLocation != undefined) {
+      setInterval(() => {
+        this.gps.obtenerMiPosicionGPS().then((resp) => {
+          this.currentLocation.lat = resp.lat;
+          this.currentLocation.long = resp.long;
+
+          this.mapa.centrarEn({
+            lat: this.currentLocation.lat,
+            lng: this.currentLocation.long
+          });
+
+          this.mapa.eliminarMarcador('Posicion Actual')
+          this.mapa.anyadirMarcador(
+            'Posicion Actual', {
+              lat: this.currentLocation.lat,
+              lng: this.currentLocation.long
+            }, 'assets/icon/gpsIcon.svg'
+          );
+          // this.mapa.refrescarMapa();
+        });
+      }, 5000);
+    }
   }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ngOnInit(): void {
-    // this.presentToast();
-  }
+  ngOnInit(): void {}
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
@@ -209,6 +231,10 @@ export class RutasPage implements OnInit {
         }); // Añadimos un punto en la ruta
         this.currentLocation.lat = resp.coords.latitude;
         this.currentLocation.long = resp.coords.longitude;
+        this.mapa.centrarEn({
+          lat: resp.coords.latitude,
+          lng: resp.coords.longitude
+        });
         this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
       }
     });
@@ -254,7 +280,13 @@ export class RutasPage implements OnInit {
   async presentToast() {
     let testData;
 
-    this.storage.set('test', [{lat:1,long:2},{lat:3,long:4}]);
+    this.storage.set('test', [{
+      lat: 1,
+      long: 2
+    }, {
+      lat: 3,
+      long: 4
+    }]);
 
     this.storage.get('test').then(data => {
       if (data) {

@@ -82,6 +82,12 @@ export class MapaService {
 
   }
 
+  eliminarMarcador(nombreMarcador: any) {
+    if (this.marcadores[nombreMarcador]) {
+      this.marcadores[nombreMarcador].setMap(null);
+    }
+  }
+
   // -----------------------------------------
   // medicion: Medicion -> anyadirMedicion -> void
   // ------------------------------------------
