@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ListaObjetosComponent implements OnInit {
 
-  @Input() objects: any;
-  @Input() abrirModal: string;
+  @Input() objects: any[];
+  @Input() abrirModal: any;
   @Input() tituloLista: string;
   @Input() nombreObjecto: string;
 

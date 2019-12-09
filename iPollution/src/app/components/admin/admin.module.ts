@@ -16,6 +16,7 @@ import {FormsModule} from '@angular/forms';
     IonicModule,
     FormsModule
   ],
-  exports: [AdminToolbarComponent, ListaObjetosComponent, ModalNodosComponent, ModalUsuariosComponent]
+  exports: [AdminToolbarComponent, ListaObjetosComponent, ModalNodosComponent, ModalUsuariosComponent],
+  entryComponents: [ModalNodosComponent, ModalUsuariosComponent]
 })
 export class AdminModule { }

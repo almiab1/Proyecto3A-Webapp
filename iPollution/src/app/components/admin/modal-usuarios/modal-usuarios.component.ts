@@ -71,7 +71,7 @@ export class ModalUsuariosComponent implements OnInit {
   // radioGroupChange()
   // ----------------------------------------------------------------------------
   radioGroupChange(event) {
-    this.tipoUsuario = event.detail;
+    this.tipoUsuario = event.detail.value;
   }
   // ----------------------------------------------------------------------------
 

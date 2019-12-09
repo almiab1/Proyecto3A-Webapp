@@ -35,8 +35,10 @@ export class ConfiguracionPage implements OnInit {
   ngOnInit() {}
 
   logout = () => {
+    console.log('INICIO LOG OUT')
     localStorage.removeItem('token');
     this.router.navigate(['/config']);
+    console.log('FIN LOG OUT')
   }
 
 }

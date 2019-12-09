@@ -6,10 +6,10 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./admin-toolbar.component.scss'],
 })
 export class AdminToolbarComponent implements OnInit {
-  @Input() iconoAnyadir: string;
+  @Input() iconoAnyadir: any;
   @Input() placeHolder: string;
-  @Input() funcionFiltrado: string;
-  @Input() abrirModalAnyadir: string;
+  @Input() funcionFiltrado: any;
+  @Input() abrirModalAnyadir: any;
 
   constructor() { }
 
