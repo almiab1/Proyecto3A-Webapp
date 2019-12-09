@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MenuController, ModalController} from '@ionic/angular';
 import {LoginComponent} from '../login/login.component';
-import {LoginService} from '../../../core/services/login.service';
 import {DataService} from '../../../core/services/data.service';
 import {MenuItem} from '../../../models/MenuItem';
 
@@ -10,8 +9,9 @@ import {MenuItem} from '../../../models/MenuItem';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnChanges {
   public menuPages: MenuItem[];
+  @Input() rolUser: number;
   constructor(private menuCtrl: MenuController,
               private modalCtrl: ModalController,
               public data: DataService) { }
@@ -40,5 +40,8 @@ export class MenuComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.rellenarMenu();
   }
 }

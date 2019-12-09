@@ -24,8 +24,6 @@ export class AppComponent {
     this.loginService.comprobarLogin();
     this.initializeApp();
   }
-
-
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
