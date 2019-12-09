@@ -8,8 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { ConfiguracionPage } from './configuracion.page';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../../../components/shared/shared.module';
-import { BasureroComponentsModule } from './../../../components/basurero/basureroComponents.module';
-
+import {BasureroModule} from '../basurero.module';
+import {ConfigModule} from '../../../components/config/config.module';
 
 @NgModule({
     imports: [
@@ -20,7 +20,7 @@ import { BasureroComponentsModule } from './../../../components/basurero/basurer
             {path: '', component: ConfiguracionPage}
         ]),
         SharedModule,
-        BasureroComponentsModule
+        ConfigModule
     ],
   declarations: [ConfiguracionPage]
 })

@@ -67,4 +67,8 @@ export class LoginComponent implements OnInit {
     });
     await this.loading.present();
   }
+
+    closeModal() {
+        this.modalCtrl.dismiss();
+    }
 }
