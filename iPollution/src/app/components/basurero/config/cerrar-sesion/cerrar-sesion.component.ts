@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {LoginService} from "../../../core/services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cerrar-sesion',
@@ -6,11 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./cerrar-sesion.component.scss'],
 })
 export class CerrarSesionComponent implements OnInit {
-
-  @Input() funcionLogOut: any;
-
-  constructor() { }
+  constructor(private loginService: LoginService,
+              private router: Router) { }
 
   ngOnInit() {}
-
+  logOut() {
+    this.loginService.logout();
+    this.router.navigate(['home']);
+  }
 }
