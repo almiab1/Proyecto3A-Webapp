@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {LoginService} from "../../../core/services/login.service";
-import {Router} from "@angular/router";
+import {LoginService} from '../../../core/services/login.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-cerrar-sesion',

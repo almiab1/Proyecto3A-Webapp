@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
   password: string;
   mode: any;
   loading: any;
-  rolUser: number;
   private readonly tokenKey = 'token';
   constructor(private modalCtrl: ModalController,
               private loadingCtrl: LoadingController,
@@ -36,10 +35,10 @@ export class LoginComponent implements OnInit {
         });
   }
   loginCorrecto(data: string) {
-    this.rolUser = this.loginService.procesarToken(data);
+    const rolUser = this.loginService.procesarToken(data);
     this.loadingCtrl.dismiss();
     this.password = '';
-    this.modalCtrl.dismiss(this.rolUser);
+    this.modalCtrl.dismiss(rolUser);
     this.presentarToast(`Hola, ${this.email}`, 'success');
   }
   loginIncorrecto() {
