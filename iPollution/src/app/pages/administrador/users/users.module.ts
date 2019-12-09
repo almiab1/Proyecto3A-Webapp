@@ -9,7 +9,6 @@ import { UsersPage } from './users.page';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../../../components/shared/shared.module';
 import {AdminModule} from '../../../components/admin/admin.module';
-import {AdminToolbarComponent} from '../../../components/admin/admin-toolbar/admin-toolbar.component';
 
 
 @NgModule({
