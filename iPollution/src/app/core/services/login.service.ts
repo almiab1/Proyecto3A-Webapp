@@ -37,4 +37,7 @@ export class LoginService {
     this.data.guardarToken(token);
     return this.data.rolUser = jwt_decode(token).idTipoUsuario;
   }
+  logout() {
+    this.data.borrarStorage();
+  }
 }

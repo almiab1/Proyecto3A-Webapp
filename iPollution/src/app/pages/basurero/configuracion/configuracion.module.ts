@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { ConfiguracionPage } from './configuracion.page';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../../../components/shared/shared.module';
+import {BasureroModule} from '../basurero.module';
+import {ConfigModule} from '../../../components/config/config.module';
 
 @NgModule({
     imports: [
@@ -17,7 +19,8 @@ import {SharedModule} from '../../../components/shared/shared.module';
         RouterModule.forChild([
             {path: '', component: ConfiguracionPage}
         ]),
-        SharedModule
+        SharedModule,
+        ConfigModule
     ],
   declarations: [ConfiguracionPage]
 })

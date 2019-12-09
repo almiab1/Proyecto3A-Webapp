@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BasureroRoutingModule } from './basurero-routing.module';
-import { CerrarSesionComponent } from './../../components/config/cerrar-sesion/cerrar-sesion.component';
-import {IonicModule} from '@ionic/angular';
+import {RutasPageModule} from './rutas/rutas.module';
+import {ConfiguracionPageModule} from './configuracion/configuracion.module';
 
 
 
 @NgModule({
-  declarations: [CerrarSesionComponent],
+  declarations: [],
     imports: [
         CommonModule,
         BasureroRoutingModule,
-        IonicModule,
-    ],
-  exports: [CerrarSesionComponent]
+        RutasPageModule,
+        ConfiguracionPageModule
+    ]
 })
 export class BasureroModule { }
