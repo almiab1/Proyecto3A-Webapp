@@ -32,4 +32,8 @@ export class DataService {
       return this.http.get<MenuItem[]>('/assets/data/menu/menu.admin-desktop.json');
     }
   }
+  borrarStorage() {
+    this.rolUser = 0;
+    localStorage.clear();
+  }
 }

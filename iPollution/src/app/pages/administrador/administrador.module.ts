@@ -8,9 +8,7 @@ import {
 import {
   AdministradorRoutingModule
 } from './administrador-routing.module';
-import {
-  UsersPage
-} from './users/users.page';
+
 import {
   UsersPageModule
 } from './users/users.module';
