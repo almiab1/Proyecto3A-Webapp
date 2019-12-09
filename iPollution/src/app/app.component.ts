@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import {LoginService} from './core/services/login.service';
+import {DataService} from './core/services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,12 @@ import {LoginService} from './core/services/login.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  mode: string;
-  rolUser: number;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private data: DataService
   ) {
     this.comprobarPlataforma();
     this.loginService.comprobarLogin();
@@ -33,7 +33,8 @@ export class AppComponent {
     });
   }
   comprobarPlataforma() {
-    if (this.platform.is('ios')) { this.mode = 'ios'; }
-    if (this.platform.is('android')) { this.mode = 'md'; }
+    if (this.platform.is('ios')) { this.data.platform = 'ios'; }
+    if (this.platform.is('android')) { this.data.platform = 'md'; }
+    if (this.platform.is('desktop')) { this.data.platform = 'desktop'; }
   }
 }

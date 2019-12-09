@@ -9,10 +9,9 @@ import {DataService} from './data.service';
   providedIn: 'root'
 })
 export class LoginService {
-  rolUser: number;
   private url = 'https://osblasae.upv.edu.es';
   constructor(private httpClient: HttpClient,
-              private dataService: DataService) { }
+              private data: DataService) { }
   /* ********* autenticarUsuario()  ***************
   *  Oscar Blanquez
   *  description: peticion POST al servidor con el
@@ -29,13 +28,13 @@ export class LoginService {
   comprobarLogin() {
     const token = localStorage.getItem('token');
     if (token === null) {
-      this.rolUser = 0;
+      this.data.rolUser = 0
       return;
     }
-    this.rolUser = jwt_decode(token).idTipoUsuario;
+    this.data.rolUser = jwt_decode(token).idTipoUsuario;
   }
   procesarToken(token) {
-    this.dataService.guardarToken(token);
-    return this.rolUser = jwt_decode(token).idTipoUsuario;
+    this.data.guardarToken(token);
+    return this.data.rolUser = jwt_decode(token).idTipoUsuario;
   }
 }
