@@ -28,7 +28,7 @@ export class LoginService {
   comprobarLogin() {
     const token = localStorage.getItem('token');
     if (token === null) {
-      this.data.rolUser = 0
+      this.data.rolUser = 0;
       return;
     }
     this.data.rolUser = jwt_decode(token).idTipoUsuario;
