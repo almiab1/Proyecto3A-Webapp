@@ -1,22 +1,20 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {LoginService} from '../../../core/services/login.service';
 import {Platform} from '@ionic/angular';
-import {DataService} from "../../../core/services/data.service";
+import {DataService} from '../../../core/services/data.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
-  @Input() rolUser: number;
-  tamanyoWidget: number;
+export class HomePage implements OnInit, OnChanges {
   constructor(private loginService: LoginService,
               private platform: Platform,
               private data: DataService) {
-    this.rolUser = data.rolUser;
-    this.contarNumeroWidgets();
   }
+  tamanyoWidget: number;
+
   ngOnInit() {
     this.tamanyoWidget = this.contarNumeroWidgets();
   }
@@ -25,9 +23,13 @@ export class HomePage implements OnInit {
     if (this.platform.is('mobile')) {
       contador++;
     }
-    if (this.rolUser === 1 || this.rolUser === 2) {
+    if (this.data.rolUser === 1 || this.data.rolUser === 2) {
       contador++;
     }
+    console.log("Contador", contador);
     return 12 / contador;
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("Ha habido un cambio");
   }
 }

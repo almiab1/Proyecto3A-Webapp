@@ -1,6 +1,7 @@
 export interface MenuItem {
+    title: string;
     icon: string;
-    name: string;
     url: string;
     subPages?: MenuItem[];
+    open?: boolean;
 }
