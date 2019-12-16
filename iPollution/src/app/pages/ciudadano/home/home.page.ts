@@ -8,7 +8,7 @@ import {DataService} from '../../../core/services/data.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit, OnChanges {
+export class HomePage implements OnInit {
   constructor(private loginService: LoginService,
               private platform: Platform,
               private data: DataService) {
@@ -26,10 +26,6 @@ export class HomePage implements OnInit, OnChanges {
     if (this.data.rolUser === 1 || this.data.rolUser === 2) {
       contador++;
     }
-    console.log("Contador", contador);
     return 12 / contador;
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("Ha habido un cambio");
   }
 }
