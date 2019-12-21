@@ -78,15 +78,6 @@ export class RutasPage implements OnInit {
             lat: this.currentLocation.lat,
             lng: this.currentLocation.long
           });
-
-          this.mapa.eliminarMarcador('Posicion Actual')
-          this.mapa.anyadirMarcador(
-            'Posicion Actual', {
-              lat: this.currentLocation.lat,
-              lng: this.currentLocation.long
-            }, 'assets/icon/gpsIcon.svg'
-          );
-          // this.mapa.refrescarMapa();
         });
       }, 5000);
     }
@@ -97,6 +88,9 @@ export class RutasPage implements OnInit {
   ngOnInit(): void {}
   // ----------------------------------------------------------------------------------------------
 
+  // ----------------------------------------------------------------------------------------------
+  // ngAfterViewInit()
+  // metodo que se ejecuta al inicial la vista, inicializar componentes
   // ----------------------------------------------------------------------------------------------
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
@@ -200,6 +194,9 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
+  // onSelectCapaChange()
+  // metodo para controlar el select de capas
+  // ----------------------------------------------------------------------------------------------
   onSelectCapaChange(valores) {
     this.mapa.ocultarTodasLasCapas();
     valores.forEach(capa => {
@@ -208,6 +205,9 @@ export class RutasPage implements OnInit {
   }
   // ----------------------------------------------------------------------------------------------
 
+  // ----------------------------------------------------------------------------------------------
+  // onSelectRuta()
+  // metodo para controlar el select de rutas
   // ----------------------------------------------------------------------------------------------
   onSelectRuta(valores) {
     console.log('INICIO ONSELECTRUTA');
@@ -218,6 +218,9 @@ export class RutasPage implements OnInit {
   }
   // ----------------------------------------------------------------------------------------------
 
+  // ----------------------------------------------------------------------------------------------
+  // startTracking()
+  // metodo para comenzar el monitoreo de ruta
   // ----------------------------------------------------------------------------------------------
   startTracking() {
     this.isTracking = true; // cambiamos el estado a monitoreo
@@ -242,6 +245,9 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
+  // stoptTracking()
+  // metodo para parar el monitoreo de ruta
+  // ----------------------------------------------------------------------------------------------
   stopTracking() {
     let newRoute = {
       finished: new Date().getTime(),
@@ -258,12 +264,18 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
+  // ruta: objeto --> showHistoryRoute()
+  // metodo para mostrar el historial de rutas realizadas
+  // ----------------------------------------------------------------------------------------------
   showHistoryRoute(route) {
     this.mapa.pintarRuta(route, null);
     this.mapa.refrescarMapa();
   }
   // ----------------------------------------------------------------------------------------------
 
+  // ----------------------------------------------------------------------------------------------
+  // loadHistoricRoutes()
+  // metodo para cargar de la bd las rutas ya realizadas
   // ----------------------------------------------------------------------------------------------
   loadHistoricRoutes() {
     this.storage.get('routes').then(data => {
