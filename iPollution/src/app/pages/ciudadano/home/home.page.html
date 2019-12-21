@@ -9,7 +9,7 @@
         </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col *ngIf="rolUser === 1 || rolUser === 2" size-xs="12" [sizeMd]="tamanyoWidget" [sizeLg]="tamanyoWidget">
+        <ion-col *ngIf="data.rolUser === 1 || data.rolUser === 2" size-xs="12" [sizeMd]="tamanyoWidget" [sizeLg]="tamanyoWidget">
             <app-widget-action titulo="Rutas" ruta="/user/rutas"
                                descripcion="Accede a las rutas menos contaminantes"
                                color="widget-mapa" backgroundColor="widget-rutas-background"

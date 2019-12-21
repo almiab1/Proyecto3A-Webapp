@@ -14,9 +14,9 @@ export class MenuComponent implements OnInit, OnChanges {
   @Input() rolUser: number;
   constructor(private menuCtrl: MenuController,
               private modalCtrl: ModalController,
-              public data: DataService) { }
+              private data: DataService) { }
 
-  ngOnInit() {
+  ngOnInit()  {
     this.rellenarMenu();
   }
   async loginModal() {
@@ -30,9 +30,7 @@ export class MenuComponent implements OnInit, OnChanges {
     if (dataModal.data === undefined) {
       this.data.rolUser = 0;
       return;
-      this.rellenarMenu();
     }
-    this.rellenarMenu();
   }
   rellenarMenu() {
     this.data.getMenu().subscribe(data => {

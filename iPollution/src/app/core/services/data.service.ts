@@ -36,4 +36,7 @@ export class DataService {
     this.rolUser = 0;
     localStorage.clear();
   }
+  getRolUser() {
+    return this.rolUser;
+  }
 }

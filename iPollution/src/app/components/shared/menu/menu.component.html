@@ -38,7 +38,6 @@
                     <ion-icon slot="end" name="arrow-down" *ngIf="p.open" color="accent"></ion-icon>
                   </ion-item>
                 </div>
-
                 <div *ngIf="p.open">
                   <ion-menu-toggle auto-hide="false">
                     <ion-item *ngFor="let s of p.subPages" [routerDirection]="'root'" [routerLink]="[s.url]"
@@ -55,7 +54,6 @@
           </div>
         </ion-col>
       </ion-row>
-
       <ion-row class="ion-align-items-baseline">
         <ion-col class="ion-margin">
           <div>
