@@ -78,15 +78,6 @@ export class RutasPage implements OnInit {
             lat: this.currentLocation.lat,
             lng: this.currentLocation.long
           });
-
-          this.mapa.eliminarMarcador('Posicion Actual')
-          this.mapa.anyadirMarcador(
-            'Posicion Actual', {
-              lat: this.currentLocation.lat,
-              lng: this.currentLocation.long
-            }, 'assets/icon/gpsIcon.svg'
-          );
-          // this.mapa.refrescarMapa();
         });
       }, 5000);
     }
