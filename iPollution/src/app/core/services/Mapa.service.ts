@@ -48,8 +48,8 @@ export class MapaService {
   // ------------------------------------------
   centrarEn(posicion: any) {
     this.mapa.setCenter(posicion);
-    this.mapa.eliminarMarcador('Posicion Actual');
-    this.mapa.anyadirMarcador(
+    // this.eliminarMarcador('Posicion Actual');
+    this.anyadirMarcador(
       'Posicion Actual', {
         lat: posicion.lat,
         lng: posicion.lng
