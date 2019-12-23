@@ -48,13 +48,16 @@ export class MapaService {
   // ------------------------------------------
   centrarEn(posicion: any) {
     this.mapa.setCenter(posicion);
-    // this.eliminarMarcador('Posicion Actual');
-    this.anyadirMarcador(
-      'Posicion Actual', {
-        lat: posicion.lat,
-        lng: posicion.lng
-      }, 'assets/icon/gpsIcon.svg'
-    );
+
+    const marcadorName = 'Posicion Actual';
+
+    // this.eliminarMarcador(marcadorName);
+    // this.anyadirMarcador(
+    //   marcadorName, {
+    //     lat: posicion.lat,
+    //     lng: posicion.lng
+    //   }, 'assets/icon/gpsIcon.svg'
+    // );
     this.refrescarMapa();
   }
   // -------------------------------------------
@@ -197,13 +200,17 @@ export class MapaService {
       currentMapTrack = new google.maps.Polyline({
         path: ruta,
         geodesic: true,
-        strokeColor: '#2196f2',
-        strokeOpacity: 1.0,
-        strokeWeight: 3
+        trokeColor: '#ff0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 6,
+        fillColor: '#ff0000',
+        fillOpacity: 0.30
       });
       currentMapTrack.setMap(this.mapa);
     }
     this.refrescarMapa();
+
+    return currentMapTrack;
   }
   // ------------------------------------------
 

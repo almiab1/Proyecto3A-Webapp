@@ -60,6 +60,7 @@ export class RutasPage implements OnInit {
   isTracking = false;
   trackedRoute = [];
   previousTracks = [];
+  rutaSeleccionada: any;
 
   // Constructor
   constructor(
@@ -209,11 +210,13 @@ export class RutasPage implements OnInit {
   // onSelectRuta()
   // metodo para controlar el select de rutas
   // ----------------------------------------------------------------------------------------------
-  onSelectRuta(valores) {
+  onSelectRuta(data) {
     console.log('INICIO ONSELECTRUTA');
-    console.table(valores);
+    console.log(data)
+    // console.log(JSON.parse(this.rutaSeleccionada[0]));
     this.mapa.refrescarMapa();
-    this.showHistoryRoute(this.previousTracks[this.previousTracks.length - 1].path);
+    // this.showHistoryRoute(this.previousTracks[this.previousTracks.length - 1].path);
+    this.showHistoryRoute(this.rutaSeleccionada[0].path);
     console.log('FIN ONSELECTRUTA');
   }
   // ----------------------------------------------------------------------------------------------
@@ -228,17 +231,21 @@ export class RutasPage implements OnInit {
 
     this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
       if (resp != undefined) {
+
+        // Actualizamos nuestra posicion actual
+        this.currentLocation.lat = resp.coords.latitude;
+        this.currentLocation.long = resp.coords.longitude;
+
         this.trackedRoute.push({
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         }); // Añadimos un punto en la ruta
-        this.currentLocation.lat = resp.coords.latitude;
-        this.currentLocation.long = resp.coords.longitude;
+
         this.mapa.centrarEn({
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         });
-        this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
+        this.currentMapTrack = this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
       }
     });
   }
@@ -258,8 +265,7 @@ export class RutasPage implements OnInit {
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
     this.gps.stopLocationWatch(this.watchUpdates); // paramos de monitorear
-    // this.mapa.quitarRuta(this.currentMapTrack);
-    this.currentMapTrack.setMap(null);
+    this.mapa.quitarRuta(this.currentMapTrack);
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -268,7 +274,7 @@ export class RutasPage implements OnInit {
   // metodo para mostrar el historial de rutas realizadas
   // ----------------------------------------------------------------------------------------------
   showHistoryRoute(route) {
-    this.mapa.pintarRuta(route, null);
+    this.currentMapTrack = this.mapa.pintarRuta(route, this.currentMapTrack);
     this.mapa.refrescarMapa();
   }
   // ----------------------------------------------------------------------------------------------
