@@ -79,6 +79,16 @@ export class RutasPage implements OnInit {
             lat: this.currentLocation.lat,
             lng: this.currentLocation.long
           });
+
+          const marcadorName = 'Posicion Actual';
+
+          this.mapa.eliminarMarcador(marcadorName);
+          this.mapa.anyadirMarcador(
+            marcadorName, {
+              lat: this.currentLocation.lat,
+              lng: this.currentLocation.long
+            }, 'assets/icon/gpsIcon.svg'
+          );
         });
       }, 5000);
     }
@@ -220,8 +230,8 @@ export class RutasPage implements OnInit {
 
     this.previousTracks.forEach(element => {
       console.log(element)
-      if(element.finished == this.rutaSeleccionadaTiempo) {
-         ruta = element.path 
+      if (element.finished == this.rutaSeleccionadaTiempo) {
+        ruta = element.path
       }
     });
 
@@ -303,11 +313,6 @@ export class RutasPage implements OnInit {
         this.previousTracks = data;
       }
     })
-    // let data = [
-    //   {finished: 1577118973361, path: [{lat: 38.381723,lng: -0.774593}, {lat: 38.381392,lng: -0.768067}, {lat: 38.381723,lng: -0.774593}]}
-    // ];
-
-    // this.previousTracks = data;
   }
   // ----------------------------------------------------------------------------------------------
 

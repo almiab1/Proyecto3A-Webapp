@@ -48,16 +48,6 @@ export class MapaService {
   // ------------------------------------------
   centrarEn(posicion: any) {
     this.mapa.setCenter(posicion);
-
-    const marcadorName = 'Posicion Actual';
-
-    // this.eliminarMarcador(marcadorName);
-    // this.anyadirMarcador(
-    //   marcadorName, {
-    //     lat: posicion.lat,
-    //     lng: posicion.lng
-    //   }, 'assets/icon/gpsIcon.svg'
-    // );
     this.refrescarMapa();
   }
   // -------------------------------------------
