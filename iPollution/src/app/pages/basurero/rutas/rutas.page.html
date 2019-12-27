@@ -43,7 +43,7 @@
             <ion-row>
                 <ion-col>
                     <ion-item color="secondary">
-                        <ion-list expand="full" color="secondary">
+                        <!-- <ion-list expand="full" color="secondary">
                             <ion-list-header color="secondary" expand="block">Rutas previas:</ion-list-header>
                             <ion-item-sliding *ngFor="let route of previousTracks" expand="block">
                                 <ion-label color="accent" expand="block">{{ route.finished | date }},
@@ -53,22 +53,22 @@
                                     expand="block">View
                                     Route</button>
                             </ion-item-sliding>
-                        </ion-list>
-                        <!--
+                        </ion-list> -->
+
                         <ion-label>
                             <h3>Rutas previas:</h3>
                         </ion-label>
-                        -->
-                        <!--
+
+
                         <ion-select name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
-                            (ionChange)="onSelectRuta($event)" color="secundario" expand="full">
-                            <ion-select-option *ngFor="let route of previousTracks" value="route.path" color="acentuado">
-                                <ion-label color="accent" expand="full">{{ route.finished | date }},
-                                    {{ route.path.length }}
-                                    Puntos de Control</ion-label>
+                            [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById" (ionChange)="onSelectRuta($event.value)" color="secundario" expand="full"
+                            interface="action-sheet">
+                            <ion-select-option *ngFor="let route of previousTracks" value="{{ route.finished }}" color="acentuado">
+                                {{ route.finished | date }} - {{ route.path.length | number}} Waypoints
+                                <!-- <ion-label color="accent" expand="full">{{ route.path.length}}</ion-label> -->
                             </ion-select-option>
                         </ion-select>
-                        -->
+
                     </ion-item>
                 </ion-col>
             </ion-row>

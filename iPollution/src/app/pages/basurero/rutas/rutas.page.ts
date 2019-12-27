@@ -60,6 +60,7 @@ export class RutasPage implements OnInit {
   isTracking = false;
   trackedRoute = [];
   previousTracks = [];
+  rutaSeleccionadaTiempo: any;
 
   // Constructor
   constructor(
@@ -85,7 +86,9 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadHistoricRoutes();
+  }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
@@ -209,12 +212,26 @@ export class RutasPage implements OnInit {
   // onSelectRuta()
   // metodo para controlar el select de rutas
   // ----------------------------------------------------------------------------------------------
-  onSelectRuta(valores) {
+  onSelectRuta(data) {
     console.log('INICIO ONSELECTRUTA');
-    console.table(valores);
-    this.mapa.refrescarMapa();
-    this.showHistoryRoute(this.previousTracks[this.previousTracks.length - 1].path);
+    console.log(this.rutaSeleccionadaTiempo);
+
+    let ruta: any[];
+
+    this.previousTracks.forEach(element => {
+      console.log(element)
+      if(element.finished == this.rutaSeleccionadaTiempo) {
+         ruta = element.path 
+      }
+    });
+
+    console.log(ruta);
+    this.showHistoryRoute(ruta);
     console.log('FIN ONSELECTRUTA');
+  }
+
+  compareById(o1, o2) {
+    return o1.finished === o2.finished
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -228,17 +245,21 @@ export class RutasPage implements OnInit {
 
     this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
       if (resp != undefined) {
+
+        // Actualizamos nuestra posicion actual
+        this.currentLocation.lat = resp.coords.latitude;
+        this.currentLocation.long = resp.coords.longitude;
+
         this.trackedRoute.push({
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         }); // Añadimos un punto en la ruta
-        this.currentLocation.lat = resp.coords.latitude;
-        this.currentLocation.long = resp.coords.longitude;
+
         this.mapa.centrarEn({
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         });
-        this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
+        this.currentMapTrack = this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
       }
     });
   }
@@ -258,8 +279,7 @@ export class RutasPage implements OnInit {
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
     this.gps.stopLocationWatch(this.watchUpdates); // paramos de monitorear
-    // this.mapa.quitarRuta(this.currentMapTrack);
-    this.currentMapTrack.setMap(null);
+    this.mapa.quitarRuta(this.currentMapTrack);
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -268,7 +288,7 @@ export class RutasPage implements OnInit {
   // metodo para mostrar el historial de rutas realizadas
   // ----------------------------------------------------------------------------------------------
   showHistoryRoute(route) {
-    this.mapa.pintarRuta(route, null);
+    this.currentMapTrack = this.mapa.pintarRuta(route, this.currentMapTrack);
     this.mapa.refrescarMapa();
   }
   // ----------------------------------------------------------------------------------------------
@@ -282,7 +302,12 @@ export class RutasPage implements OnInit {
       if (data) {
         this.previousTracks = data;
       }
-    });
+    })
+    // let data = [
+    //   {finished: 1577118973361, path: [{lat: 38.381723,lng: -0.774593}, {lat: 38.381392,lng: -0.768067}, {lat: 38.381723,lng: -0.774593}]}
+    // ];
+
+    // this.previousTracks = data;
   }
   // ----------------------------------------------------------------------------------------------
 
