@@ -60,7 +60,7 @@ export class RutasPage implements OnInit {
   isTracking = false;
   trackedRoute = [];
   previousTracks = [];
-  rutaSeleccionada: any;
+  rutaSeleccionadaTiempo: any;
 
   // Constructor
   constructor(
@@ -86,7 +86,9 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadHistoricRoutes();
+  }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
@@ -212,12 +214,24 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   onSelectRuta(data) {
     console.log('INICIO ONSELECTRUTA');
-    console.log(data)
-    // console.log(JSON.parse(this.rutaSeleccionada[0]));
-    this.mapa.refrescarMapa();
-    // this.showHistoryRoute(this.previousTracks[this.previousTracks.length - 1].path);
-    this.showHistoryRoute(this.rutaSeleccionada[0].path);
+    console.log(this.rutaSeleccionadaTiempo);
+
+    let ruta: any[];
+
+    this.previousTracks.forEach(element => {
+      console.log(element)
+      if(element.finished == this.rutaSeleccionadaTiempo) {
+         ruta = element.path 
+      }
+    });
+
+    console.log(ruta);
+    this.showHistoryRoute(ruta);
     console.log('FIN ONSELECTRUTA');
+  }
+
+  compareById(o1, o2) {
+    return o1.finished === o2.finished
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -288,7 +302,12 @@ export class RutasPage implements OnInit {
       if (data) {
         this.previousTracks = data;
       }
-    });
+    })
+    // let data = [
+    //   {finished: 1577118973361, path: [{lat: 38.381723,lng: -0.774593}, {lat: 38.381392,lng: -0.768067}, {lat: 38.381723,lng: -0.774593}]}
+    // ];
+
+    // this.previousTracks = data;
   }
   // ----------------------------------------------------------------------------------------------
 

@@ -61,12 +61,10 @@
 
 
                         <ion-select name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
-                            [(ngModel)]="rutaSeleccionada" (ionChange)="onSelectRuta($event.target.value)" color="secundario" expand="full"
+                            [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById" (ionChange)="onSelectRuta($event.value)" color="secundario" expand="full"
                             interface="action-sheet">
-                            <ion-select-option *ngFor="let route of previousTracks" value="{{ route }}" color="acentuado">
-                                <ion-label color="accent" expand="full">
-                                    {{ route.finished | date }} - {{ route.path.length | number}} Waypoints
-                                </ion-label>
+                            <ion-select-option *ngFor="let route of previousTracks" value="{{ route.finished }}" color="acentuado">
+                                {{ route.finished | date }} - {{ route.path.length | number}} Waypoints
                                 <!-- <ion-label color="accent" expand="full">{{ route.path.length}}</ion-label> -->
                             </ion-select-option>
                         </ion-select>
