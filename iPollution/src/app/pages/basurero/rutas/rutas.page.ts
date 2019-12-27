@@ -72,23 +72,26 @@ export class RutasPage implements OnInit {
     if (this.currentLocation != undefined) {
       setInterval(() => {
         this.gps.obtenerMiPosicionGPS().then((resp) => {
-          this.currentLocation.lat = resp.lat;
-          this.currentLocation.long = resp.long;
 
-          this.mapa.centrarEn({
-            lat: this.currentLocation.lat,
-            lng: this.currentLocation.long
-          });
+          if (this.currentLocation.lat != resp.lat || this.currentLocation.long != resp.long) {
+            this.currentLocation.lat = resp.lat;
+            this.currentLocation.long = resp.long;
 
-          const marcadorName = 'Posicion Actual';
-
-          this.mapa.eliminarMarcador(marcadorName);
-          this.mapa.anyadirMarcador(
-            marcadorName, {
+            this.mapa.centrarEn({
               lat: this.currentLocation.lat,
               lng: this.currentLocation.long
-            }, 'assets/icon/gpsIcon.svg'
-          );
+            });
+
+            const marcadorName = 'Posicion Actual';
+
+            this.mapa.eliminarMarcador(marcadorName);
+            this.mapa.anyadirMarcador(
+              marcadorName, {
+                lat: this.currentLocation.lat,
+                lng: this.currentLocation.long
+              }, 'assets/icon/gpsIcon.svg'
+            );
+          }
         });
       }, 5000);
     }
