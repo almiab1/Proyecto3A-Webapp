@@ -54,13 +54,19 @@ export class RutasPage implements OnInit {
     long: 0
   };
 
-  // Updates position
+  // Updates position traqueo posicion
   watchUpdates: any;
   currentMapTrack = null;
   isTracking = false;
   trackedRoute = [];
   previousTracks = [];
   rutaSeleccionadaTiempo: any;
+
+  // Rutas predefinidas
+  rutaSeleccionadaPredefinida: any;
+  rutasPredefinidas: any[];
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
 
   // Constructor
   constructor(
@@ -69,6 +75,7 @@ export class RutasPage implements OnInit {
     private storage: Storage,
     public toastController: ToastController
   ) {
+    // Actualizados la posicion del icono cuando se cambia la ubicación3
     if (this.currentLocation != undefined) {
       setInterval(() => {
         this.gps.obtenerMiPosicionGPS().then((resp) => {
@@ -225,24 +232,22 @@ export class RutasPage implements OnInit {
   // onSelectRuta()
   // metodo para controlar el select de rutas
   // ----------------------------------------------------------------------------------------------
-  onSelectRuta(data) {
+  onSelectRuta() {
     console.log('INICIO ONSELECTRUTA');
-    console.log(this.rutaSeleccionadaTiempo);
-
     let ruta: any[];
-
     this.previousTracks.forEach(element => {
       console.log(element)
       if (element.finished == this.rutaSeleccionadaTiempo) {
         ruta = element.path
       }
     });
-
-    console.log(ruta);
     this.showHistoryRoute(ruta);
     console.log('FIN ONSELECTRUTA');
   }
 
+  // ----------------------------------------------------------------------------------------------
+  // Comparar los objetos de rutas
+  // ----------------------------------------------------------------------------------------------
   compareById(o1, o2) {
     return o1.finished === o2.finished
   }
@@ -315,7 +320,56 @@ export class RutasPage implements OnInit {
       if (data) {
         this.previousTracks = data;
       }
-    })
+    });
+
+    this.rutasPredefinidas = this.cargarRutasPreviamenteCreadas();
+    console.log(this.rutasPredefinidas)
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // cargarRutasPreviamenteCreadas()
+  // metodo para cargar de la bd las rutas predefinidas
+  // ----------------------------------------------------------------------------------------------
+  cargarRutasPreviamenteCreadas() {
+    let rutas: any[];
+
+    rutas = [
+      {
+        nombreRuta: 'Ruta Novelda',
+        puntoInicio: {lat: 38.381392, lng: -0.768067},
+        wayPoints: [{location: {lat: 38.381723, lng: -0.774593}}, {location: {lat: 38.384118, lng: -0.774465}}],
+        puntoFinal: {lat: 38.383905, lng: -0.770708}
+      }
+    ];
+    return rutas;
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // cargarRutasPreviamenteCreadas()
+  // metodo para cargar de la bd las rutas predefinidas
+  // ----------------------------------------------------------------------------------------------
+  onSelectRutaPredefinida(){
+    let ruta: any;
+
+    this.rutasPredefinidas.forEach(element => {
+      console.log(element)
+      if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
+        ruta = element;
+      }
+    });
+
+    this.mapa.calcularYMostrarRutasPredefinida(ruta);
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // limpiarMapa()
+  // metodo para limpiar el mapa
+  // ----------------------------------------------------------------------------------------------
+  limpiarMapa(){
+    this.mapa.limpiarMapa(this.currentMapTrack);
   }
   // ----------------------------------------------------------------------------------------------
 
