@@ -24,6 +24,9 @@ export class MapaService {
   private puntoCentral: any;
   private capasDeMediciones: Array < any > ;
   private marcadores: Array < any > ;
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+
 
   //////////////////////
 
@@ -48,16 +51,6 @@ export class MapaService {
   // ------------------------------------------
   centrarEn(posicion: any) {
     this.mapa.setCenter(posicion);
-
-    const marcadorName = 'Posicion Actual';
-
-    // this.eliminarMarcador(marcadorName);
-    // this.anyadirMarcador(
-    //   marcadorName, {
-    //     lat: posicion.lat,
-    //     lng: posicion.lng
-    //   }, 'assets/icon/gpsIcon.svg'
-    // );
     this.refrescarMapa();
   }
   // -------------------------------------------
@@ -71,7 +64,7 @@ export class MapaService {
   // ------------------------------------------
 
   // -----------------------------------------
-  // posicion:Posicion -> anyadirMarcador -> void
+  // posicion:Posicion -> anyadirMarcador ->
   // ------------------------------------------
   anyadirMarcador(nombre: string, posicion: any, iconoUrl: string) {
     const icono = {
@@ -92,7 +85,10 @@ export class MapaService {
 
   }
 
-  eliminarMarcador(nombreMarcador: any) {
+  // -----------------------------------------
+  // nombreMarcador:string -> eliminarMarcador ->
+  // ------------------------------------------
+  eliminarMarcador(nombreMarcador: string) {
     if (this.marcadores[nombreMarcador]) {
       this.marcadores[nombreMarcador].setMap(null);
     }
@@ -220,5 +216,40 @@ export class MapaService {
   quitarRuta(currentMapTrack) {
     currentMapTrack.setMap(null);
     this.refrescarMapa();
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // calcularYMostrarRutasPredefinida()
+  // metodo para ver las rutas predefinidas
+  // ----------------------------------------------------------------------------------------------
+  calcularYMostrarRutasPredefinida(ruta: any) {
+    const that = this;
+
+    this.directionsService.route({
+      origin: ruta.puntoInicio,
+      destination: ruta.puntoFinal,
+      waypoints: ruta.wayPoints,
+      travelMode: 'DRIVING',
+      optimizeWaypoints: true,
+    }, (response, status) => {
+      if (status === 'OK') {
+        console.log('Status --> ' + status)
+        that.directionsDisplay.setDirections(response);
+        that.directionsDisplay.setMap(this.mapa);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // currentMapTrack: ruta --> culimpiarMapa()
+  // metodo para limpiar el mapa
+  // ----------------------------------------------------------------------------------------------
+  limpiarMapa(currentMapTrack: any) {
+    this.directionsDisplay.setMap(null);
+    this.quitarRuta(currentMapTrack);
   }
 }

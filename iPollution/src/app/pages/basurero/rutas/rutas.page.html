@@ -41,42 +41,53 @@
             </ion-row>
 
             <ion-row>
-                <ion-col>
+                <ion-col size="6">
                     <ion-item color="secondary">
-                        <!-- <ion-list expand="full" color="secondary">
-                            <ion-list-header color="secondary" expand="block">Rutas previas:</ion-list-header>
-                            <ion-item-sliding *ngFor="let route of previousTracks" expand="block">
-                                <ion-label color="accent" expand="block">{{ route.finished | date }},
-                                    {{ route.path.length }}
-                                    Puntos de Control</ion-label>
-                                <button ion-button clear item-end (click)="showHistoryRoute(route.path)" slot="end"
-                                    expand="block">View
-                                    Route</button>
-                            </ion-item-sliding>
-                        </ion-list> -->
+                                <ion-label>
+                                    <h3>Rutas predefinidas:</h3>
+                                </ion-label>
 
-                        <ion-label>
-                            <h3>Rutas previas:</h3>
-                        </ion-label>
+                                <ion-select name="selectRutaPredefinida" multiple="false" cancelText="Cancelar" okText="Cargar"
+                                    [(ngModel)]="rutaSeleccionadaPredefinida" [compareWith]="compareById"
+                                    (ionChange)="onSelectRutaPredefinida()" color="secundario" expand="full"
+                                    interface="action-sheet">
+                                    <ion-select-option *ngFor="let ruta of rutasPredefinidas" value="{{ ruta.nombreRuta }}"
+                                        color="acentuado">
+                                        Ruta - {{ ruta.nombreRuta }}
+                                    </ion-select-option>
+                                </ion-select>
+                    </ion-item>
+                </ion-col>
 
+                <ion-col size="6">
+                    <ion-item color="secondary">
+                                <ion-label>
+                                    <h3>Rutas realizadas:</h3>
+                                </ion-label>
 
-                        <ion-select name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
-                            [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById" (ionChange)="onSelectRuta($event.value)" color="secundario" expand="full"
-                            interface="action-sheet">
-                            <ion-select-option *ngFor="let route of previousTracks" value="{{ route.finished }}" color="acentuado">
-                                {{ route.finished | date }} - {{ route.path.length | number}} Waypoints
-                                <!-- <ion-label color="accent" expand="full">{{ route.path.length}}</ion-label> -->
-                            </ion-select-option>
-                        </ion-select>
-
+                                <ion-select name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
+                                    [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById"
+                                    (ionChange)="onSelectRuta()" color="secundario" expand="full"
+                                    interface="action-sheet">
+                                    <ion-select-option *ngFor="let route of previousTracks" value="{{ route.finished }}"
+                                        color="acentuado">
+                                        {{ route.finished | date }} - {{ route.path.length | number}} Waypoints
+                                    </ion-select-option>
+                                </ion-select>
                     </ion-item>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </ion-item>
     <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="accent">
+        </ion-fab-button>
+    </ion-fab> -->
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="accent" (click)="limpiarMapa()">
+            <ion-img src="assets/icon/escoba.svg" class="img-home"></ion-img>
         </ion-fab-button>
     </ion-fab>
 </ion-content>
