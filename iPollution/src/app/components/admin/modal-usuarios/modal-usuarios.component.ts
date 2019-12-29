@@ -13,8 +13,7 @@ import { Observable } from 'rxjs';
 import {
   Component,
   OnInit,
-  NgZone,
-  OnChanges
+  NgZone
 } from '@angular/core';
 import {
   LogicaDeNegocioFake
@@ -34,7 +33,7 @@ import {
 // ----------------------------------------------------------------------------
 // Class ModalUsuariosComponent
 // ----------------------------------------------------------------------------
-export class ModalUsuariosComponent implements OnInit, OnChanges {
+export class ModalUsuariosComponent implements OnInit {
 
   // Propiedades
   nombreUser: string;
@@ -46,6 +45,7 @@ export class ModalUsuariosComponent implements OnInit, OnChanges {
   contrasenya: any;
   tipoUsuario: string;
   distancia: any;
+  actividad: any;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -69,6 +69,7 @@ export class ModalUsuariosComponent implements OnInit, OnChanges {
     this.tituloComponent = this.navParams.data.titulo;
     this.nodos = this.navParams.data.nodos;
     this.tipoModal = this.navParams.data.tipoModal;
+    this.calcularDistancia();
   }
   // ----------------------------------------------------------------------------
 
@@ -128,13 +129,9 @@ export class ModalUsuariosComponent implements OnInit, OnChanges {
 
     this.distancia = this.serve.getDistanciaUsuario(idUsuario).subscribe(response => {
       this.ngZone.run(() => {
-          this.distancia = response;
-          console.log(response);
+          this.distancia = response.distancia;
+          this.actividad = response.actividad;
         });
     });
   }
-  ngOnChanges() {
-    
-  }
-
 }

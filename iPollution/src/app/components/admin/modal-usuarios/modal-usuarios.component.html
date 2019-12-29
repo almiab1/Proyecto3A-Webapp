@@ -94,6 +94,42 @@
                 </ion-grid>
             </div>
         </ion-item>
+        <ion-item>
+            <div *ngIf="tipoModal == 'anyadir'">
+                <ion-label position="floating">Distancia diaria: </ion-label>
+                <ion-input type="text" value="{{distancia}}" [(ngModel)]="distancia" id="input"></ion-input>
+            </div>
+            <div *ngIf="tipoModal != 'anyadir'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>Distancia diaria:</ion-label>
+                        </ion-col>
+                        <ion-col>
+                            <ion-label>{{distancia}} km</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </ion-item>
+        <ion-item>
+            <div *ngIf="tipoModal == 'anyadir'">
+                <ion-label position="floating">Actividad: </ion-label>
+                <ion-input type="text" value="{{actividad}}" [(ngModel)]="actividad" id="input"></ion-input>
+            </div>
+            <div *ngIf="tipoModal != 'anyadir'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>Actividad:</ion-label>
+                        </ion-col>
+                        <ion-col>
+                            <ion-label>{{actividad}}</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </ion-item>
         <!-- <ion-item *ngIf="tipoModal != 'anyadir'">
       <ion-label position="floating">Nodos: </ion-label>
       <ion-input *ngIf="tipoModal == 'anyadir'" type="number" value="{{nodos}}" [(ngModel)]="nodos" id="input">
@@ -106,13 +142,6 @@
     <div class="ion-text-end" vertical="bottom" slot="fixed">
         <ion-grid *ngIf="tipoModal != 'anyadir'">
             <ion-row class="ion-text-end">
-                <ion-col size="">
-                    <div>
-                        <ion-button color="warning" (click)="calcularDistancia()">
-                            <ion-label>Calcular distancia recorrida</ion-label>
-                        </ion-button>
-                    </div>
-                </ion-col>
                 <ion-col>
                     <div>
                         <ion-button color="danger" (click)="closeModal('eliminar')">
@@ -120,9 +149,6 @@
                         </ion-button>
                     </div>
                 </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-label>{{distancia}}</ion-label>
             </ion-row>
         </ion-grid>
         <div *ngIf="tipoModal == 'anyadir'">
