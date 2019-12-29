@@ -53,7 +53,7 @@ export class ModalUsuariosComponent implements OnInit {
     private modalController: ModalController,
     private navParams: NavParams,
     private serve: LogicaDeNegocioFake,
-    private ngZone: NgZone,
+    private ngZone: NgZone
   ) {}
   // ----------------------------------------------------------------------------
 
@@ -127,7 +127,7 @@ export class ModalUsuariosComponent implements OnInit {
 
     const idUsuario = this.emailUsuario;
 
-    this.distancia = this.serve.getDistanciaUsuario(idUsuario).subscribe(response => {
+    this.serve.getDistanciaUsuario(idUsuario).subscribe(response => {
       this.ngZone.run(() => {
           this.distancia = response.distancia;
           this.actividad = response.actividad;

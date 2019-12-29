@@ -12,7 +12,8 @@
 // ----------------------------------------------------------------------------
 import {
   Component,
-  OnInit
+  OnInit,
+  NgZone
 } from '@angular/core';
 import {
   LogicaDeNegocioFake
@@ -40,13 +41,18 @@ export class ModalNodosComponent implements OnInit {
   usuarioNodo: string;
   tituloComponent: string;
   tipoModal: string;
+  estado: any;
+  funcionamiento: any;
+  listaSensoresInactivos: any;
+  listaSensoresErroneos: any;
 
   // ----------------------------------------------------------------------------
   // Constructor
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private serve: LogicaDeNegocioFake
+    private serve: LogicaDeNegocioFake,
+    private ngZone: NgZone
   ) {}
   // ----------------------------------------------------------------------------
 
@@ -61,6 +67,8 @@ export class ModalNodosComponent implements OnInit {
     this.usuarioNodo = this.navParams.data.usuarioNodo;
     this.tituloComponent = this.navParams.data.titulo;
     this.tipoModal = this.navParams.data.tipoModal;
+    this.obtenerEstadoUnSensor();
+    this.obtenerFuncionamientoUnSensor();
   }
   // ----------------------------------------------------------------------------
 
@@ -74,7 +82,7 @@ export class ModalNodosComponent implements OnInit {
 
   // ----------------------------------------------------------------------------
   // tipoBoton --> closeModal()
-  async closeModa(tipoBoton: string) {
+  async closeModal(tipoBoton: string) {
     const onClosedData = 'ModalCerrado';
 
     switch (tipoBoton) {
@@ -109,4 +117,63 @@ export class ModalNodosComponent implements OnInit {
   }
   // ----------------------------------------------------------------------------
 º
+// ----------------------------------------------------------------------------
+
+async obtenerEstadoUnSensor() {
+
+  const idSensor = this.nombreNodo;
+
+  this.serve.getEstadoUnSensor(idSensor).subscribe(response => {
+    this.ngZone.run(() => {
+        console.log(response);
+        if (response === true) {
+          this.estado = 'activo';
+        }
+        else {
+          this.estado = 'inactivo';
+        }
+      });
+  });
+}
+// ----------------------------------------------------------------------------
+
+async obtenerFuncionamientoUnSensor() {
+
+  const idSensor = this.nombreNodo;
+
+  this.serve.getPrecisionUnSensor(idSensor).subscribe(response => {
+    this.ngZone.run(() => {
+        console.log(response);
+        if (response === true) {
+          this.funcionamiento = 'erróneo';
+        }
+        else {
+          this.funcionamiento = 'correcto';
+        }
+      });
+  });
+}
+
+// ----------------------------------------------------------------------------
+
+async obtenerEstadoSensores() {
+
+  this.serve.getEstadoSensores().subscribe(response => {
+    this.ngZone.run(() => {
+        console.log(response);
+        this.listaSensoresInactivos = JSON.stringify(response);
+      });
+  });
+}
+// ----------------------------------------------------------------------------
+
+async obtenerFuncionamientoSensores() {
+
+  this.serve.getPrecisionSensores().subscribe(response => {
+    this.ngZone.run(() => {
+        console.log(response);
+        this.listaSensoresErroneos = JSON.stringify(response);
+      });
+  });
+}
 }

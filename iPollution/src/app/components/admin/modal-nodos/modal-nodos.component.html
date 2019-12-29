@@ -1,114 +1,144 @@
 <ion-header>
-  <ion-toolbar color="secundario">
+    <ion-toolbar color="secundario">
 
-    <ion-grid>
-      <ion-row>
-        <ion-col size="2">
-          <ion-icon (click)="closeModal('')" name="arrow-back" color="acentuado" size="large" expand="full"></ion-icon>
-        </ion-col>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="2">
+                    <ion-icon (click)="closeModal('')" name="arrow-back" color="acentuado" size="large" expand="full"></ion-icon>
+                </ion-col>
 
-        <ion-col size="10">
-          <ion-title color="acentuado" size="large" class="ion-text-center">{{tituloComponent}}</ion-title>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+                <ion-col size="10">
+                    <ion-title color="acentuado" size="large" class="ion-text-center">{{tituloComponent}}</ion-title>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
 
-  </ion-toolbar>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list expand="full" slot="fixed">
+    <ion-list expand="full" slot="fixed">
 
-    <!-- Lista tipo nodo -->
-    <ion-list *ngIf="tipoModal == 'anyadir'">
-      <ion-radio-group (ionChange)="radioGroupChange($event)" allow-empty-selection="false">
-        <ion-list-header>
-          <ion-label>Tipo de Nodo:</ion-label>
-        </ion-list-header>
+        <!-- Lista tipo nodo -->
+        <ion-list *ngIf="tipoModal == 'anyadir'">
+            <ion-radio-group (ionChange)="radioGroupChange($event)" allow-empty-selection="false">
+                <ion-list-header>
+                    <ion-label>Tipo de Nodo:</ion-label>
+                </ion-list-header>
+                <ion-item>
+                    <ion-label>Ozono</ion-label>
+                    <ion-radio value="1" slot="end"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Dioxido de Carbono</ion-label>
+                    <ion-radio value="2" slot="end"></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Dióxido de azufre</ion-label>
+                    <ion-radio value="3" slot="end"></ion-radio>
+                </ion-item>
+            </ion-radio-group>
+        </ion-list>
+        <!-- item nombre nodo -->
         <ion-item>
-          <ion-label>Ozono</ion-label>
-          <ion-radio value="1" slot="end"></ion-radio>
+            <div *ngIf="tipoModal == 'anyadir'">
+                <ion-label position="floating">Nodo: </ion-label>
+                <ion-input type="text" value="{{nombreNodo}}" [(ngModel)]="nombreNodo" id="input">
+                </ion-input>
+            </div>
+            <div *ngIf="tipoModal != 'anyadir'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>Nodo:</ion-label>
+                        </ion-col>
+                        <ion-col>
+                            <ion-label>{{nombreNodo}}</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </ion-item>
+        <!-- Lista tipo nodo -->
+        <div *ngIf="tipoModal != 'anyadir'">
+            <ion-item>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>Tipo nodo:</ion-label>
+                        </ion-col>
+                        <ion-col>
+                            <ion-label>{{tipoNodo}}</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </div>
+
+        <!-- Usuario asociado del nodo -->
         <ion-item>
-          <ion-label>Dioxido de Carbono</ion-label>
-          <ion-radio value="2" slot="end"></ion-radio>
+            <div *ngIf="tipoModal == 'anyadir'">
+                <ion-label position="floating">Usuario del nodo: </ion-label>
+                <ion-input type="text" value="{{usuarioNodo}}" [(ngModel)]="usuarioNodo" id="input">
+                </ion-input>
+            </div>
+            <div *ngIf="tipoModal != 'anyadir'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>Usuario del nodo:</ion-label>
+                        </ion-col>
+                        <ion-col>
+                            <ion-label>{{usuarioNodo}}</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </ion-item>
+
         <ion-item>
-          <ion-label>Dióxido de azufre</ion-label>
-          <ion-radio value="3" slot="end"></ion-radio>
+            <div *ngIf="tipoModal != 'anyadir'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>Estado del nodo:</ion-label>
+                        </ion-col>
+                        <ion-col>
+                            <ion-label>{{estado}}</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
         </ion-item>
-      </ion-radio-group>
+
+        <ion-item>
+            <div *ngIf="tipoModal != 'anyadir'">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-label>Funcionamiento del nodo:</ion-label>
+                        </ion-col>
+                        <ion-col>
+                            <ion-label>{{funcionamiento}}</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </ion-item>
+
     </ion-list>
-    <!-- item nombre nodo -->
-    <ion-item>
-      <div *ngIf="tipoModal == 'anyadir'">
-        <ion-label position="floating">Nodo: </ion-label>
-        <ion-input type="text" value="{{nombreNodo}}" [(ngModel)]="nombreNodo" id="input">
-        </ion-input>
-      </div>
-      <div *ngIf="tipoModal != 'anyadir'">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-label>Nodo:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-label>{{nombreNodo}}</ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </ion-item>
-    <!-- Lista tipo nodo -->
-    <div *ngIf="tipoModal != 'anyadir'">
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-label>Tipo nodo:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-label>{{tipoNodo}}</ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </div>
 
-    <!-- Usuario asociado del nodo -->
-    <ion-item>
-      <div *ngIf="tipoModal == 'anyadir'">
-        <ion-label position="floating">Usuario del nodo: </ion-label>
-        <ion-input type="text" value="{{usuarioNodo}}" [(ngModel)]="usuarioNodo" id="input">
-        </ion-input>
-      </div>
-      <div *ngIf="tipoModal != 'anyadir'">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-label>Usuario del nodo:</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-label>{{usuarioNodo}}</ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </ion-item>
-
-  </ion-list>
-
-  <!-- Botones comfirmacion -->
-  <div class="ion-text-end" vertical="bottom" slot="fixed">
-    <div *ngIf="tipoModal == 'anyadir'">
-      <ion-button color="success" size="large" (click)="closeModa('guardar')">
-        <ion-icon size="large" name="save"></ion-icon>
-      </ion-button>
+    <!-- Botones comfirmacion -->
+    <div class="ion-text-end" vertical="bottom" slot="fixed">
+        <div *ngIf="tipoModal == 'anyadir'">
+            <ion-button color="success" size="large" (click)="closeModal('guardar')">
+                <ion-icon size="large" name="save"></ion-icon>
+            </ion-button>
+        </div>
+        <div *ngIf="tipoModal != 'anyadir'">
+            <ion-button color="danger" (click)="closeModal('eliminar')">
+                <ion-icon size="large" name="trash"></ion-icon>
+            </ion-button>
+        </div>
     </div>
-    <div *ngIf="tipoModal != 'anyadir'">
-      <ion-button color="danger" (click)="closeModa('eliminar')">
-        <ion-icon size="large" name="trash"></ion-icon>
-      </ion-button>
-    </div>
-  </div>
 </ion-content>
