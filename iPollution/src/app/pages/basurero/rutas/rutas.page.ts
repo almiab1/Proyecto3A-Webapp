@@ -65,8 +65,6 @@ export class RutasPage implements OnInit {
   // Rutas predefinidas
   rutaSeleccionadaPredefinida: any;
   rutasPredefinidas: any[];
-  directionsService = new google.maps.DirectionsService;
-  directionsDisplay = new google.maps.DirectionsRenderer;
 
   // Constructor
   constructor(
