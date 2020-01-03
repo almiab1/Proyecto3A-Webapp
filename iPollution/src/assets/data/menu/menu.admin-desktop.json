@@ -1,5 +1,4 @@
-[
-  {
+[{
     "title": "Home",
     "url": "/home",
     "icon": "home"
@@ -18,8 +17,7 @@
     "title": "+Info",
     "url": "/mas-info",
     "icon": "information-circle-outline",
-    "subPages": [
-      {
+    "subPages": [{
         "title": "Tips",
         "icon": "leaf",
         "url": "/tips"
@@ -41,14 +39,20 @@
     "url": "/admin",
     "icon": "folder",
     "subPages": [{
-      "title": "Usuarios",
-      "icon": "people",
-      "url": "/admin/users"
-    },
+        "title": "Usuarios",
+        "icon": "people",
+        "url": "/admin/users"
+      },
       {
         "title": "Nodos",
         "icon": "radio-button-on",
         "url": "/admin/nodos"
-      }]
+      },
+      {
+        "title":"Histórico de mapas",
+        "icon":"archive",
+        "url":"/admin/historico"
+      }
+    ]
   }
 ]
