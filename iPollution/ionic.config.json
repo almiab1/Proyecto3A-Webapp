@@ -1,8 +1,7 @@
 {
   "name": "iPollution",
   "integrations": {
-    "cordova": {},
-    "capacitor": {}
+    "cordova": {}
   },
   "type": "angular"
 }
