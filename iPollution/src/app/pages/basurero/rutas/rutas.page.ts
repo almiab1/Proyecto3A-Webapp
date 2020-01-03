@@ -54,17 +54,12 @@ export class RutasPage implements OnInit {
     long: 0
   };
 
-  // Updates position traqueo posicion
+  // Updates position
   watchUpdates: any;
   currentMapTrack = null;
   isTracking = false;
   trackedRoute = [];
   previousTracks = [];
-  rutaSeleccionadaTiempo: any;
-
-  // Rutas predefinidas
-  rutaSeleccionadaPredefinida: any;
-  rutasPredefinidas: any[];
 
   // Constructor
   constructor(
@@ -73,30 +68,16 @@ export class RutasPage implements OnInit {
     private storage: Storage,
     public toastController: ToastController
   ) {
-    // Actualizados la posicion del icono cuando se cambia la ubicación3
     if (this.currentLocation != undefined) {
       setInterval(() => {
         this.gps.obtenerMiPosicionGPS().then((resp) => {
+          this.currentLocation.lat = resp.lat;
+          this.currentLocation.long = resp.long;
 
-          if (this.currentLocation.lat != resp.lat || this.currentLocation.long != resp.long) {
-            this.currentLocation.lat = resp.lat;
-            this.currentLocation.long = resp.long;
-
-            this.mapa.centrarEn({
-              lat: this.currentLocation.lat,
-              lng: this.currentLocation.long
-            });
-
-            const marcadorName = 'Posicion Actual';
-
-            this.mapa.eliminarMarcador(marcadorName);
-            this.mapa.anyadirMarcador(
-              marcadorName, {
-                lat: this.currentLocation.lat,
-                lng: this.currentLocation.long
-              }, 'assets/icon/gpsIcon.svg'
-            );
-          }
+          this.mapa.centrarEn({
+            lat: this.currentLocation.lat,
+            lng: this.currentLocation.long
+          });
         });
       }, 5000);
     }
@@ -104,9 +85,7 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ngOnInit(): void {
-    this.loadHistoricRoutes();
-  }
+  ngOnInit(): void {}
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
@@ -230,24 +209,12 @@ export class RutasPage implements OnInit {
   // onSelectRuta()
   // metodo para controlar el select de rutas
   // ----------------------------------------------------------------------------------------------
-  onSelectRuta() {
+  onSelectRuta(valores) {
     console.log('INICIO ONSELECTRUTA');
-    let ruta: any[];
-    this.previousTracks.forEach(element => {
-      console.log(element)
-      if (element.finished == this.rutaSeleccionadaTiempo) {
-        ruta = element.path
-      }
-    });
-    this.showHistoryRoute(ruta);
+    console.table(valores);
+    this.mapa.refrescarMapa();
+    this.showHistoryRoute(this.previousTracks[this.previousTracks.length - 1].path);
     console.log('FIN ONSELECTRUTA');
-  }
-
-  // ----------------------------------------------------------------------------------------------
-  // Comparar los objetos de rutas
-  // ----------------------------------------------------------------------------------------------
-  compareById(o1, o2) {
-    return o1.finished === o2.finished
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -261,21 +228,17 @@ export class RutasPage implements OnInit {
 
     this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
       if (resp != undefined) {
-
-        // Actualizamos nuestra posicion actual
-        this.currentLocation.lat = resp.coords.latitude;
-        this.currentLocation.long = resp.coords.longitude;
-
         this.trackedRoute.push({
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         }); // Añadimos un punto en la ruta
-
+        this.currentLocation.lat = resp.coords.latitude;
+        this.currentLocation.long = resp.coords.longitude;
         this.mapa.centrarEn({
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         });
-        this.currentMapTrack = this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
+        this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
       }
     });
   }
@@ -295,7 +258,8 @@ export class RutasPage implements OnInit {
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
     this.gps.stopLocationWatch(this.watchUpdates); // paramos de monitorear
-    this.mapa.quitarRuta(this.currentMapTrack);
+    // this.mapa.quitarRuta(this.currentMapTrack);
+    this.currentMapTrack.setMap(null);
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -304,7 +268,7 @@ export class RutasPage implements OnInit {
   // metodo para mostrar el historial de rutas realizadas
   // ----------------------------------------------------------------------------------------------
   showHistoryRoute(route) {
-    this.currentMapTrack = this.mapa.pintarRuta(route, this.currentMapTrack);
+    this.mapa.pintarRuta(route, null);
     this.mapa.refrescarMapa();
   }
   // ----------------------------------------------------------------------------------------------
@@ -319,55 +283,6 @@ export class RutasPage implements OnInit {
         this.previousTracks = data;
       }
     });
-
-    this.rutasPredefinidas = this.cargarRutasPreviamenteCreadas();
-    console.log(this.rutasPredefinidas)
-  }
-  // ----------------------------------------------------------------------------------------------
-
-  // ----------------------------------------------------------------------------------------------
-  // cargarRutasPreviamenteCreadas()
-  // metodo para cargar de la bd las rutas predefinidas
-  // ----------------------------------------------------------------------------------------------
-  cargarRutasPreviamenteCreadas() {
-    let rutas: any[];
-
-    rutas = [
-      {
-        nombreRuta: 'Ruta Novelda',
-        puntoInicio: {lat: 38.381392, lng: -0.768067},
-        wayPoints: [{location: {lat: 38.381723, lng: -0.774593}}, {location: {lat: 38.384118, lng: -0.774465}}],
-        puntoFinal: {lat: 38.383905, lng: -0.770708}
-      }
-    ];
-    return rutas;
-  }
-  // ----------------------------------------------------------------------------------------------
-
-  // ----------------------------------------------------------------------------------------------
-  // cargarRutasPreviamenteCreadas()
-  // metodo para cargar de la bd las rutas predefinidas
-  // ----------------------------------------------------------------------------------------------
-  onSelectRutaPredefinida(){
-    let ruta: any;
-
-    this.rutasPredefinidas.forEach(element => {
-      console.log(element)
-      if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
-        ruta = element;
-      }
-    });
-
-    this.mapa.calcularYMostrarRutasPredefinida(ruta);
-  }
-  // ----------------------------------------------------------------------------------------------
-
-  // ----------------------------------------------------------------------------------------------
-  // limpiarMapa()
-  // metodo para limpiar el mapa
-  // ----------------------------------------------------------------------------------------------
-  limpiarMapa(){
-    this.mapa.limpiarMapa(this.currentMapTrack);
   }
   // ----------------------------------------------------------------------------------------------
 

@@ -24,9 +24,6 @@ export class MapaService {
   private puntoCentral: any;
   private capasDeMediciones: Array < any > ;
   private marcadores: Array < any > ;
-  directionsService = new google.maps.DirectionsService;
-  directionsDisplay = new google.maps.DirectionsRenderer;
-
 
   //////////////////////
 
@@ -51,6 +48,13 @@ export class MapaService {
   // ------------------------------------------
   centrarEn(posicion: any) {
     this.mapa.setCenter(posicion);
+    this.mapa.eliminarMarcador('Posicion Actual');
+    this.mapa.anyadirMarcador(
+      'Posicion Actual', {
+        lat: posicion.lat,
+        lng: posicion.lng
+      }, 'assets/icon/gpsIcon.svg'
+    );
     this.refrescarMapa();
   }
   // -------------------------------------------
@@ -64,7 +68,7 @@ export class MapaService {
   // ------------------------------------------
 
   // -----------------------------------------
-  // posicion:Posicion -> anyadirMarcador ->
+  // posicion:Posicion -> anyadirMarcador -> void
   // ------------------------------------------
   anyadirMarcador(nombre: string, posicion: any, iconoUrl: string) {
     const icono = {
@@ -85,10 +89,7 @@ export class MapaService {
 
   }
 
-  // -----------------------------------------
-  // nombreMarcador:string -> eliminarMarcador ->
-  // ------------------------------------------
-  eliminarMarcador(nombreMarcador: string) {
+  eliminarMarcador(nombreMarcador: any) {
     if (this.marcadores[nombreMarcador]) {
       this.marcadores[nombreMarcador].setMap(null);
     }
@@ -196,17 +197,13 @@ export class MapaService {
       currentMapTrack = new google.maps.Polyline({
         path: ruta,
         geodesic: true,
-        trokeColor: '#ff0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 6,
-        fillColor: '#ff0000',
-        fillOpacity: 0.30
+        strokeColor: '#2196f2',
+        strokeOpacity: 1.0,
+        strokeWeight: 3
       });
       currentMapTrack.setMap(this.mapa);
     }
     this.refrescarMapa();
-
-    return currentMapTrack;
   }
   // ------------------------------------------
 
@@ -216,40 +213,5 @@ export class MapaService {
   quitarRuta(currentMapTrack) {
     currentMapTrack.setMap(null);
     this.refrescarMapa();
-  }
-  // ----------------------------------------------------------------------------------------------
-
-  // ----------------------------------------------------------------------------------------------
-  // calcularYMostrarRutasPredefinida()
-  // metodo para ver las rutas predefinidas
-  // ----------------------------------------------------------------------------------------------
-  calcularYMostrarRutasPredefinida(ruta: any) {
-    const that = this;
-
-    this.directionsService.route({
-      origin: ruta.puntoInicio,
-      destination: ruta.puntoFinal,
-      waypoints: ruta.wayPoints,
-      travelMode: 'DRIVING',
-      optimizeWaypoints: true,
-    }, (response, status) => {
-      if (status === 'OK') {
-        console.log('Status --> ' + status)
-        that.directionsDisplay.setDirections(response);
-        that.directionsDisplay.setMap(this.mapa);
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });
-  }
-  // ----------------------------------------------------------------------------------------------
-
-  // ----------------------------------------------------------------------------------------------
-  // currentMapTrack: ruta --> culimpiarMapa()
-  // metodo para limpiar el mapa
-  // ----------------------------------------------------------------------------------------------
-  limpiarMapa(currentMapTrack: any) {
-    this.directionsDisplay.setMap(null);
-    this.quitarRuta(currentMapTrack);
   }
 }
