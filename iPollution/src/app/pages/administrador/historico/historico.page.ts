@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-historico',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoricoPage implements OnInit {
 
+  @ViewChild('mapElement', {
+    static: false
+  }) mapElement: ElementRef;
   constructor() { }
 
   ngOnInit() {

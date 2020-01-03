@@ -1,9 +1,8 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>historico</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Admin | Histórico de mapas"></app-header>
 
 <ion-content>
-
+  <ion-item class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed" color="secundario">
+      <ion-datetime displayFormat="MM DD YY" placeholder="Selecciona una fecha para consultar"></ion-datetime>
+  </ion-item>
+  <div #mapElement class="mapElement" slot="fixed"></div>
 </ion-content>
