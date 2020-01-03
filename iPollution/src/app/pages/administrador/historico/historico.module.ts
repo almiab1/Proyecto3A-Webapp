@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HistoricoComponent } from './historico.component';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { HistoricoPageRoutingModule } from './historico-routing.module';
+
+import { HistoricoPage } from './historico.page';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    HistoricoPageRoutingModule
   ],
-  declarations: [HistoricoComponent]
+  declarations: [HistoricoPage]
 })
-export class HistoricoModule { }
+export class HistoricoPageModule {}

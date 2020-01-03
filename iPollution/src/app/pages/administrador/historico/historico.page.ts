@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-historico',
-  templateUrl: './historico.component.html',
-  styleUrls: ['./historico.component.css']
+  templateUrl: './historico.page.html',
+  styleUrls: ['./historico.page.scss'],
 })
-export class HistoricoComponent implements OnInit {
+export class HistoricoPage implements OnInit {
 
   constructor() { }
 
