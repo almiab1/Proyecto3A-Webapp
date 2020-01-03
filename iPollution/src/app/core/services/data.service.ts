@@ -8,6 +8,7 @@ import {MenuItem} from '../../models/MenuItem';
 export class DataService {
   platform: string;
   rolUser: number;
+  idUser: string;
   constructor(private http: HttpClient) { }
   guardarToken(token: string) {
     localStorage.setItem('token', token);

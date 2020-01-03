@@ -28,13 +28,15 @@ export class LoginService {
   comprobarLogin() {
     const token = localStorage.getItem('token');
     if (token === null) {
-      this.data.rolUser = 0
+      this.data.rolUser = 0;
       return;
     }
+    this.data.idUser = jwt_decode(token).usuario;
     this.data.rolUser = jwt_decode(token).idTipoUsuario;
   }
   procesarToken(token) {
     this.data.guardarToken(token);
+    this.data.idUser = jwt_decode(token).usuario;
     return this.data.rolUser = jwt_decode(token).idTipoUsuario;
   }
   logout() {
