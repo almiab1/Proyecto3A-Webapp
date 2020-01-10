@@ -125,6 +125,18 @@ export class MapaService {
   }
   // ------------------------------------------
 
+
+  // ------------------------------------------
+  // nombreDeCapa:string --> eliminarCapa() --> void
+  // ------------------------------------------
+  borrarCapa(nombreDeCapa: string) {
+    if (this.capasDeMediciones[nombreDeCapa]) {
+      delete this.capasDeMediciones[nombreDeCapa];
+    }
+  }
+  // ------------------------------------------
+
+
   // -----------------------------------------
   // nombreGas:string -> mostrarCapa() -> void
   // ------------------------------------------

@@ -34,8 +34,6 @@ export class HistoricoPage implements OnInit {
   };
 
 
-  medidas = new Array < any > ();
-
   constructor(private geolocation: LocalizadorGPS,
               private server: LogicaDeNegocioFake) {}
 
@@ -64,7 +62,51 @@ export class HistoricoPage implements OnInit {
 
   cambioDeFecha(fechaIso: string): void {
     let fecha = new Date(Date.parse(fechaIso));
-    console.log(fecha.getTime());
+    fecha.setHours(12);
+    fecha.setMinutes(0);
+    fecha.setSeconds(0);
+    fecha.setMilliseconds(0);
+    this.getMedidas(fecha, medidas => {
+      if(medidas.length > 0) {
+        this.mapa.ocultarCapa('o3');
+        this.mapa.borrarCapa('o3');
+        this.anyadirLaCapa(medidas);
+      }
+    });
+  }
+
+  getMedidas(fecha, callback): void {
+    this.server.getMedidasDeIntervaloConcreto(fecha.getTime(), 24).toPromise().then(valores => {
+
+      if(valores.length > 0) {
+        let medidas = new Array<any>();
+        let nuevaFecha = new Date();
+        valores.forEach(valor => {
+          nuevaFecha.setTime(valor.tiempo);
+          if (nuevaFecha.toLocaleDateString() === fecha.toLocaleDateString()) {
+            medidas.unshift(valor);
+          }
+        });
+        callback(medidas);
+      }
+    });
+  }
+
+  anyadirLaCapa(medidas: any): void {
+    this.mapa.refrescarMapa();
+    this.mapa.anyadirCapa({
+      nombre: 'o3',
+      disipado: true, // Escalado del aspecto de los puntos en funcion del zoom
+      radio: 70, // Radio de influencia de cada punto en pixeles sobre el mapa
+      maxIntensidad: 1500 // Valor en el cual el color es máximo
+    });
+    medidas.forEach(medida => {
+      this.mapa.anyadirMedicion('o3', medida);
+    });
+
+    console.log('He acabado con las mediciones');
+
+    this.mapa.refrescarMapa();
   }
 
 }
