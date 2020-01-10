@@ -227,7 +227,7 @@ export class MapaService {
     const that = this;
 
     this.directionsService.route({
-      origin: ruta.puntoInicio,
+      origin: ruta.puntoInicial,
       destination: ruta.puntoFinal,
       waypoints: ruta.wayPoints,
       travelMode: 'DRIVING',

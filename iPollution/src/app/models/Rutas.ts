@@ -1,4 +1,4 @@
-export interface Rutas {
+export interface Ruta {
     nombreRuta: string;
     tipoRuta: string;
     ruta: [];
@@ -8,8 +8,8 @@ export interface Rutas {
 export interface RutasPreviamenteCreadas {
     nombreRuta: string;
     puntoInicial: Posicion;
-    wayPoints: Posicion[];
-    puntoFinal: Position;
+    wayPoints: Location[];
+    puntoFinal: Posicion;
 }
 
 export interface RutasRealizadas {
@@ -20,4 +20,8 @@ export interface RutasRealizadas {
 export interface Posicion {
     lat: number;
     lng: number;
+}
+
+export interface Location {
+    location: Posicion;
 }
