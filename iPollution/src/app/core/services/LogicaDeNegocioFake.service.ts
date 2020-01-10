@@ -1,4 +1,6 @@
-import { DataService } from './data.service';
+import {
+    DataService
+} from './data.service';
 // ------------------------------------------------------------------------------------
 // LogicaDeNegocioFake.service.ts
 // Equipo 4
@@ -23,7 +25,9 @@ import {
     Observable,
     throwError
 } from 'rxjs';
-import {Ruta} from '../../models/Rutas';
+import {
+    Ruta
+} from '../../models/Rutas';
 // ------------------------------------------------------------------------------------
 // Class LogicaDeNegocioFake
 // ------------------------------------------------------------------------------------
@@ -57,10 +61,15 @@ export class LogicaDeNegocioFake {
     urlEstadoSensores = this.urlServe + '/admin/estadoSensores';
     urlPrecisionUnSensor = this.urlServe + '/admin/precisionUnSensor';
     urlPrecisionSensores = this.urlServe + '/admin/precisionTodosSensores';
+    urlGetRutasPredefinidasAdmin = this.urlServe + '/admin/getRutasPredefinidas';
+    urlGetRutasRealizadasAdmin = this.urlServe + '/admin/getRutasRealizadas';
+    urlPostRutaAdmin = this.urlServe + '/admin/postRuta';
+    urlDeleteRuta = this.urlServe + '/admin/deleteRuta';
 
     // API de basurero
-    urlGetRuta = this.urlServe + '/basurero/getRuta';
-    urlPostRuta = this.urlServe + '/basurero/postRuta';
+    urlGetRutasPredefinidasBasurero = this.urlServe + '/basurero/getRutasPredefinidas';
+    urlGetRutasRealizadasBasurero = this.urlServe + '/basurero/getRutasRealizadas';
+    urlPostRutaBasurero = this.urlServe + '/basurero/postRuta';
     urlBasureroGuardar = this.urlServe + '/basurero/guardarMedida';
     urlEditarUsuarioBasurero = this.urlServe + '/basurero/editarUsuarioBasurero';
 
@@ -81,7 +90,7 @@ export class LogicaDeNegocioFake {
     constructor(
         public http: HttpClient,
         public dataService: DataService
-        ) {}
+    ) {}
     /*
         // Handle API errors
         handleError(error: HttpErrorResponse) {
@@ -263,9 +272,33 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     // GET getRutas()
     // ------------------------------------------------------------------------------------
-    getRutasUsuario(tipoRuta, idUsuario): Observable < any > {
-        return this.http
-            .get(this.urlGetRuta + '/' + idUsuario + '/' + tipoRuta, this.httpOptions);
+    getRutas(tipoRuta, idUsuario): Observable < any > {
+        switch (this.dataService.rolUser) {
+            case 1: {
+                //Estado basurero
+                if (tipoRuta == 0) {
+                    return this.http
+                        .get(this.urlGetRutasPredefinidasBasurero); // Peticion cuando eres basurero y queres realizar consulta de una ruta predefinida
+                } else if (tipoRuta == 1) {
+                    return this.http
+                        .get(this.urlGetRutasRealizadasBasurero + '/' + idUsuario); // Peticion cuando eres basurero y queres realizar consulta de una ruta realizada
+                }
+            }
+            case 2: {
+                //Estado admin
+                if (tipoRuta == 0) {
+                    return this.http
+                        .get(this.urlGetRutasPredefinidasAdmin); // Peticion cuando eres admin y queres realizar consulta de una ruta predefinida
+                } else if (tipoRuta == 1) {
+                    return this.http
+                        .get(this.urlGetRutasRealizadasAdmin + '/' + idUsuario); // Peticion cuando eres admin y queres realizar consulta de una ruta realizada
+                }
+            }
+            default: {
+                //Estado por defecto
+                break;
+            }
+        }
     }
 
 
@@ -359,23 +392,43 @@ export class LogicaDeNegocioFake {
     // POST portRuta()
     // Guardar en la BD una ruta
     // ------------------------------------------------------------------------------------
-    public postRuta(data) {
+    public postRuta(data, tipoRutaPost) {
 
-        const ruta:Ruta = {
+        const ruta: Ruta = {
             nombreRuta: data.nombreRuta,
-            tipoRuta: data.tipoRuta,
-            ruta: data.ruta,
+            tipoRuta: tipoRutaPost,
+            ruta: data.ruta.toString(),
             idUsuario: this.dataService.idUser,
         };
-        // this.nodosFicticios.push(data);
 
-        this.http.post(this.urlDarDeAltaSensor, JSON.stringify(ruta), this.httpOptions)
-        .subscribe(
-            data => console.log('Se ha hecho la peticion postRuta'),
-            err => {
-            console.log('ERROR!' + err);
-            console.log(err);
-        });
+        switch (this.dataService.rolUser) {
+            case 1: {
+                //Estado basurero
+                this.http.post(this.urlPostRutaBasurero, JSON.stringify(ruta), this.httpOptions)
+                    .subscribe(
+                        data => console.log('Se ha hecho la peticion postRuta'),
+                        err => {
+                            console.log('ERROR!' + err);
+                            console.log(err);
+                        });
+                break;
+            }
+            case 2: {
+                //Estado admin cuando quieres hacer un post de una ruta
+                this.http.post(this.urlPostRutaBasurero, JSON.stringify(ruta), this.httpOptions)
+                    .subscribe(
+                        data => console.log('Se ha hecho la peticion postRuta'),
+                        err => {
+                            console.log('ERROR!' + err);
+                            console.log(err);
+                        });
+                break;
+            }
+            default: {
+                //Estado por defecto 
+                break;
+            }
+        }
     }
 
     // -----------------------------Delete-------------------------------------------------
@@ -411,6 +464,22 @@ export class LogicaDeNegocioFake {
     public darDeBajaSensor(data) {
 
         this.peticionDelete(this.urlDarDeBajaSensor + '/' + data)
+            .subscribe(
+                data => console.log('--------------Se ha hecho la peticion--------------'),
+                err => {
+                    console.log('ERROR --> ');
+                    console.log(err);
+                });
+    }
+
+    // ------------------------------------------------------------------------------------
+    // Delete eliminarRuta()
+    // nombreRuta: string --> eliminarRuta() -->
+    // Eliminar una ruta de la bd
+    // ------------------------------------------------------------------------------------
+    public eliminarRuta(nombreRuta) {
+
+        this.peticionDelete(this.urlDeleteRuta + '/' + nombreRuta)
             .subscribe(
                 data => console.log('--------------Se ha hecho la peticion--------------'),
                 err => {

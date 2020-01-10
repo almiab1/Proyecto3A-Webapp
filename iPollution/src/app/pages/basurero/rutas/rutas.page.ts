@@ -1,4 +1,3 @@
-import { RutasPreviamenteCreadas } from './../../../models/Rutas';
 // ----------------------------
 // rutas.page.ts
 // Controlador de la vista rutas
@@ -241,7 +240,7 @@ export class RutasPage implements OnInit {
     this.previousTracks.forEach(element => {
       console.log(element)
       if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
-        ruta = element.path
+        ruta = element.ruta
       }
     });
     this.showHistoryRoute(ruta);
@@ -291,11 +290,14 @@ export class RutasPage implements OnInit {
   // metodo para parar el monitoreo de ruta
   // ----------------------------------------------------------------------------------------------
   stopTracking() {
+    let date = new Date();
     const newRoute:RutasRealizadas = {
-      nombreRuta: new Date().getTime().toString(),
-      path: this.trackedRoute
+      nombreRuta: 'Ruta del ' + date.toLocaleString(),
+      ruta: this.trackedRoute
     };
     this.previousTracks.push(newRoute);
+
+    this.server.postRuta(newRoute,1);
     this.storage.set('routes', this.previousTracks);
 
     this.isTracking = false; // cambiamos el estado a no monitoreo

@@ -14,7 +14,7 @@ export interface RutasPreviamenteCreadas {
 
 export interface RutasRealizadas {
     nombreRuta: string;
-    path: Posicion[];
+    ruta: Posicion[];
 }
 
 export interface Posicion {
