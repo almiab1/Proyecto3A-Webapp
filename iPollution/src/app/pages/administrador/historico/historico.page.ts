@@ -66,10 +66,12 @@ export class HistoricoPage implements OnInit {
     fecha.setMinutes(0);
     fecha.setSeconds(0);
     fecha.setMilliseconds(0);
+
+    this.mapa.ocultarCapa('o3');
+    this.mapa.borrarCapa('o3');
+
     this.getMedidas(fecha, medidas => {
       if(medidas.length > 0) {
-        this.mapa.ocultarCapa('o3');
-        this.mapa.borrarCapa('o3');
         this.anyadirLaCapa(medidas);
       }
     });
