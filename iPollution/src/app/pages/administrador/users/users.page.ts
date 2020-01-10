@@ -9,10 +9,11 @@
 // ----------------------------------------------------------------------------
 // Includes
 // ----------------------------------------------------------------------------
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { ModalUsuariosComponent } from '../../../components/admin/modal-usuarios/modal-usuarios.component';
 import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
+import { stringify } from 'querystring';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -30,6 +31,7 @@ export class UsersPage implements OnInit {
   dataReturned: any;
   public users: any[];
   public usersFiltrados: any[];
+  actividades: any[];
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
@@ -38,6 +40,7 @@ export class UsersPage implements OnInit {
     public modalController: ModalController,
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
+    private ngZone: NgZone
   ) {
   }
   // ----------------------------------------------------------------------------
@@ -53,6 +56,7 @@ export class UsersPage implements OnInit {
       },
       err => console.log(err),
     )
+    this.calcularDistancia();
   }
   // ----------------------------------------------------------------------------
   ionViewWillEnter() {
@@ -143,6 +147,26 @@ export class UsersPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  // ----------------------------------------------------------------------------
+
+  async calcularDistancia() {
+
+    this.serve.getUsuarios().subscribe(
+      res => {
+        const listaUsers = res;
+        let lista = [];
+
+        for (let index = 0; index < listaUsers.length; index++) {
+          const idUsuario = listaUsers[index].idUsuario;
+          this.serve.getDistanciaUsuario(idUsuario).subscribe(response => {
+            lista[index] = response.actividad;
+          });
+        }
+        this.actividades = lista;
+      }
+    );
   }
 
 }
