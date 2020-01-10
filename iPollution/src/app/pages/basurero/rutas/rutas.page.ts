@@ -31,6 +31,9 @@ import {
 import {
   ToastController
 } from '@ionic/angular';
+import { RutasRealizadas } from '../../../models/Rutas';
+import { RutasPreviamenteCreadas } from '../../../models/Rutas';
+import { DataService } from './../../../core/services/data.service';
 // ----------------------------
 // Components
 // ----------------------------
@@ -59,19 +62,20 @@ export class RutasPage implements OnInit {
   currentMapTrack = null;
   isTracking = false;
   trackedRoute = [];
-  previousTracks = [];
+  previousTracks: RutasRealizadas[] = [];
   rutaSeleccionadaTiempo: any;
 
   // Rutas predefinidas
   rutaSeleccionadaPredefinida: any;
-  rutasPredefinidas: any[];
+  rutasPredefinidas: RutasPreviamenteCreadas[];
 
   // Constructor
   constructor(
     private gps: LocalizadorGPS,
     private server: LogicaDeNegocioFake,
     private storage: Storage,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public dataService: DataService
   ) {
     // Actualizados la posicion del icono cuando se cambia la ubicación3
     if (this.currentLocation != undefined) {
@@ -235,8 +239,8 @@ export class RutasPage implements OnInit {
     let ruta: any[];
     this.previousTracks.forEach(element => {
       console.log(element)
-      if (element.finished == this.rutaSeleccionadaTiempo) {
-        ruta = element.path
+      if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
+        ruta = element.ruta
       }
     });
     this.showHistoryRoute(ruta);
@@ -286,11 +290,14 @@ export class RutasPage implements OnInit {
   // metodo para parar el monitoreo de ruta
   // ----------------------------------------------------------------------------------------------
   stopTracking() {
-    let newRoute = {
-      finished: new Date().getTime(),
-      path: this.trackedRoute
+    let date = new Date();
+    const newRoute:RutasRealizadas = {
+      nombreRuta: 'Ruta del ' + date.toLocaleString(),
+      ruta: this.trackedRoute
     };
     this.previousTracks.push(newRoute);
+
+    this.server.postRuta(newRoute,1);
     this.storage.set('routes', this.previousTracks);
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
@@ -314,14 +321,8 @@ export class RutasPage implements OnInit {
   // metodo para cargar de la bd las rutas ya realizadas
   // ----------------------------------------------------------------------------------------------
   loadHistoricRoutes() {
-    this.storage.get('routes').then(data => {
-      if (data) {
-        this.previousTracks = data;
-      }
-    });
-
+    this.previousTracks = this.cargarRutasPrevias();
     this.rutasPredefinidas = this.cargarRutasPreviamenteCreadas();
-    console.log(this.rutasPredefinidas)
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -330,23 +331,56 @@ export class RutasPage implements OnInit {
   // metodo para cargar de la bd las rutas predefinidas
   // ----------------------------------------------------------------------------------------------
   cargarRutasPreviamenteCreadas() {
-    let rutas: any[];
+    let rutas: RutasPreviamenteCreadas[];
 
     rutas = [
       {
         nombreRuta: 'Ruta Novelda',
-        puntoInicio: {lat: 38.381392, lng: -0.768067},
+        puntoInicial: {lat: 38.381392, lng: -0.768067},
         wayPoints: [{location: {lat: 38.381723, lng: -0.774593}}, {location: {lat: 38.384118, lng: -0.774465}}],
         puntoFinal: {lat: 38.383905, lng: -0.770708}
       }
     ];
+
+    // this.server.getRutasUsuario(0,this.dataService.idUser).subscribe(
+    //   res => {
+    //     rutas = res;
+    //   },
+    //   err => console.log(err),
+    // );
     return rutas;
   }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  // cargarRutasPreviamenteCreadas()
-  // metodo para cargar de la bd las rutas predefinidas
+  // cargarRutasPrevias()
+  // metodo para cargar de la bd las rutas ya hechas
+  // ----------------------------------------------------------------------------------------------
+  cargarRutasPrevias() {
+    let rutas: RutasRealizadas[];
+
+    this.storage.get('routes').then(data => {
+      if (data) {
+        rutas = data;
+      }
+    }, err => console.error(err));
+
+    // this.server.getRutasUsuario(0,this.dataService.idUser).subscribe(
+    //   res => {
+    //     rutas = res;
+    //   },
+    //   err => console.log(err),
+    // );
+    console.log('cargarRutasPrevias -------------------------------------')
+    console.log(rutas);
+    if (rutas == undefined){rutas = []}
+    return rutas;
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // onSelectRutaPredefinida()
+  // Metodo para seleccionar una ruta predefinida
   // ----------------------------------------------------------------------------------------------
   onSelectRutaPredefinida(){
     let ruta: any;
