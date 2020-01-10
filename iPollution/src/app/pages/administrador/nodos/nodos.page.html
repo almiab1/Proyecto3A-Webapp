@@ -6,13 +6,16 @@
 
   <!-- Por si no van los components version antigua-->
   <ion-grid>
-    <ion-row>
+    <ion-row style="justify-content: space-around">
+      <ion-button>Boton1</ion-button>
+      <ion-button>Boton2</ion-button>
+      <ion-button>Boton3</ion-button>
       <ion-col size="12">
         <ion-toolbar expand="full">
           <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras" (ionInput)="filterList($event)">
           </ion-searchbar>
           <ion-button slot="end" color="success" disabled="false" (click)="openModal(undefined,'anyadir')">
-            <ion-icon name="person-add" size="large" expand="block" ></ion-icon>
+            <ion-icon name="person-add" size="large" expand="block"></ion-icon>
           </ion-button>
         </ion-toolbar>
       </ion-col>
