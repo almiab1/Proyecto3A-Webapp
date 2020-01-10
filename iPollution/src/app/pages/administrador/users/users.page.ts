@@ -161,7 +161,7 @@ export class UsersPage implements OnInit {
     if (data != undefined) {
       titulo = data.descripcion;
     } else {
-      titulo = 'Añadir Usuario';
+      titulo = 'Añadir Ruta';
     }
     const modal = await this.modalController.create({
       component: ModalRutasComponent,
