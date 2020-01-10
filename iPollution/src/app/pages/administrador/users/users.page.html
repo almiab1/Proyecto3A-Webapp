@@ -1,35 +1,38 @@
 <app-header title="Admin | Usuarios"></app-header>
 <ion-content>
-  <!-- <app-admin-toolbar iconoAnyadir="person-add" placeHolder="Busca el trabajador deseado" funcionFiltrado="filterList($event)" abrirModalAnyadir="openModal(undefined,'anyadir')">
+    <!-- <app-admin-toolbar iconoAnyadir="person-add" placeHolder="Busca el trabajador deseado" funcionFiltrado="filterList($event)" abrirModalAnyadir="openModal(undefined,'anyadir')">
   </app-admin-toolbar>
   <app-lista-objetos objects="users" abrirModal="openModal(item,'editar')" tituloLista="Trabajadores" nombreObjecto="nombre"> </app-lista-objetos> -->
 
-  <!-- Por si no van los components version antigua-->
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <ion-toolbar expand="block">
-          <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras" (ionInput)="filterList($event)">
-          </ion-searchbar>
-          <ion-button slot="end" color="success" disabled="false" (click)="openModal(undefined,'anyadir')">
-            <ion-icon name="person-add" size="large" expand="block" ></ion-icon>
-          </ion-button>
-        </ion-toolbar>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <div>
-          <ion-list>
-            <ion-list-header>
-              <ion-title>Lista de Basureros:</ion-title>
-            </ion-list-header>
-            <ion-item *ngFor="let item of users" (click)="openModal(item,'editar')">
-              {{ item.nombre }}
-            </ion-item>
-          </ion-list>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <!-- Por si no van los components version antigua-->
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <ion-toolbar expand="block">
+                    <ion-searchbar slot="start" autocomplete="on" inputmode="text" placeholder="Busca el nodo que quieras" (ionInput)="filterList($event)">
+                    </ion-searchbar>
+                    <ion-button slot="end" color="success" disabled="false" (click)="openModal(undefined,'anyadir')">
+                        <ion-icon name="person-add" size="large" expand="block"></ion-icon>
+                    </ion-button>
+                </ion-toolbar>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div>
+                    <ion-list>
+                        <ion-list-header>
+                            <ion-title>Lista de Basureros:</ion-title>
+                        </ion-list-header>
+                        <ion-item *ngFor="let item of users" (click)="openModal(item,'editar')">
+                            {{ item.nombre }}
+                            <!--ion-badge slot="end" color="medium">
+                                <ion-label color="medium">·</ion-label>
+                            </ion-badge-->
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
