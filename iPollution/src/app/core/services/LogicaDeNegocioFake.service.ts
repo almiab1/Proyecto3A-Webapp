@@ -55,6 +55,7 @@ export class LogicaDeNegocioFake {
     urlEstadoSensores = this.urlServe + '/admin/estadoSensores';
     urlPrecisionUnSensor = this.urlServe + '/admin/precisionUnSensor';
     urlPrecisionSensores = this.urlServe + '/admin/precisionTodosSensores';
+    urlMedidasIntervalo = this.urlServe + '/admin/getMedidasDeIntervaloConcreto';
 
 
     // Api de técnico local
@@ -304,7 +305,19 @@ export class LogicaDeNegocioFake {
             );
     }
 
-
+    // ------------------------------------------------------------------------------------
+    // GET getMedidasDeIntervaloConcreto()
+    // Obtener las medidas que se publicaron en cierto intervalo de tiempo
+    // fecha:N, ventanaDeHoras:R --> getMedidasDeIntervaloConcreto() --> [medidas]
+    // ------------------------------------------------------------------------------------
+    getMedidasDeIntervaloConcreto(fecha, ventanaDeHoras): Observable < any > {
+        return this.http
+        .get(this.urlMedidasIntervalo + '?fecha=' + fecha + '&ventanaDeHoras=' + ventanaDeHoras, this.httpOptions)
+        .pipe(
+            // retry(2),
+            // catchError(this.handleError)
+        );
+    }
     // -----------------------------POST---------------------------------------------------
     // ------------------------------------------------------------------------------------
     // POST guardarMedida

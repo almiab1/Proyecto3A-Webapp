@@ -1,8 +1,21 @@
-import { LocalizadorGPS } from './../../../core/services/LocalizadorGPS.service';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { MapaService } from './../../../core/services/Mapa.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
+import {
+  LocalizadorGPS
+} from './../../../core/services/LocalizadorGPS.service';
+import {
+  Geolocation
+} from '@ionic-native/geolocation/ngx';
+import {
+  MapaService
+} from './../../../core/services/Mapa.service';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
+import {
+  LogicaDeNegocioFake
+} from 'src/app/core/services/LogicaDeNegocioFake.service';
 
 @Component({
   selector: 'app-historico',
@@ -20,11 +33,13 @@ export class HistoricoPage implements OnInit {
     long: 0
   };
 
-  constructor(private geolocation: LocalizadorGPS,
-              private server: LogicaDeNegocioFake) { }
 
-  ngOnInit() {
-  }
+  medidas = new Array < any > ();
+
+  constructor(private geolocation: LocalizadorGPS,
+              private server: LogicaDeNegocioFake) {}
+
+  ngOnInit() {}
 
   // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit(): void {
@@ -39,12 +54,17 @@ export class HistoricoPage implements OnInit {
         zoom: 15
       }, this.mapElement.nativeElement);
       this.mapa.anyadirMarcador(
-          'Posicion Actual', {
-            lat: this.currentLocation.lat,
-            lng: this.currentLocation.long
-          }, 'assets/icon/gpsIcon.svg'
+        'Posicion Actual', {
+          lat: this.currentLocation.lat,
+          lng: this.currentLocation.long
+        }, 'assets/icon/gpsIcon.svg'
       );
     });
+  }
+
+  cambioDeFecha(fechaIso: string): void {
+    let fecha = new Date(Date.parse(fechaIso));
+    console.log(fecha.getTime());
   }
 
 }
