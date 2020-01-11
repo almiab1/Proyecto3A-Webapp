@@ -80,25 +80,20 @@
         </ion-grid>
     </ion-item>
     <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
-    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="accent">
-        </ion-fab-button>
-    </ion-fab> -->
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="accent">
             <ion-icon name="arrow-dropup"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="top">
-
             <ion-fab-button color="light" (click)="abrirSelect('selectPredefinidas')">
                 <!-- Rutas realizadas -->
-                <ion-icon name="logo-facebook"></ion-icon>
+                <ion-img src="assets/icon/ruta1.svg" class="iconos"></ion-img>
             </ion-fab-button>
 
             <ion-fab-button color="light" (click)="abrirSelect('selectRealizadas')">
                 <!-- Rutas Predefinidas -->
-                <ion-icon name="logo-twitter"></ion-icon>
+                <ion-img src="assets/icon/ruta1.svg" class="iconos"></ion-img>
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>
