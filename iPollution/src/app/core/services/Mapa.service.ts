@@ -9,6 +9,8 @@ import {
   Injectable,
   ElementRef
 } from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {LogicaDeNegocioFake} from './LogicaDeNegocioFake.service';
 
 declare var google;
 @Injectable({
@@ -24,10 +26,9 @@ export class MapaService {
   private puntoCentral: any;
   private capasDeMediciones: Array < any > ;
   private marcadores: Array < any > ;
-  directionsService = new google.maps.DirectionsService;
-  directionsDisplay = new google.maps.DirectionsRenderer;
-
-
+  directionsService = new google.maps.DirectionsService();
+  directionsDisplay;
+  server: LogicaDeNegocioFake;
   //////////////////////
 
 
@@ -118,7 +119,7 @@ export class MapaService {
     });
 
     this.capasDeMediciones[informacion.nombre] = {
-      layer: layer,
+      layer,
       nombre: informacion.nombre
     };
     this.mostrarCapa(informacion.nombre);
@@ -223,9 +224,29 @@ export class MapaService {
   // calcularYMostrarRutasPredefinida()
   // metodo para ver las rutas predefinidas
   // ----------------------------------------------------------------------------------------------
-  calcularYMostrarRutasPredefinida(ruta: any) {
+  calcularYMostrarRutasPredefinida(ruta: any, contaminacion) {
     const that = this;
-
+    if (contaminacion === 0) {
+      that.directionsDisplay = new google.maps.DirectionsRenderer({
+        polylineOptions: {
+          strokeColor: 'green'
+        }
+      });
+    }
+    if (contaminacion === 1) {
+      that.directionsDisplay = new google.maps.DirectionsRenderer({
+        polylineOptions: {
+          strokeColor: 'orange'
+        }
+      });
+    }
+    if (contaminacion === 2) {
+      that.directionsDisplay = new google.maps.DirectionsRenderer({
+        polylineOptions: {
+          strokeColor: 'red'
+        }
+      });
+    }
     this.directionsService.route({
       origin: ruta.puntoInicio,
       destination: ruta.puntoFinal,
@@ -234,7 +255,6 @@ export class MapaService {
       optimizeWaypoints: true,
     }, (response, status) => {
       if (status === 'OK') {
-        console.log('Status --> ' + status)
         that.directionsDisplay.setDirections(response);
         that.directionsDisplay.setMap(this.mapa);
       } else {

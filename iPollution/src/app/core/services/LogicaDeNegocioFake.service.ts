@@ -65,7 +65,7 @@ export class LogicaDeNegocioFake {
     protected httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            Authorization: localStorage.getItem('token')
         })
     };
 
@@ -343,7 +343,7 @@ export class LogicaDeNegocioFake {
             contrasenya: data.contrasenya,
             idTipoUsuario: data.idTipoUsuario,
             telefono: data.telefono,
-        }
+        };
         // this.usuariosFicticios.push(data);
 
         this.http.post(this.urlDarDeAltaUsuario, JSON.stringify(body), this.httpOptions).subscribe(
@@ -385,7 +385,7 @@ export class LogicaDeNegocioFake {
     // Dar de baja Usuario
     // idUsuario --> darDeBajaUsuario()
     // ------------------------------------------------------------------------------------
-    public darDeBajaUsuario(data){
+    public darDeBajaUsuario(data) {
 
         // // Eleminar seleccionado ------- PRUEBA ----------------
         // this.usuariosFicticios.forEach(element => {
@@ -433,6 +433,9 @@ export class LogicaDeNegocioFake {
             console.log('ERROR --> ');
             console.log(err);
         });
+    }
+    getEstimacionCalidadAire(puntos) {
+        return this.http.post('https://osblasae.upv.edu.es/basurero/getValoracionCalidadAire', puntos, this.httpOptions);
     }
 }
 

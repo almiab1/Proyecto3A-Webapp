@@ -1,0 +1,7 @@
+{
+  "nombreRuta": "Ruta Novelda (contaminante)",
+  "puntoInicio": {"lat": 38.381392, "lng": -0.768067},
+  "wayPoints": [{"location": {"lat": 38.381723, "lng": -0.774593}}, {"location": {"lat": 38.384118, "lng": -0.774465}}],
+  "puntoFinal": {"lat": 38.383905, "lng": -0.770708},
+  "contaminacion": 2
+}
