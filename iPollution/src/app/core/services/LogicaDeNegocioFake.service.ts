@@ -402,10 +402,12 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     public postRuta(data, tipoRutaPost) {
 
-        const ruta: Ruta = {
+        let rutaPath = JSON.stringify({ruta: data.ruta});
+
+        const ruta = {
             nombreRuta: data.nombreRuta,
             tipoRuta: tipoRutaPost,
-            ruta: data.ruta.toString(),
+            ruta: rutaPath,
             idUsuario: this.dataService.idUser,
         };
 

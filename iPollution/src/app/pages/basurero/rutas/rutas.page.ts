@@ -360,31 +360,30 @@ export class RutasPage implements OnInit {
       }
     });
 
-    let rutasBase: Ruta[];
-
     this.server.getRutas(0, this.dataService.idUser).subscribe(
       res => {
-         rutasBase = res;
 
          if (res.length != 0 || res != undefined) {
           res.forEach(element => {
 
+            let rutaPath = JSON.parse(element.ruta);
+
             let rutaPrevia: RutasPreviamenteCreadas = {
               nombreRuta: element.nombreRuta,
-              puntoInicial: element.ruta[0],
-              puntoFinal: element.ruta[element.ruta.length - 1],
+              puntoInicial: rutaPath.ruta[0],
+              puntoFinal: rutaPath.ruta[rutaPath.ruta.length - 1],
               wayPoints: [],
             };
 
-            if (element.ruta.length >= 3) {
-              for (let i = 1; i <= element.ruta.length - 1; i++) {
+            if (rutaPath.ruta.length >= 3) {
+              for (let i = 1; i <= rutaPath.ruta.length - 1; i++) {
                 rutaPrevia.wayPoints.push({
-                  location: element.ruta[i]
+                  location: rutaPath.ruta[i]
                 });
               }
             }
-            console.log('Rutas Previas')
-            console.log(rutaPrevia)
+            console.log('Rutas Previas');
+            console.log(rutaPrevia);
             rutas.push(rutaPrevia);
 
           });
