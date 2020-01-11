@@ -354,7 +354,9 @@ export class RutasPage implements OnInit {
           puntos[i + 1] = element.wayPoints[i].location;
         }
         puntos.push(element.puntoFinal);
-        this.server.getEstimacionCalidadAire(puntos).subscribe(contaminacion => {
+        let contaminacion: any;
+        this.server.getEstimacionCalidadAire(puntos).subscribe(res => {
+          contaminacion = res;
           this.mapa.calcularYMostrarRutasPredefinida(element, contaminacion.calidadDelAire);
         });
       }
