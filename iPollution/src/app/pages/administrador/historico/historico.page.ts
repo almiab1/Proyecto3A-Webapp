@@ -7,6 +7,7 @@ import {
 import {
   MapaService
 } from './../../../core/services/Mapa.service';
+import { ToastController } from '@ionic/angular';
 import {
   Component,
   OnInit,
@@ -35,7 +36,7 @@ export class HistoricoPage implements OnInit {
 
 
   constructor(private geolocation: LocalizadorGPS,
-              private server: LogicaDeNegocioFake) {}
+              private server: LogicaDeNegocioFake, private toastController: ToastController) {}
 
   ngOnInit() {}
 
@@ -70,11 +71,19 @@ export class HistoricoPage implements OnInit {
     this.mapa.ocultarCapa('o3');
     this.mapa.borrarCapa('o3');
 
+    try {
     this.getMedidas(fecha, medidas => {
-      if(medidas.length > 0) {
+      if (medidas.length > 0) {
         this.anyadirLaCapa(medidas);
+      } else {
+        this.mostrarToast('Sin resultados', 1500);
       }
     });
+    } catch (error) {
+     console.error(error);
+     this.mostrarToast('Ha habido un error, inténtalo más tarde', 2000);
+   }
+
   }
 
   getMedidas(fecha, callback): void {
@@ -90,6 +99,8 @@ export class HistoricoPage implements OnInit {
           }
         });
         callback(medidas);
+      } else {
+        this.mostrarToast('Sin resultados', 1500);
       }
     });
   }
@@ -106,9 +117,24 @@ export class HistoricoPage implements OnInit {
       this.mapa.anyadirMedicion('o3', medida);
     });
 
-    console.log('He acabado con las mediciones');
-
     this.mapa.refrescarMapa();
+  }
+
+  async mostrarToast(texto: string, duracion: number) {
+    const toast =  await this.toastController.create({
+      message: texto,
+      duration: duracion
+    });
+
+    toast.buttons = [{
+      text: 'Cerrar',
+      role: 'cancel',
+      handler: () => {
+       toast.dismiss();
+      }
+    }];
+
+    toast.present();
   }
 
 }
