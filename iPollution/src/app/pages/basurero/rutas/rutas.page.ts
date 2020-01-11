@@ -116,7 +116,6 @@ export class RutasPage implements OnInit {
 
   // ----------------------------------------------------------------------------------------------
   ngOnInit(): void {
-    this.loadHistoricRoutes();
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -126,8 +125,6 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
-
-    this.loadHistoricRoutes();
 
     this.gps.obtenerMiPosicionGPS().then((resp) => {
       this.currentLocation.lat = resp.lat;
@@ -218,6 +215,7 @@ export class RutasPage implements OnInit {
       this.mapa.ocultarTodasLasCapas();
       this.mapa.mostrarCapa('o3');
 
+      this.loadHistoricRoutes();
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -328,8 +326,8 @@ export class RutasPage implements OnInit {
   // metodo para cargar de la bd las rutas ya realizadas
   // ----------------------------------------------------------------------------------------------
   loadHistoricRoutes() {
-    this.previousTracks = this.cargarRutasPrevias();
     this.rutasPredefinidas = this.cargarRutasPreviamenteCreadas();
+    this.previousTracks = this.cargarRutasPrevias();
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -340,24 +338,42 @@ export class RutasPage implements OnInit {
   cargarRutasPreviamenteCreadas() {
     let rutas: RutasPreviamenteCreadas[] = [];
 
-    rutas.push(
-      {
-        nombreRuta: 'Ruta Novelda',
-        puntoInicial: {lat: 38.381392, lng: -0.768067},
-        wayPoints: [{location: {lat: 38.381723, lng: -0.774593}}, {location: {lat: 38.384118, lng: -0.774465}}],
-        puntoFinal: {lat: 38.383905, lng: -0.770708}
+    //Ruta test
+    rutas.push({
+      nombreRuta: 'Ruta Novelda',
+      puntoInicial: {
+        lat: 38.381392,
+        lng: -0.768067
+      },
+      wayPoints: [{
+        location: {
+          lat: 38.381723,
+          lng: -0.774593
+        }
+      }, {
+        location: {
+          lat: 38.384118,
+          lng: -0.774465
+        }
+      }],
+      puntoFinal: {
+        lat: 38.383905,
+        lng: -0.770708
       }
-    );
+    });
 
     let rutasBase: Ruta[];
     this.server.getRutas(0, this.dataService.idUser).subscribe(
       res => {
         rutasBase = res;
+        console.log('Rutas Base Predefinidas Init------------------');
+        console.log(rutasBase);
+        console.log('Rutas Base Predefinidas Fin------------------');
+
       },
       err => console.log(err),
     );
-    console.log('Rutas Base Predefinidas ------------------')
-    console.log(rutasBase)
+
 
     // if (rutasBase.length != 0 || rutasBase != undefined) {
     //   rutasBase.forEach(element => {
@@ -406,8 +422,9 @@ export class RutasPage implements OnInit {
       },
       err => console.log(err),
     );
-    console.log('cargarRutasPrevias -------------------------------------');
+    console.log('cargarRutasPrevias Inicio-------------------------------------');
     console.log(rutasBase);
+    console.log('cargarRutasPrevias Fin-------------------------------------');
 
     this.storage.get('routes').then(data => {
       if (data) {
