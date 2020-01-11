@@ -9,7 +9,8 @@
                 </ion-col>
 
                 <ion-col size="10" aling-self-center>
-                    <ion-title mode="ios" color="acentuado" size="large" class=" ion-text-center" expand="full">{{tituloComponent}}
+                    <ion-title mode="ios" color="acentuado" size="large" class=" ion-text-center" expand="full">
+                        {{tituloComponent}}
                     </ion-title>
                 </ion-col>
             </ion-row>
@@ -19,25 +20,17 @@
 </ion-header>
 
 <ion-content>
-    <ion-grid>
-        <ion-row>
-            <ion-col size="7">
-                <div #mapElement class="mapElement" slot="fixed"></div>
-            </ion-col>
-            <ion-col size="5">
-                <div>
-                    <ion-card mode="ios">
-                        <ion-card-header>
-                            <ion-card-title>Nueva Ruta</ion-card-title>
-                        </ion-card-header>
+    <div slot="fixed">
+        <ion-card mode="ios">
+            <ion-card-header>
+                <ion-card-title>Nueva Ruta</ion-card-title>
+            </ion-card-header>
 
-                        <ion-card-content>
-                            Keep close to Nature's heart... and break clear away, once in awhile,
-                            and climb a mountain or spend a week in the woods. Wash your spirit clean.
-                        </ion-card-content>
-                    </ion-card>
-                </div>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+            <ion-card-content>
+                <ion-item>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <div #mapElement class="mapElement" slot="fixed"></div>
 </ion-content>

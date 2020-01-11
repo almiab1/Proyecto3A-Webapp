@@ -282,6 +282,9 @@ export class LogicaDeNegocioFake {
                 } else if (tipoRuta == 1) {
                     // Peticion cuando eres basurero y queres realizar consulta de una ruta realizada
                     return this.http.get(this.urlGetRutasRealizadasBasurero + '/' + idUsuario, this.httpOptions);
+                } else {
+                    console.error('Error en el tipo de ruta pedido')
+                    break;
                 }
             }
             case 2: {
@@ -294,6 +297,9 @@ export class LogicaDeNegocioFake {
                     // Peticion cuando eres admin y queres realizar consulta de una ruta realizada
                     return this.http
                         .get(this.urlGetRutasRealizadasAdmin + '/' + idUsuario, this.httpOptions);
+                } else {
+                    console.error('Error en el tipo de ruta pedido')
+                    break;
                 }
             }
             default: {

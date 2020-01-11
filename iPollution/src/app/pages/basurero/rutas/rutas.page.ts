@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 // ----------------------------------------------------------------------------------------------
 // rutas.page.ts
 // Controlador de la vista rutas
@@ -32,15 +33,10 @@ import {
   ToastController
 } from '@ionic/angular';
 import {
-  RutasRealizadas,
-  Ruta
-} from '../../../models/Rutas';
-import {
-  RutasPreviamenteCreadas
-} from '../../../models/Rutas';
-import {
   DataService
 } from './../../../core/services/data.service';
+import { Ruta, RutasPreviamenteCreadas } from './../../../models/Rutas';
+
 // ----------------------------------------------------------------------------------------------
 // Components
 // ----------------------------------------------------------------------------------------------
@@ -69,7 +65,7 @@ export class RutasPage implements OnInit {
   currentMapTrack = null;
   isTracking = false;
   trackedRoute = [];
-  previousTracks: RutasRealizadas[] = [];
+  previousTracks: Ruta[] = [];
   rutaSeleccionadaTiempo: any;
 
   // Rutas predefinidas
@@ -296,9 +292,11 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   stopTracking() {
     let date = new Date();
-    const newRoute: RutasRealizadas = {
+    const newRoute: Ruta = {
       nombreRuta: 'Ruta del ' + date.toLocaleString(),
-      ruta: this.trackedRoute
+      tipoRuta: '1',
+      ruta: this.trackedRoute,
+      idUsuario: this.dataService.idUser
     };
     this.previousTracks.push(newRoute);
 
@@ -363,39 +361,37 @@ export class RutasPage implements OnInit {
     });
 
     let rutasBase: Ruta[];
+
     this.server.getRutas(0, this.dataService.idUser).subscribe(
       res => {
-        rutasBase = res;
-        console.log('Rutas Base Predefinidas Init------------------');
-        console.log(rutasBase);
-        console.log('Rutas Base Predefinidas Fin------------------');
+         rutasBase = res;
 
+         if (res.length != 0 || res != undefined) {
+          res.forEach(element => {
+
+            let rutaPrevia: RutasPreviamenteCreadas = {
+              nombreRuta: element.nombreRuta,
+              puntoInicial: element.ruta[0],
+              puntoFinal: element.ruta[element.ruta.length - 1],
+              wayPoints: [],
+            };
+
+            if (element.ruta.length >= 3) {
+              for (let i = 1; i <= element.ruta.length - 1; i++) {
+                rutaPrevia.wayPoints.push({
+                  location: element.ruta[i]
+                });
+              }
+            }
+            console.log('Rutas Previas')
+            console.log(rutaPrevia)
+            rutas.push(rutaPrevia);
+
+          });
+        }
       },
       err => console.log(err),
     );
-
-
-    // if (rutasBase.length != 0 || rutasBase != undefined) {
-    //   rutasBase.forEach(element => {
-
-    //     let rutaPrevia: RutasPreviamenteCreadas = {
-    //       nombreRuta: element.nombreRuta,
-    //       puntoInicial: element.ruta[element.ruta.length-1],
-    //       puntoFinal: element.ruta[element.ruta.length - 1],
-    //       wayPoints: [],
-    //     };
-
-    //     if (element.ruta.length >= 3) {
-    //       for (let i = 1; i <= element.ruta.length - 1; i++) {
-    //         rutaPrevia.wayPoints.push({
-    //           location: element.ruta[i]
-    //         });
-    //       }
-    //     }
-    //     rutas.push(rutaPrevia);
-
-    //   });
-    // }
 
     return rutas;
   }
@@ -406,24 +402,17 @@ export class RutasPage implements OnInit {
   // metodo para cargar de la bd las rutas ya hechas
   // ----------------------------------------------------------------------------------------------
   cargarRutasPrevias() {
-    let rutas: RutasRealizadas[] = [];
+    let rutas: Ruta[] = [];
 
-    let rutasBase: RutasRealizadas[];
     this.server.getRutas(1, 'canut@gmail.com').subscribe(
       res => {
-        res.forEach(element => {
-          let rutaRealizada: RutasRealizadas = {
-            nombreRuta: element.nombreRuta,
-            ruta: element.ruta,
-          }
-          rutasBase.push(rutaRealizada);
-        });
-        this.storage.set('routes', rutasBase);
+        rutas = res;
+        this.storage.set('routes', res);
       },
       err => console.log(err),
     );
     console.log('cargarRutasPrevias Inicio-------------------------------------');
-    console.log(rutasBase);
+    console.log(rutas);
     console.log('cargarRutasPrevias Fin-------------------------------------');
 
     this.storage.get('routes').then(data => {
@@ -443,7 +432,6 @@ export class RutasPage implements OnInit {
     let ruta: any;
 
     this.rutasPredefinidas.forEach(element => {
-      console.log(element)
       if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
         ruta = element;
       }
