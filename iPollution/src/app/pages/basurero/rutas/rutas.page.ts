@@ -1,4 +1,3 @@
-import { async } from '@angular/core/testing';
 // ----------------------------------------------------------------------------------------------
 // rutas.page.ts
 // Controlador de la vista rutas
@@ -30,7 +29,7 @@ import {
   Storage
 } from '@ionic/storage';
 import {
-  ToastController
+  ToastController, IonSelect
 } from '@ionic/angular';
 import {
   DataService
@@ -59,6 +58,11 @@ export class RutasPage implements OnInit {
     lat: 0,
     long: 0
   };
+  
+  @ViewChild('selectPredefinidas', { static: false }) selectPredefinidas: IonSelect;
+  @ViewChild('selectRealizadas', { static: false }) selectRealizadas: IonSelect;
+  @ViewChild('selectCapas', { static: false }) selectCapas: IonSelect;
+
 
   // Updates position traqueo posicion
   watchUpdates: any;
@@ -446,6 +450,36 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   limpiarMapa() {
     this.mapa.limpiarMapa(this.currentMapTrack);
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // abrirSelect()
+  // metodo para limpiar el mapa
+  // ----------------------------------------------------------------------------------------------
+  abrirSelect(select) {
+    switch (select) {
+      case 'selectPredefinidas': {
+        console.log('----------Select selectPredefinidas------------');
+        this.selectPredefinidas.open();
+        break;
+      }
+      case 'selectRealizadas': {
+        console.log('----------Select selectRealizadas------------');
+        this.selectRealizadas.open();
+        break;
+      }
+      case 'selectCapas': {
+        console.log('----------Select selectCapas------------');
+        this.selectCapas.open();
+        break;
+      }
+      default: {
+        console.log('----------Default------------');
+
+        break;
+      }
+    }
   }
   // ----------------------------------------------------------------------------------------------
 
