@@ -277,21 +277,23 @@ export class LogicaDeNegocioFake {
             case 1: {
                 //Estado basurero
                 if (tipoRuta == 0) {
-                    return this.http
-                        .get(this.urlGetRutasPredefinidasBasurero); // Peticion cuando eres basurero y queres realizar consulta de una ruta predefinida
+                    // Peticion cuando eres basurero y queres realizar consulta de una ruta predefinida
+                    return this.http.get(this.urlGetRutasPredefinidasBasurero, this.httpOptions); 
                 } else if (tipoRuta == 1) {
-                    return this.http
-                        .get(this.urlGetRutasRealizadasBasurero + '/' + idUsuario); // Peticion cuando eres basurero y queres realizar consulta de una ruta realizada
+                    // Peticion cuando eres basurero y queres realizar consulta de una ruta realizada
+                    return this.http.get(this.urlGetRutasRealizadasBasurero + '/' + idUsuario, this.httpOptions);
                 }
             }
             case 2: {
                 //Estado admin
                 if (tipoRuta == 0) {
+                    // Peticion cuando eres admin y queres realizar consulta de una ruta predefinida
                     return this.http
-                        .get(this.urlGetRutasPredefinidasAdmin); // Peticion cuando eres admin y queres realizar consulta de una ruta predefinida
+                        .get(this.urlGetRutasPredefinidasAdmin, this.httpOptions);
                 } else if (tipoRuta == 1) {
+                    // Peticion cuando eres admin y queres realizar consulta de una ruta realizada
                     return this.http
-                        .get(this.urlGetRutasRealizadasAdmin + '/' + idUsuario); // Peticion cuando eres admin y queres realizar consulta de una ruta realizada
+                        .get(this.urlGetRutasRealizadasAdmin + '/' + idUsuario, this.httpOptions);
                 }
             }
             default: {
