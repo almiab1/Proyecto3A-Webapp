@@ -40,7 +40,6 @@ export class UsersPage implements OnInit {
     public modalController: ModalController,
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
-    private ngZone: NgZone
   ) {
   }
   // ----------------------------------------------------------------------------

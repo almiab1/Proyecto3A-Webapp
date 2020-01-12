@@ -37,7 +37,8 @@ import {
 } from './../../../core/services/data.service';
 import {
   Ruta,
-  RutasPreviamenteCreadas
+  RutasPreviamenteCreadas,
+  Posicion
 } from './../../../models/Rutas';
 
 // ----------------------------------------------------------------------------------------------
@@ -78,7 +79,7 @@ export class RutasPage implements OnInit {
   watchUpdates: any;
   currentMapTrack = null;
   isTracking = false;
-  trackedRoute = [];
+  trackedRoute: any[] = [];
   previousTracks: Ruta[] = [];
   rutaSeleccionadaTiempo: any;
 
@@ -234,8 +235,8 @@ export class RutasPage implements OnInit {
     let ruta: any[];
     this.previousTracks.forEach(element => {
       console.log(element)
-      if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
-        ruta = element.ruta
+      if (element.nombreRuta === this.rutaSeleccionadaTiempo) {
+        ruta = element.ruta;
       }
     });
     this.showHistoryRoute(ruta);
@@ -265,10 +266,12 @@ export class RutasPage implements OnInit {
         this.currentLocation.lat = resp.coords.latitude;
         this.currentLocation.long = resp.coords.longitude;
 
-        this.trackedRoute.push({
+        let ubicacion: Posicion = {
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
-        }); // Añadimos un punto en la ruta
+        };
+
+        this.trackedRoute.push(ubicacion); // Añadimos un punto en la ruta
 
         this.mapa.centrarEn({
           lat: resp.coords.latitude,
@@ -286,12 +289,16 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   stopTracking() {
     let date = new Date();
+
     const newRoute: Ruta = {
       nombreRuta: 'Ruta del ' + date.toLocaleString(),
       tipoRuta: '1',
       ruta: this.trackedRoute,
       idUsuario: this.dataService.idUser
     };
+
+    console.table(newRoute);
+    
     this.previousTracks.push(newRoute);
 
     this.server.postRuta(newRoute, 1);
@@ -373,7 +380,7 @@ export class RutasPage implements OnInit {
   cargarRutasPrevias() {
     let rutas: Ruta[] = [];
 
-    this.server.getRutas(1, 'canut@gmail.com').subscribe(
+    this.server.getRutas(1, this.dataService.idUser).subscribe(
       res => {
         rutas = res;
         this.storage.set('routes', res);

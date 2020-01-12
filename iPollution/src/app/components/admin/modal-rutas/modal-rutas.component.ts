@@ -81,8 +81,6 @@ export class ModalRutasComponent implements OnInit {
 
   // Rutas
   currentMap = null;
-  rutasPreviasRealizadas: Ruta[] = [];
-  rutaSeleccionadaTiempo: any;
   rutaSeleccionadaPredefinida: any;
   rutasPredefinidas: RutasPreviamenteCreadas[];
   rutaSeleccionadaPredefinidaAEliminar: any;
@@ -167,13 +165,13 @@ export class ModalRutasComponent implements OnInit {
     this.mapa.refrescarMapa();
   }
   // ----------------------------------------------------------------------------------------------
+  
   // ----------------------------------------------------------------------------------------------
   // loadHistoricRoutes()
   // metodo para cargar de la bd las rutas ya realizadas
   // ----------------------------------------------------------------------------------------------
   loadHistoricRoutes() {
     this.rutasPredefinidas = this.cargarRutasPreviamenteCreadas();
-    this.rutasPreviasRealizadas = this.cargarRutasPrevias();
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -225,12 +223,6 @@ export class ModalRutasComponent implements OnInit {
       err => console.log(err),
     );
 
-    console.log
-
-    if (rutas.length == 0) {
-      this.mostrarToast('Sin resultados', 1500);
-    }
-
     return rutas;
   }
   // ----------------------------------------------------------------------------------------------
@@ -239,39 +231,17 @@ export class ModalRutasComponent implements OnInit {
   // cargarRutasPrevias()
   // metodo para cargar de la bd las rutas ya hechas
   // ----------------------------------------------------------------------------------------------
-  cargarRutasPrevias() {
+  async cargarRutasPrevias() {
     let rutas: Ruta[] = [];
 
-    this.server.getRutas(1, 'canut@gmail.com').subscribe(
+    await this.server.getRutas(1, 'canut@gmail.com').subscribe(
       res => {
         rutas = res;
-        if (res.length == 0) {
-          this.mostrarToast('Sin resultados', 1500);
-        }
-
       },
       err => console.log(err),
     );
 
     return rutas;
-  }
-  // ----------------------------------------------------------------------------------------------
-
-  // ----------------------------------------------------------------------------------------------
-  // onSelectRuta()
-  // metodo para controlar el select de rutas
-  // ----------------------------------------------------------------------------------------------
-  onSelectRuta() {
-    console.log('INICIO ONSELECTRUTA');
-    let ruta: any[];
-    this.rutasPreviasRealizadas.forEach(element => {
-      console.log(element)
-      if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
-        ruta = element.ruta;
-      }
-    });
-    this.showHistoryRoute(ruta);
-    console.log('FIN ONSELECTRUTA');
   }
   // ----------------------------------------------------------------------------------------------
 
