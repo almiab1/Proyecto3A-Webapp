@@ -1,6 +1,3 @@
-import {
-    DataService
-} from './data.service';
 // ------------------------------------------------------------------------------------
 // LogicaDeNegocioFake.service.ts
 // Equipo 4
@@ -25,9 +22,10 @@ import {
     Observable,
     throwError
 } from 'rxjs';
+import { Ruta, RutaAEnviar } from './../../models/Rutas';
 import {
-    Ruta
-} from '../../models/Rutas';
+    DataService
+} from './data.service';
 // ------------------------------------------------------------------------------------
 // Class LogicaDeNegocioFake
 // ------------------------------------------------------------------------------------
@@ -286,6 +284,7 @@ export class LogicaDeNegocioFake {
             // catchError(this.handleError)
         );
     }
+    // ------------------------------------------------------------------------------------
     // GET getRutas()
     // ------------------------------------------------------------------------------------
     getRutas(tipoRuta, idUsuario): Observable < any > {
@@ -376,7 +375,6 @@ export class LogicaDeNegocioFake {
             idTipoUsuario: data.idTipoUsuario,
             telefono: data.telefono,
         };
-        // this.usuariosFicticios.push(data);
 
         this.http.post(this.urlDarDeAltaUsuario, JSON.stringify(body), this.httpOptions).subscribe(
             data => console.log('--------------Se ha hecho la peticion--------------'),
@@ -418,15 +416,16 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     public postRuta(data, tipoRutaPost) {
 
-        let rutaPath = JSON.stringify({ruta: data.ruta});
+        let rutaPath:string = JSON.stringify({ruta: data.ruta});
 
-        console.log(rutaPath)
-        const ruta = {
+        const ruta: RutaAEnviar = {
             nombreRuta: data.nombreRuta,
             tipoRuta: tipoRutaPost,
             ruta: rutaPath,
-            idUsuario: this.dataService.idUser,
+            idUsuario: data.idUsuario,
         };
+
+        console.table(ruta)
 
         switch (this.dataService.rolUser) {
             case 1: {
