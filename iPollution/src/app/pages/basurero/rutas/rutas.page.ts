@@ -89,7 +89,7 @@ export class RutasPage implements OnInit {
       setInterval(() => {
         this.gps.obtenerMiPosicionGPS().then((resp) => {
 
-          if (this.currentLocation.lat != resp.lat || this.currentLocation.long != resp.long) {
+          if (this.currentLocation.lat !== resp.lat || this.currentLocation.long !== resp.long) {
             this.currentLocation.lat = resp.lat;
             this.currentLocation.long = resp.long;
 
@@ -217,6 +217,8 @@ export class RutasPage implements OnInit {
 
       this.loadHistoricRoutes();
 
+      this.mapa.activarDesactivarTrafico(true);
+
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -340,30 +342,6 @@ export class RutasPage implements OnInit {
   cargarRutasPreviamenteCreadas() {
     let rutas: RutasPreviamenteCreadas[] = [];
 
-    //Ruta test
-    rutas.push({
-      nombreRuta: 'Ruta Novelda',
-      puntoInicial: {
-        lat: 38.381392,
-        lng: -0.768067
-      },
-      wayPoints: [{
-        location: {
-          lat: 38.381723,
-          lng: -0.774593
-        }
-      }, {
-        location: {
-          lat: 38.384118,
-          lng: -0.774465
-        }
-      }],
-      puntoFinal: {
-        lat: 38.383905,
-        lng: -0.770708
-      }
-    });
-
     this.server.getRutas(0, this.dataService.idUser).subscribe(
       res => {
 
@@ -414,9 +392,6 @@ export class RutasPage implements OnInit {
       },
       err => console.log(err),
     );
-    console.log('cargarRutasPrevias Inicio-------------------------------------');
-    console.log(rutas);
-    console.log('cargarRutasPrevias Fin-------------------------------------');
 
     this.storage.get('routes').then(data => {
       if (data) {

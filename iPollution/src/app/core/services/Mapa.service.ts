@@ -1,10 +1,13 @@
-/*
-  Mapa.service.ts
-  Implementación: Carlos Tortosa Micó
-  Equipo 4
-  iPollution
-*/
+// ----------------------------------------------------------------------------------------------
+//  Mapa.service.ts
+//  Implementación: Carlos Tortosa Micó
+//  Equipo 4
+//  iPollution
+// ----------------------------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------------------------
+// Imports
+// ----------------------------------------------------------------------------------------------
 import {
   Injectable,
   ElementRef
@@ -16,20 +19,18 @@ import {
 import {
   LogicaDeNegocioFake
 } from './LogicaDeNegocioFake.service';
-
 declare var google;
 @Injectable({
   providedIn: 'root'
 })
+// ----------------------------------------------------------------------------------------------
+// Clase MapaService
+// ----------------------------------------------------------------------------------------------
 export class MapaService {
 
-  ///////////////////////
+  // ----------------------------------------------------------------------------------------------
   // PARTE PRIVADA
-  //////////////////////
-  public chicago = {
-    lat: 41.85,
-    lng: -87.65
-  };
+  // ----------------------------------------------------------------------------------------------
 
   private mapa: any;
   private puntoCentral: any;
@@ -38,14 +39,17 @@ export class MapaService {
   directionsService = new google.maps.DirectionsService();
   directionsDisplay;
   server: LogicaDeNegocioFake;
-  //////////////////////
+  trafficLayer: any;
+  // ----------------------------------------------------------------------------------------------
 
-
+  // ----------------------------------------------------------------------------------------------
+  // Constructor
+  // ----------------------------------------------------------------------------------------------
   constructor(posicion: any, settings: any, elementoHtml: ElementRef) {
     this.puntoCentral = posicion;
     this.mapa = new google.maps.Map(elementoHtml, {
       zoom: settings.zoom,
-      zoomControl: false,
+      zoomControl: true,
       streetViewControl: false,
       mapTypeControl: false,
     });
@@ -55,32 +59,28 @@ export class MapaService {
     this.capasDeMediciones = new Array < any > ();
 
     this.marcadores = new Array < any > ();
-
-    var trafficLayer = new google.maps.TrafficLayer();
-    trafficLayer.setMap(this.mapa);
   }
 
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // posicion:Posicion -> centrarEn() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   centrarEn(posicion: any) {
     this.mapa.setCenter(posicion);
-    this.refrescarMapa();
   }
-  // -------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // void -> refrescarMapa() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   refrescarMapa() {
     google.maps.event.trigger(this.mapa, 'resize'); // Pequeño truco para forzar un refresh y redibujado de los mapas de Google
   }
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // posicion:Posicion -> anyadirMarcador ->
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   anyadirMarcador(nombre: string, posicion: any, iconoUrl: string) {
     const icono = {
       url: iconoUrl,
@@ -96,22 +96,22 @@ export class MapaService {
     this.marcadores[nombre] = marcador;
 
     return marcador;
-    // -------------------------------------------
+    // ----------------------------------------------------------------------------------------------
 
   }
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // nombreMarcador:string -> eliminarMarcador ->
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   eliminarMarcador(nombreMarcador: string) {
     if (this.marcadores[nombreMarcador]) {
       this.marcadores[nombreMarcador].setMap(null);
     }
   }
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // medicion: Medicion -> anyadirMedicion -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   anyadirMedicion(nombreDelGas: string, medicion: any) {
 
     this.capasDeMediciones[nombreDelGas].layer.data.push({
@@ -120,11 +120,11 @@ export class MapaService {
     });
 
   }
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // informacion:Json -> anyadirCapa() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   anyadirCapa(informacion: any) {
     const layer = new google.maps.visualization.HeatmapLayer({
       dissipating: informacion.disipado,
@@ -138,23 +138,23 @@ export class MapaService {
     };
     this.mostrarCapa(informacion.nombre);
   }
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
 
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // nombreDeCapa:string --> eliminarCapa() --> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   borrarCapa(nombreDeCapa: string) {
     if (this.capasDeMediciones[nombreDeCapa]) {
       delete this.capasDeMediciones[nombreDeCapa];
     }
   }
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // nombreGas:string -> mostrarCapa() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
   mostrarCapa(nombreGas: string) {
     if (this.capasDeMediciones[nombreGas]) {
@@ -165,12 +165,12 @@ export class MapaService {
     }
   }
 
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // nombreGas:string -> ocultarCapa() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
   ocultarCapa(nombreGas: string) {
     if (this.capasDeMediciones[nombreGas]) {
@@ -181,11 +181,11 @@ export class MapaService {
     }
   }
 
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // nombreGas:string -> ocultarCapa() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
   ocultarTodasLasCapas() {
     for (const i in this.capasDeMediciones) {
@@ -194,10 +194,11 @@ export class MapaService {
       }
     }
   }
+  // ----------------------------------------------------------------------------------------------
 
-  // ------------------------------------------
-  // ------------------------------------------
-  // tslint:disable-next-line: ban-types
+  // ----------------------------------------------------------------------------------------------
+  // anyadirInformacionMarcador()
+  // ----------------------------------------------------------------------------------------------
   anyadirInformacionMarcador(marcador: void, contenido: String) {
 
     const infoWindow = new google.maps.InfoWindow({
@@ -209,12 +210,13 @@ export class MapaService {
     });
 
   }
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
-  // -----------------------------------------
+  // ----------------------------------------------------------------------------------------------
   // ruta: array -> pintarRuta() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
   pintarRuta(ruta, currentMapTrack) {
+
     if (currentMapTrack) {
       currentMapTrack.setMap(null);
     }
@@ -224,7 +226,7 @@ export class MapaService {
         path: ruta,
         geodesic: true,
         trokeColor: '#ff0000',
-        strokeOpacity: 0.8,
+        strokeOpacity: 0.6,
         strokeWeight: 6,
         fillColor: '#ff0000',
         fillOpacity: 0.30
@@ -235,11 +237,11 @@ export class MapaService {
 
     return currentMapTrack;
   }
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
 
-  // -----------------------------------------
-  // ruta:sarray -> quitarRuta() -> void
-  // ------------------------------------------
+  // ----------------------------------------------------------------------------------------------
+  // ruta:array -> quitarRuta() -> void
+  // ----------------------------------------------------------------------------------------------
   quitarRuta(currentMapTrack) {
     currentMapTrack.setMap(null);
     this.refrescarMapa();
@@ -251,25 +253,34 @@ export class MapaService {
   // metodo para ver las rutas predefinidas
   // ----------------------------------------------------------------------------------------------
   calcularYMostrarRutasPredefinida(ruta: any, contaminacion) {
+
+    this.activarDesactivarTrafico(false);
+
     const that = this;
     if (contaminacion === 0) {
       that.directionsDisplay = new google.maps.DirectionsRenderer({
         polylineOptions: {
-          strokeColor: 'green'
+          strokeColor: 'green',
+          strokeOpacity: 0.5,
+          strokeWeight: 6,
         }
       });
     }
     if (contaminacion === 1) {
       that.directionsDisplay = new google.maps.DirectionsRenderer({
         polylineOptions: {
-          strokeColor: 'orange'
+          strokeColor: 'orange',
+          strokeOpacity: 0.5,
+          strokeWeight: 8,
         }
       });
     }
     if (contaminacion === 2) {
       that.directionsDisplay = new google.maps.DirectionsRenderer({
         polylineOptions: {
-          strokeColor: 'red'
+          strokeColor: 'red',
+          strokeOpacity: 0.5,
+          strokeWeight: 8,
         }
       });
     }
@@ -278,11 +289,6 @@ export class MapaService {
       destination: ruta.puntoFinal,
       waypoints: ruta.wayPoints,
       travelMode: 'DRIVING',
-      drivingOptions: {
-        departureTime: new Date(Date.now()),
-        trafficModel: 'pessimistic'
-      },
-      unitSystem: google.maps.UnitSystem.IMPERIAL,
       optimizeWaypoints: true,
     }, (response, status) => {
       if (status === 'OK') {
@@ -303,4 +309,18 @@ export class MapaService {
     this.directionsDisplay.setMap(null);
     this.quitarRuta(currentMapTrack);
   }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // ActivarDesactivarTrafico
+  // ----------------------------------------------------------------------------------------------
+  activarDesactivarTrafico(activoInactivo){
+    if(activoInactivo) {
+      this.trafficLayer = new google.maps.TrafficLayer();
+      this.trafficLayer.setMap(this.mapa);
+    } else {
+      this.trafficLayer.setMap(null);
+    }
+  }
+  //----------------------------------------------------------------------------------------------
 }
