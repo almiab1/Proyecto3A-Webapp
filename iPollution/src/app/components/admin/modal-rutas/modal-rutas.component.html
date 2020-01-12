@@ -1,0 +1,93 @@
+<ion-header>
+    <ion-toolbar color="secundario">
+
+        <ion-grid>
+            <ion-row>
+                <ion-col size="2">
+                    <ion-icon (click)="closeModal()" name="arrow-back" color="acentuado" size="large" expand="full">
+                    </ion-icon>
+                </ion-col>
+
+                <ion-col size="8" aling-self-center>
+                    <ion-title mode="ios" color="acentuado" size="large" class=" ion-text-center" expand="full">
+                        {{tituloComponent}}
+                    </ion-title>
+                </ion-col>
+
+                <ion-col size="2">
+                    <ion-button color="success" (click)="closeModal('guardar')">
+                        <ion-icon size="large" name="save"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="container-fluid">
+        <div class="row">
+            <div #mapElement class="mapElement col-12" slot="fixed" expand="block"></div>
+        </div>
+        <div class="row">
+            <ion-item mode="ios" class="col-12">
+                <ion-item>
+                    <ion-label position="floating">Latitud: </ion-label>
+                    <ion-input type="text" [(ngModel)]="nuevoPuntoLat" id="input">
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Longitud: </ion-label>
+                    <ion-input type="text" [(ngModel)]="nuevoPuntoLng" id="input">
+                    </ion-input>
+                </ion-item>
+                <ion-button color="warning">
+                    <ion-icon size="large" name="add"></ion-icon>
+                </ion-button>
+        
+
+                <ion-grid *ngIf="tituloComponent == 'Rutas'">
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-item color="secondary">
+                                <ion-label>
+                                    <h3>Rutas predefinidas:</h3>
+                                </ion-label>
+        
+                                <ion-select name="selectRutaPredefinida" multiple="false" cancelText="Cancelar" okText="Cargar"
+                                    [(ngModel)]="rutaSeleccionadaPredefinida" [compareWith]="compareById"
+                                    (ionChange)="onSelectRutaPredefinida()" color="secundario" expand="full" interface="popover"
+                                    mode="ios">
+                                    <ion-select-option *ngFor="let ruta of rutasPredefinidas" value="{{ ruta.nombreRuta }}"
+                                        color="acentuado">
+                                        Ruta - {{ ruta.nombreRuta }}
+                                    </ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                        </ion-col>
+        
+                        <ion-col size="6">
+                            <ion-item color="secondary">
+                                <ion-label>
+                                    <h3>Rutas realizadas:</h3>
+                                </ion-label>
+        
+                                <ion-select name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
+                                    [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById"
+                                    (ionChange)="onSelectRuta()" color="secundario" expand="full" mode="ios"
+                                    interface="popover">
+                                    <ion-select-option *ngFor="let route of rutasPreviasRealizadas"
+                                        value="{{ route.nombreRuta }}" color="acentuado">
+                                        {{ route.nombreRuta }} - {{ route.ruta.length | number}} Waypoints
+                                    </ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+        
+                </ion-grid>
+            </ion-item>
+        </div>
+    </div>
+</ion-content>

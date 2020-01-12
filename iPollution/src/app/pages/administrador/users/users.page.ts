@@ -12,8 +12,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { ModalUsuariosComponent } from '../../../components/admin/modal-usuarios/modal-usuarios.component';
+import { ModalRutasComponent } from '../../../components/admin/modal-rutas/modal-rutas.component';
 import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
-import { stringify } from 'querystring';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -98,6 +98,7 @@ export class UsersPage implements OnInit {
 
   // ----------------------------------------------------------------------------
   // openModal()
+  // ----------------------------------------------------------------------------
   async openModal(data, tipo) {
 
     let titulo;
@@ -148,6 +149,39 @@ export class UsersPage implements OnInit {
 
     return await modal.present();
   }
+
+  // ----------------------------------------------------------------------------
+  // openModal()
+  // ----------------------------------------------------------------------------
+  async openModalRutas(data, tipo) {
+
+    let titulo;
+    let tipoModal =  tipo;
+
+    if (data != undefined) {
+      titulo = data.descripcion;
+    } else {
+      titulo = 'Añadir Ruta';
+    }
+    const modal = await this.modalController.create({
+      component: ModalRutasComponent,
+      componentProps: {
+        titulo,
+        tipoModal
+      }
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+        // alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+
+    return await modal.present();
+  }
+
+  // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
 

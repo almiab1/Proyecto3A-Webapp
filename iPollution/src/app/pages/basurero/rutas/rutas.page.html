@@ -10,7 +10,7 @@
                             <ion-label>
                                 <h3>Capas</h3>
                             </ion-label>
-                            <ion-select name="selectCapa" multiple="true" cancelText="Cancelar" okText="Aceptar"
+                            <ion-select #selectCapas name="selectCapa" multiple="true" cancelText="Cancelar" okText="Aceptar"
                                 (ionChange)="onSelectCapaChange($event.target.value)" color="secundario" expand="block">
                                 <ion-select-option selected="true" value="o3" color="acentuado">Ozono
                                 </ion-select-option>
@@ -23,13 +23,13 @@
 
                 <ion-col size="4">
                     <div colo="secundario">
-                        <ion-button expand="block" (click)="startTracking()" *ngIf="!isTracking">
+                        <ion-button expand="block" color="acentuado" (click)="startTracking()" *ngIf="!isTracking">
                             <ion-icon name="locate" slot="start"></ion-icon>
-                            Start Tracking
+                            <ion-label slot="end">Start Tracking</ion-label>
                         </ion-button>
-                        <ion-button expand="block" (click)="stopTracking()" *ngIf="isTracking">
+                        <ion-button expand="block" color="danger" (click)="stopTracking()" *ngIf="isTracking">
                             <ion-icon name="hand" slot="start"></ion-icon>
-                            Stop Tracking
+                            <ion-label slot="end">Stop</ion-label>
                         </ion-button>
 
                         <!-- <ion-button expand="block" (click)="presentToast()">
@@ -40,54 +40,61 @@
 
             </ion-row>
 
-            <ion-row>
+            <ion-row hidden>
                 <ion-col size="6">
                     <ion-item color="secondary">
-                                <ion-label>
-                                    <h3>Rutas predefinidas:</h3>
-                                </ion-label>
+                        <ion-label>
+                            <h3>Rutas predefinidas:</h3>
+                        </ion-label>
 
-                                <ion-select name="selectRutaPredefinida" multiple="false" cancelText="Cancelar" okText="Cargar"
-                                    [(ngModel)]="rutaSeleccionadaPredefinida" [compareWith]="compareById"
-                                    (ionChange)="onSelectRutaPredefinida()" color="secundario" expand="full"
-                                    interface="action-sheet">
-                                    <ion-select-option *ngFor="let ruta of rutasPredefinidas" value="{{ ruta.nombreRuta }}"
-                                        color="acentuado">
-                                        Ruta - {{ ruta.nombreRuta }}
-                                    </ion-select-option>
-                                </ion-select>
+                        <ion-select #selectPredefinidas name="selectRutaPredefinida" multiple="false" cancelText="Cancelar" okText="Cargar"
+                            [(ngModel)]="rutaSeleccionadaPredefinida" [compareWith]="compareById"
+                            (ionChange)="onSelectRutaPredefinida()" color="secundario" expand="full"
+                            interface="action-sheet" mode="ios">
+                            <ion-select-option *ngFor="let ruta of rutasPredefinidas" value="{{ ruta.nombreRuta }}"
+                                color="acentuado">
+                                Ruta - {{ ruta.nombreRuta }}
+                            </ion-select-option>
+                        </ion-select>
                     </ion-item>
                 </ion-col>
 
                 <ion-col size="6">
                     <ion-item color="secondary">
-                                <ion-label>
-                                    <h3>Rutas realizadas:</h3>
-                                </ion-label>
+                        <ion-label>
+                            <h3>Rutas realizadas:</h3>
+                        </ion-label>
 
-                                <ion-select name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
-                                    [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById"
-                                    (ionChange)="onSelectRuta()" color="secundario" expand="full"
-                                    interface="action-sheet">
-                                    <ion-select-option *ngFor="let route of previousTracks" value="{{ route.nombreRuta }}"
-                                        color="acentuado">
-                                        {{ route.nombreRuta }} - {{ route.ruta.length | number}} Waypoints
-                                    </ion-select-option>
-                                </ion-select>
+                        <ion-select #selectRealizadas name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
+                            [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById"
+                            (ionChange)="onSelectRuta()" color="secundario" expand="full" mode="ios"
+                            interface="action-sheet">
+                            <ion-select-option *ngFor="let route of previousTracks" value="{{ route.nombreRuta }}"
+                                color="acentuado">
+                                {{ route.nombreRuta }} - {{ route.ruta.length | number}} Waypoints
+                            </ion-select-option>
+                        </ion-select>
                     </ion-item>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </ion-item>
     <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
-    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="accent">
-        </ion-fab-button>
-    </ion-fab> -->
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="accent" (click)="limpiarMapa()">
-            <ion-img src="assets/icon/escoba.svg" class="img-home"></ion-img>
+        <ion-fab-button color="accent">
+            <ion-icon name="arrow-dropup"></ion-icon>
         </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button color="light" (click)="abrirSelect('selectPredefinidas')">
+                <!-- Rutas realizadas -->
+                <ion-img src="assets/icon/ruta1.svg" class="iconos"></ion-img>
+            </ion-fab-button>
+
+            <ion-fab-button color="light" (click)="abrirSelect('selectRealizadas')">
+                <!-- Rutas Predefinidas -->
+                <ion-img src="assets/icon/rutasRealizadas.svg" class="iconoRutaRealizada"></ion-img>
+            </ion-fab-button>
+        </ion-fab-list>
     </ion-fab>
 </ion-content>
