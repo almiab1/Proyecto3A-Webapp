@@ -25,3 +25,10 @@ export interface Posicion {
 export interface Location {
     location: Posicion;
 }
+
+export interface RutaAEnviar {
+    nombreRuta: string;
+    tipoRuta: string;
+    ruta: string;
+    idUsuario?: string;
+}
