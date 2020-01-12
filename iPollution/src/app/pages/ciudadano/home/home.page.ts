@@ -33,8 +33,6 @@ export class HomePage implements OnInit {
   }
   subirMedidas() {
     if (!this.platform.is('mobile')) { return; }
-    console.log('dataUser', this.data.idUser);
-    console.log('rolUSer', this.data.rolUser);
     const medicion = this.ble.obtenerO3();
     if (medicion.valorMedido === -1 || medicion.humedad === -1 || medicion.temperatura === -1) {
       console.log('medición errónea');
