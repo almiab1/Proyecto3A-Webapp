@@ -330,32 +330,9 @@ export class LogicaDeNegocioFake {
     // POST guardarMedida
     // ------------------------------------------------------------------------------------
     public guardarMedida(data) {
-
-        // const body = new HttpParams()
-        //     .set('valorMedido', '' + data.valorMedido)
-        //     .set('tiempo', '' + data.tiempo)
-        //     .set('latitud', '' + data.latitud)
-        //     .set('longitud', '' + data.longitud)
-        //     .set('idUsuario', 'a@gmail.com')
-        //     .set('idTipoMedida', '1')
-        //     .set('idSensor', '1')
-        //     .set('temperatura', '' + data.temperatura)
-        //     .set('humedad', '' + data.humedad);
-
-        const body = {
-            valorMedido: data.valorMedido,
-            tiempo: data.tiempo,
-            latitud: data.latitud,
-            longitud: data.longitud,
-            idUsuario: this.dataService.idUser,
-            idSensor: 1,
-            idTipoMedida: 1,
-            temperatura: data.temperatura,
-            humedad: data.humedad,
-        }
-        this.http.post(this.urlBasureroGuardar, JSON.stringify(body), this.httpOptions).subscribe(data => {
-            console.log('Se ha hecho la peticion post guardarMedida');
-        }, err => {
+        console.log('POST /basurero/guardarMedida');
+        this.http.post(this.urlBasureroGuardar, JSON.stringify(data), this.httpOptions).subscribe(data,
+                err => {
             console.log('ERROR!' + err);
         });
 
@@ -367,7 +344,6 @@ export class LogicaDeNegocioFake {
     // Enviar datos para dar de alta el usuario
     // ------------------------------------------------------------------------------------
     public darDeAltaUsuario(data) {
-
         const body = {
             nombre: data.nombre,
             idUsuario: data.idUsuario,

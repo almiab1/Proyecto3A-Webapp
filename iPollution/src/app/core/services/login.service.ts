@@ -41,6 +41,8 @@ export class LoginService {
     return this.data.rolUser = jwt_decode(token).idTipoUsuario;
   }
   logout() {
+    this.data.idUser = null;
+    this.data.rolUser = 0;
     this.data.borrarStorage();
   }
 }

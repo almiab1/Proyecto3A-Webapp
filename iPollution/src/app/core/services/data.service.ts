@@ -9,7 +9,9 @@ export class DataService {
   platform: string;
   rolUser: number;
   idUser: string;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.idUser = null;
+  }
   guardarToken(token: string) {
     localStorage.setItem('token', token);
   }
@@ -36,8 +38,5 @@ export class DataService {
   borrarStorage() {
     this.rolUser = 0;
     localStorage.clear();
-  }
-  getRolUser() {
-    return this.rolUser;
   }
 }
