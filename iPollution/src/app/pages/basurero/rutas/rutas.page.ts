@@ -29,12 +29,16 @@ import {
   Storage
 } from '@ionic/storage';
 import {
-  ToastController, IonSelect
+  ToastController,
+  IonSelect
 } from '@ionic/angular';
 import {
   DataService
 } from './../../../core/services/data.service';
-import { Ruta, RutasPreviamenteCreadas } from './../../../models/Rutas';
+import {
+  Ruta,
+  RutasPreviamenteCreadas
+} from './../../../models/Rutas';
 
 // ----------------------------------------------------------------------------------------------
 // Components
@@ -58,10 +62,16 @@ export class RutasPage implements OnInit {
     lat: 0,
     long: 0
   };
-  
-  @ViewChild('selectPredefinidas', { static: false }) selectPredefinidas: IonSelect;
-  @ViewChild('selectRealizadas', { static: false }) selectRealizadas: IonSelect;
-  @ViewChild('selectCapas', { static: false }) selectCapas: IonSelect;
+
+  @ViewChild('selectPredefinidas', {
+    static: false
+  }) selectPredefinidas: IonSelect;
+  @ViewChild('selectRealizadas', {
+    static: false
+  }) selectRealizadas: IonSelect;
+  @ViewChild('selectCapas', {
+    static: false
+  }) selectCapas: IonSelect;
 
 
   // Updates position traqueo posicion
@@ -87,36 +97,14 @@ export class RutasPage implements OnInit {
     // Actualizados la posicion del icono cuando se cambia la ubicación3
     if (this.currentLocation != undefined) {
       setInterval(() => {
-        this.gps.obtenerMiPosicionGPS().then((resp) => {
-
-          if (this.currentLocation.lat != resp.lat || this.currentLocation.long != resp.long) {
-            this.currentLocation.lat = resp.lat;
-            this.currentLocation.long = resp.long;
-
-            this.mapa.centrarEn({
-              lat: this.currentLocation.lat,
-              lng: this.currentLocation.long
-            });
-
-            const marcadorName = 'Posicion Actual';
-
-            this.mapa.eliminarMarcador(marcadorName);
-            this.mapa.anyadirMarcador(
-              marcadorName, {
-                lat: this.currentLocation.lat,
-                lng: this.currentLocation.long
-              }, 'assets/icon/gpsIcon.svg'
-            );
-          }
-        });
-      }, 5000);
+        this.centrarEn();
+      }, 36000);
     }
   }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
@@ -216,6 +204,8 @@ export class RutasPage implements OnInit {
       this.mapa.mostrarCapa('o3');
 
       this.loadHistoricRoutes();
+
+      this.mapa.activarDesactivarTrafico(true);
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -340,34 +330,10 @@ export class RutasPage implements OnInit {
   cargarRutasPreviamenteCreadas() {
     let rutas: RutasPreviamenteCreadas[] = [];
 
-    //Ruta test
-    rutas.push({
-      nombreRuta: 'Ruta Novelda',
-      puntoInicial: {
-        lat: 38.381392,
-        lng: -0.768067
-      },
-      wayPoints: [{
-        location: {
-          lat: 38.381723,
-          lng: -0.774593
-        }
-      }, {
-        location: {
-          lat: 38.384118,
-          lng: -0.774465
-        }
-      }],
-      puntoFinal: {
-        lat: 38.383905,
-        lng: -0.770708
-      }
-    });
-
     this.server.getRutas(0, this.dataService.idUser).subscribe(
       res => {
 
-         if (res.length != 0 || res != undefined) {
+        if (res.length != 0 || res != undefined) {
           res.forEach(element => {
 
             let rutaPath = JSON.parse(element.ruta);
@@ -414,9 +380,6 @@ export class RutasPage implements OnInit {
       },
       err => console.log(err),
     );
-    console.log('cargarRutasPrevias Inicio-------------------------------------');
-    console.log(rutas);
-    console.log('cargarRutasPrevias Fin-------------------------------------');
 
     this.storage.get('routes').then(data => {
       if (data) {
@@ -490,6 +453,50 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
+  // centrarEn()
+  // metodo para centrarte en el mapa
+  // ----------------------------------------------------------------------------------------------
+  centrarEn() {
+    this.gps.obtenerMiPosicionGPS().then((resp) => {
+
+      this.currentLocation.lat = resp.lat;
+      this.currentLocation.long = resp.long;
+
+      this.mapa.centrarEn({
+        lat: this.currentLocation.lat,
+        lng: this.currentLocation.long
+      });
+
+      const marcadorName = 'Posicion Actual';
+
+      this.mapa.eliminarMarcador(marcadorName);
+      this.mapa.anyadirMarcador(
+        marcadorName, {
+          lat: this.currentLocation.lat,
+          lng: this.currentLocation.long
+        }, 'assets/icon/gpsIcon.svg'
+      );
+
+      this.mapa.activarDesactivarTrafico(true);
+
+    });
+
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // centrarEn()
+  // metodo para centrarte en el mapa
+  // ----------------------------------------------------------------------------------------------
+  centrarRutaSeleccionada() {
+    this.mapa.centrarEn({
+      lat: this.currentLocation.lat,
+      lng: this.currentLocation.long
+    });
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
   // Testing
   // ----------------------------------------------------------------------------------------------
   async presentToast() {
@@ -520,4 +527,6 @@ export class RutasPage implements OnInit {
     console.log('------------------------------');
     toast.present();
   }
+  // ----------------------------------------------------------------------------------------------
+
 }

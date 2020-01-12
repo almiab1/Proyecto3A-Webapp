@@ -79,8 +79,8 @@
             </ion-row>
         </ion-grid>
     </ion-item>
-    <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
 
+    <!-- Select rutas -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="accent">
             <ion-icon name="arrow-dropup"></ion-icon>
@@ -97,4 +97,15 @@
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>
+
+    <!-- Boton centra en el mapa -->
+    <ion-fab horizontal="start" slot="fixed">
+        <ion-fab-button color="accent" size="small" (click)="centrarEn()">
+            <ion-icon name="locate"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    
+    <!-- Mapa -->
+    <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
+
 </ion-content>

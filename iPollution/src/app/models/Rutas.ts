@@ -1,7 +1,7 @@
 export interface Ruta {
     nombreRuta: string;
     tipoRuta: string;
-    ruta: Position[];
+    ruta: Posicion[];
     idUsuario?: string;
 }
 
@@ -24,4 +24,11 @@ export interface Posicion {
 
 export interface Location {
     location: Posicion;
+}
+
+export interface RutaAEnviar {
+    nombreRuta: string;
+    tipoRuta: string;
+    ruta: string;
+    idUsuario?: string;
 }

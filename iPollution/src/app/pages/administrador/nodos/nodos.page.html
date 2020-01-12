@@ -20,7 +20,7 @@
         <ion-row style="justify-content: space-around">
             <ion-button color="acentuado" (click)="botonVerNodosInactivos()" [disabled]="!botonSensoresErroneos">{{textoBotonSensoresInactivos}}</ion-button>
             <ion-button color="acentuado" (click)="botonVerNodosErroneos()" [disabled]="!botonSensoresInactivos">{{textoBotonSensoresErroneos}}</ion-button>
-            <ion-button color="secundario">Descargar informe &nbsp;
+            <ion-button color="secundario" (click)="descargarPdf()">Descargar informe &nbsp;
                 <ion-icon name="download"></ion-icon>
             </ion-button>
         </ion-row>
