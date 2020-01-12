@@ -69,7 +69,6 @@ export class ReceptorBLE {
     this.ibeacon.isBluetoothEnabled().then(
       success => {
         this.data.bleActivado = true;
-        console.log('Desde ReceptorBLE', this.data.bleActivado);
       },
       error => {
         this.data.bleActivado = false;
@@ -154,8 +153,8 @@ export class ReceptorBLE {
         }),
         tiempo: date.getTime(),
         idTipoMedida: 1,
-        temperatura: this.minor,
-        humedad: this.minor,
+        temperatura: Number(this.minor.toString().substring(0, 2)),
+        humedad: Number(this.minor.toString().substring(2, 4)),
         idUsuario: this.data.idUser,
         idSensor: 1
       };
