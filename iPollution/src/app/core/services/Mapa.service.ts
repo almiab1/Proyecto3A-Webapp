@@ -254,7 +254,9 @@ export class MapaService {
   // ----------------------------------------------------------------------------------------------
   calcularYMostrarRutasPredefinida(ruta: any, contaminacion) {
 
-    this.activarDesactivarTrafico(false);
+    if(this.trafficLayer != undefined) {
+      this.activarDesactivarTrafico(false);
+    }
 
     const that = this;
     if (contaminacion === 0) {

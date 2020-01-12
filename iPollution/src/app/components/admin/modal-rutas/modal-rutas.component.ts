@@ -37,7 +37,9 @@ import {
 import {
   DataService
 } from './../../../core/services/data.service';
-
+import {
+  ToastController
+} from '@ionic/angular';
 // ----------------------------------------------------------------------------------------------
 // Components
 // ----------------------------------------------------------------------------------------------
@@ -67,9 +69,9 @@ export class ModalRutasComponent implements OnInit {
   @ViewChild('selectRealizadas', {
     static: false
   }) selectRealizadas: IonSelect;
-  @ViewChild('selectCapas', {
+  @ViewChild('selectPredefinidasAEliminar', {
     static: false
-  }) selectCapas: IonSelect;
+  }) selectPredefinidasAEliminar: IonSelect;
 
   // Rutas
   currentMap = null;
@@ -77,6 +79,7 @@ export class ModalRutasComponent implements OnInit {
   rutaSeleccionadaTiempo: any;
   rutaSeleccionadaPredefinida: any;
   rutasPredefinidas: RutasPreviamenteCreadas[];
+  selectPredefinidasAEliminarVar: any;
 
   // Posicion
   currentLocation: any = {
@@ -90,7 +93,8 @@ export class ModalRutasComponent implements OnInit {
     private navParams: NavParams,
     private server: LogicaDeNegocioFake,
     public gps: LocalizadorGPS,
-    public dataService: DataService
+    public dataService: DataService,
+    private toastController: ToastController
 
   ) {
     this.platform = this.dataService.platform;
@@ -102,6 +106,8 @@ export class ModalRutasComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.loadHistoricRoutes();
+
     this.gps.obtenerMiPosicionGPS().then((resp) => {
       this.gps.lat = resp.lat;
       this.gps.long = resp.long;
@@ -175,58 +181,42 @@ export class ModalRutasComponent implements OnInit {
   cargarRutasPreviamenteCreadas() {
     let rutas: RutasPreviamenteCreadas[] = [];
 
-    //Ruta test
-    rutas.push({
-      nombreRuta: 'Ruta Novelda',
-      puntoInicial: {
-        lat: 38.381392,
-        lng: -0.768067
-      },
-      wayPoints: [{
-        location: {
-          lat: 38.381723,
-          lng: -0.774593
-        }
-      }, {
-        location: {
-          lat: 38.384118,
-          lng: -0.774465
-        }
-      }],
-      puntoFinal: {
-        lat: 38.383905,
-        lng: -0.770708
-      }
-    });
-
-
     this.server.getRutas(0, undefined).subscribe(
       res => {
         if (res.length != 0 || res != undefined) {
           res.forEach(element => {
 
+            let rutaPath = JSON.parse(element.ruta);
+
             let rutaPrevia: RutasPreviamenteCreadas = {
               nombreRuta: element.nombreRuta,
-              puntoInicial: element.ruta[0],
-              puntoFinal: element.ruta[element.ruta.length - 1],
+              puntoInicial: rutaPath.ruta[0],
+              puntoFinal: rutaPath.ruta[rutaPath.ruta.length - 1],
               wayPoints: [],
             };
 
-            if (element.ruta.length >= 3) {
-              for (let i = 1; i <= element.ruta.length - 1; i++) {
+            if (rutaPath.ruta.length >= 3) {
+              for (let i = 1; i <= rutaPath.ruta.length - 1; i++) {
                 rutaPrevia.wayPoints.push({
-                  location: element.ruta[i]
+                  location: rutaPath.ruta[i]
                 });
               }
             }
 
             rutas.push(rutaPrevia);
 
+
           });
         }
       },
       err => console.log(err),
     );
+
+    console.log
+
+    if (rutas.length == 0) {
+      this.mostrarToast('Sin resultados', 1500);
+    }
 
     return rutas;
   }
@@ -242,6 +232,10 @@ export class ModalRutasComponent implements OnInit {
     this.server.getRutas(1, 'canut@gmail.com').subscribe(
       res => {
         rutas = res;
+        if (res.length == 0) {
+          this.mostrarToast('Sin resultados', 1500);
+        }
+
       },
       err => console.log(err),
     );
@@ -260,7 +254,7 @@ export class ModalRutasComponent implements OnInit {
     this.rutasPreviasRealizadas.forEach(element => {
       console.log(element)
       if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
-        ruta = element.ruta
+        ruta = element.ruta;
       }
     });
     this.showHistoryRoute(ruta);
@@ -314,9 +308,9 @@ export class ModalRutasComponent implements OnInit {
         this.selectRealizadas.open();
         break;
       }
-      case 'selectCapas': {
+      case 'selectPredefinidasAEliminar': {
         console.log('----------Select selectCapas------------');
-        this.selectCapas.open();
+        this.selectPredefinidasAEliminar.open();
         break;
       }
       default: {
@@ -335,15 +329,62 @@ export class ModalRutasComponent implements OnInit {
   centrarEn() {
     this.gps.obtenerMiPosicionGPS().then((resp) => {
 
-        this.currentLocation.lat = resp.lat;
-        this.currentLocation.long = resp.long;
+      this.currentLocation.lat = resp.lat;
+      this.currentLocation.long = resp.long;
 
-        this.mapa.centrarEn({
-          lat: this.currentLocation.lat,
-          lng: this.currentLocation.long
-        });
+      this.mapa.centrarEn({
+        lat: this.currentLocation.lat,
+        lng: this.currentLocation.long
+      });
     });
   }
   // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // cambiarModoRutas()
+  // seleccionador de modo
+  // ----------------------------------------------------------------------------------------------
+  cambiarModoRutas(valores) {
+    this.tipoModal = valores;
+    if(this.tipoModal == 'editar') {
+      this.loadHistoricRoutes();
+    }
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // onSelectRutaPredefinidaAEliminar()
+  // Metodo para seleccionar una ruta predefinida para eliminarla
+  // ----------------------------------------------------------------------------------------------
+  onSelectRutaPredefinidaAEliminar(){
+    for (const element of this.rutasPredefinidas) {
+      if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
+        console.log(element.nombreRuta)
+        this.server.eliminarRuta(element.nombreRuta);
+      }
+    }
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // mostrarToast()
+  // metodo para mostrar el toast
+  // ----------------------------------------------------------------------------------------------
+  async mostrarToast(texto: string, duracion: number) {
+    const toast = await this.toastController.create({
+      message: texto,
+      duration: duracion
+    });
+
+    toast.buttons = [{
+      text: 'Cerrar',
+      role: 'cancel',
+      handler: () => {
+        toast.dismiss();
+      }
+    }];
+
+    toast.present();
+  }
 
 }

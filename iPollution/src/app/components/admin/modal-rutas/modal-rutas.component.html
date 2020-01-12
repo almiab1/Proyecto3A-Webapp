@@ -16,9 +16,18 @@
 
 <ion-content>
 
+    <ion-segment (ionChange)="cambiarModoRutas($event.target.value)" vertical="top" horizontal="start" slot="fixed" color="acentuado" >
+        <ion-segment-button value="editar" color="acentuado">
+          <ion-label>Editar</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="crear" color="acentuado">
+          <ion-label>Crear</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
     <ion-item vertical="top" horizontal="start" slot="fixed" >
         <ion-grid>
-            <ion-row style="justify-content: space-around; align-items: center;">
+            <ion-row style="justify-content: space-around; align-items: center;" *ngIf="tipoModal == 'crear'">
                 <ion-item>
                     <ion-label position="floating">Latitud: </ion-label>
                     <ion-input type="number" [(ngModel)]="nuevoPuntoLat" id="input"> </ion-input>
@@ -36,77 +45,42 @@
                     <ion-icon  name="save"></ion-icon>
                 </ion-button>
             </ion-row>
-        </ion-grid>
-    </ion-item>
 
-
-    <!-- Selects -->
-    <ion-grid hidden>
-        <ion-row hidden>
-            <ion-col size="6">
-                <ion-item color="secondary">
+            <ion-row *ngIf="tipoModal == 'editar'" style="justify-content: space-around; align-items: center;">
+                <ion-item *ngIf="tituloComponent == 'Rutas Predefinidas'">
                     <ion-label>
                         <h3>Rutas predefinidas:</h3>
                     </ion-label>
-
+            
                     <ion-select #selectPredefinidas name="selectRutaPredefinida" multiple="false" cancelText="Cancelar"
                         okText="Cargar" [(ngModel)]="rutaSeleccionadaPredefinida" [compareWith]="compareById"
                         (ionChange)="onSelectRutaPredefinida()" color="secundario" expand="full"
-                        interface="action-sheet" mode="ios">
+                        interface="action-sheet" mode="ios" >
                         <ion-select-option *ngFor="let ruta of rutasPredefinidas" value="{{ ruta.nombreRuta }}"
                             color="acentuado">
                             Ruta - {{ ruta.nombreRuta }}
                         </ion-select-option>
                     </ion-select>
                 </ion-item>
-            </ion-col>
 
-            <ion-col size="6">
-                <ion-item color="secondary">
-                    <ion-label>
-                        <h3>Rutas realizadas:</h3>
-                    </ion-label>
+                <ion-button size="medium" color="danger" (click)="abrirSelect('selectPredefinidas')">
+                    <ion-icon name="trash"></ion-icon>
+                </ion-button>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
 
-                    <ion-select #selectRealizadas name="selectRuta" multiple="false" cancelText="Cancelar"
-                        okText="Cargar" [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById"
-                        (ionChange)="onSelectRuta()" color="secundario" expand="full" mode="ios"
-                        interface="action-sheet">
-                        <ion-select-option *ngFor="let route of previousTracks" value="{{ route.nombreRuta }}"
+    <div hidden>
+        <ion-select #selectPredefinidasAEliminar name="selectRutaPredefinida" multiple="false" cancelText="Cancelar"
+                        okText="Cargar" [(ngModel)]="rutaSeleccionadaPredefinida" [compareWith]="compareById"
+                        (ionChange)="onSelectRutaPredefinidaAEliminar()" color="secundario" expand="full"
+                        interface="alert" mode="ios" >
+                        <ion-select-option *ngFor="let ruta of rutasPredefinidas" value="{{ ruta.nombreRuta }}"
                             color="acentuado">
-                            {{ route.nombreRuta }} - {{ route.ruta.length | number}} Waypoints
+                            Ruta - {{ ruta.nombreRuta }}
                         </ion-select-option>
                     </ion-select>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
-    <ion-fab horizontal="start" slot="fixed">
-        <ion-fab-button color="accent" size="small" (click)="centrarEn()">
-            <ion-icon name="locate"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
-
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="modo == 'editar'">
-        <ion-fab-button color="accent">
-            <ion-icon name="arrow-dropup"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-list side="top">
-            <ion-fab-button color="light" (click)="abrirSelect('selectPredefinidas')">
-                <!-- Rutas realizadas -->
-                <ion-img src="assets/icon/ruta1.svg" class="iconos"></ion-img>
-            </ion-fab-button>
-
-            <ion-fab-button color="light" (click)="abrirSelect('selectRealizadas')">
-                <!-- Rutas Predefinidas -->
-                <ion-img src="assets/icon/rutasRealizadas.svg" class="iconoRutaRealizada"></ion-img>
-            </ion-fab-button>
-        </ion-fab-list>
-    </ion-fab>
-
-
-
-
+    </div>
     <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
 
 </ion-content>
