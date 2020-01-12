@@ -253,15 +253,21 @@ export class ModalRutasComponent implements OnInit {
   // Metodo para seleccionar una ruta predefinida
   // ----------------------------------------------------------------------------------------------
   onSelectRutaPredefinida() {
-    let ruta: any;
-
-    this.rutasPredefinidas.forEach(element => {
+    for (const element of this.rutasPredefinidas) {
       if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
-        ruta = element;
+        const puntos = [];
+        puntos.push(element.puntoInicial);
+        for (let i = 0; i < element.wayPoints.length; i++) {
+          puntos[i + 1] = element.wayPoints[i].location;
+        }
+        puntos.push(element.puntoFinal);
+        let contaminacion: any;
+        this.server.getEstimacionCalidadAire(puntos).subscribe(res => {
+          contaminacion = res;
+          this.mapa.calcularYMostrarRutasPredefinida(element, contaminacion.calidadDelAire);
+        });
       }
-    });
-
-    this.mapa.calcularYMostrarRutasPredefinida(ruta);
+    }
   }
   // ----------------------------------------------------------------------------------------------
   // ----------------------------------------------------------------------------------------------
