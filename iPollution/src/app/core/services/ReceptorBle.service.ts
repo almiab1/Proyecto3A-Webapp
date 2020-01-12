@@ -18,6 +18,7 @@ import {IBeacon} from '@ionic-native/ibeacon/ngx';
 // BeaconProvider
 import { BeaconProvider } from 'src/app/core/services/BeaconProvider.service';
 import { Events } from '@ionic/angular';
+import {DataService} from './data.service';
 
 
 // ------------------------------------------------------------------------------------------------
@@ -41,6 +42,7 @@ export class ReceptorBLE {
     // private servidor: ServidorFake,
     private gps: LocalizadorGPS,
     private ibeacon: IBeacon,
+    private data: DataService,
     public beaconProvider: BeaconProvider,
     public events: Events,
   ) {}
@@ -137,31 +139,33 @@ export class ReceptorBLE {
   // ------------------------------------------------------------------------------------------------
   // actualizarMediciones()
   private async actualizarMediciones() {
-    // llamada a obtenerMisTramas()
-    this.obtenerMisTramas();
-    // Cogemos fecha
-    const date = new Date();
-    // Creamos json medicion
-    this.medicion = {
-      valorMedido: this.major,
-      latitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
-        return ubicacion.lat;
-      }),
-      longitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
-        return ubicacion.long;
-      }),
-      tiempo: date.getTime(),
-      idTipoMedida: 1,
-      temperatura: this.minor,
-      humedad: this.minor,
-    };
+    if (this.data.idUser !== null) {
+      // llamada a obtenerMisTramas()
+      this.obtenerMisTramas();
+      // Cogemos fecha
+      const date = new Date();
+      // Creamos json medicion
+      this.medicion = {
+        valorMedido: this.major,
+        latitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
+          return ubicacion.lat;
+        }),
+        longitud: await this.gps.obtenerMiPosicionGPS().then(ubicacion => {
+          return ubicacion.long;
+        }),
+        tiempo: date.getTime(),
+        idTipoMedida: 1,
+        temperatura: this.minor,
+        humedad: this.minor,
+        idUsuario: this.data.idUser,
+        idSensor: 1
+      };
+    }
   }
 
   // ------------------------------------------------------------------------------------------------
   obtenerO3() {
     this.actualizarMediciones();
-    console.log('-------------Este es el JSON medicion-----------------------------');
-    console.table(this.medicion);
     return this.medicion;
   }
 
