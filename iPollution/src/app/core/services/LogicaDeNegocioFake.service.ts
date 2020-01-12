@@ -420,6 +420,7 @@ export class LogicaDeNegocioFake {
 
         let rutaPath = JSON.stringify({ruta: data.ruta});
 
+        console.log(rutaPath)
         const ruta = {
             nombreRuta: data.nombreRuta,
             tipoRuta: tipoRutaPost,

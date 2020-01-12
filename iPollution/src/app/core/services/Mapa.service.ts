@@ -9,8 +9,13 @@ import {
   Injectable,
   ElementRef
 } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {LogicaDeNegocioFake} from './LogicaDeNegocioFake.service';
+import {
+  HttpClient,
+  HttpHeaders
+} from '@angular/common/http';
+import {
+  LogicaDeNegocioFake
+} from './LogicaDeNegocioFake.service';
 
 declare var google;
 @Injectable({
@@ -21,6 +26,10 @@ export class MapaService {
   ///////////////////////
   // PARTE PRIVADA
   //////////////////////
+  public chicago = {
+    lat: 41.85,
+    lng: -87.65
+  };
 
   private mapa: any;
   private puntoCentral: any;
@@ -36,7 +45,9 @@ export class MapaService {
     this.puntoCentral = posicion;
     this.mapa = new google.maps.Map(elementoHtml, {
       zoom: settings.zoom,
-      zoomControl: false
+      zoomControl: false,
+      streetViewControl: false,
+      mapTypeControl: false,
     });
 
     this.centrarEn(this.puntoCentral);
@@ -44,6 +55,9 @@ export class MapaService {
     this.capasDeMediciones = new Array < any > ();
 
     this.marcadores = new Array < any > ();
+
+    var trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(this.mapa);
   }
 
 
@@ -264,6 +278,11 @@ export class MapaService {
       destination: ruta.puntoFinal,
       waypoints: ruta.wayPoints,
       travelMode: 'DRIVING',
+      drivingOptions: {
+        departureTime: new Date(Date.now()),
+        trafficModel: 'pessimistic'
+      },
+      unitSystem: google.maps.UnitSystem.IMPERIAL,
       optimizeWaypoints: true,
     }, (response, status) => {
       if (status === 'OK') {
