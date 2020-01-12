@@ -26,13 +26,15 @@ import {
   ModalController,
   NavParams,
   IonSelect,
+  AlertController,
 } from '@ionic/angular';
 import {
   MapaService
 } from '../../../core/services/Mapa.service';
 import {
   Ruta,
-  RutasPreviamenteCreadas
+  RutasPreviamenteCreadas,
+  Posicion
 } from '../../../models/Rutas';
 import {
   DataService
@@ -40,6 +42,7 @@ import {
 import {
   ToastController
 } from '@ionic/angular';
+
 // ----------------------------------------------------------------------------------------------
 // Components
 // ----------------------------------------------------------------------------------------------
@@ -72,6 +75,9 @@ export class ModalRutasComponent implements OnInit {
   @ViewChild('selectPredefinidasAEliminar', {
     static: false
   }) selectPredefinidasAEliminar: IonSelect;
+  @ViewChild('confirmacionGuardar', {
+    static: false
+  }) confirmacionGuardarRuta: IonSelect;
 
   // Rutas
   currentMap = null;
@@ -79,7 +85,13 @@ export class ModalRutasComponent implements OnInit {
   rutaSeleccionadaTiempo: any;
   rutaSeleccionadaPredefinida: any;
   rutasPredefinidas: RutasPreviamenteCreadas[];
-  selectPredefinidasAEliminarVar: any;
+  rutaSeleccionadaPredefinidaAEliminar: any;
+  // Ruta nueva
+  nuevaRuta: Posicion[] = [];
+  nuevoPuntoLat: number;
+  nuevoPuntoLng: number;
+  nuevaRutaPredefinida: Ruta;
+  nombreDeLaNuevaRuta: string = 'Prueba Creacion';
 
   // Posicion
   currentLocation: any = {
@@ -94,7 +106,8 @@ export class ModalRutasComponent implements OnInit {
     private server: LogicaDeNegocioFake,
     public gps: LocalizadorGPS,
     public dataService: DataService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    public alertController: AlertController
 
   ) {
     this.platform = this.dataService.platform;
@@ -128,14 +141,13 @@ export class ModalRutasComponent implements OnInit {
     const onClosedData = 'ModalCerrado';
 
     switch (tipoBoton) {
-      // case 'guardar': {
-      //   console.log('----------Boton guardar modal------------');
+      case 'guardar': {
+        console.log('----------Boton guardar modal------------');
 
-      //   this.serve.darDeAltaUsuario(user);
 
-      //   await this.modalController.dismiss(onClosedData);
-      //   break;
-      // }
+        await this.modalController.dismiss(onClosedData);
+        break;
+      }
       default: {
         console.log('----------Default------------');
 
@@ -170,6 +182,7 @@ export class ModalRutasComponent implements OnInit {
   // metodo para cargar de la bd las rutas predefinidas
   // ----------------------------------------------------------------------------------------------
   eliminarRuta(nombreRuta) {
+    console.log(nombreRuta);
     this.server.eliminarRuta(nombreRuta);
   }
   // ----------------------------------------------------------------------------------------------
@@ -357,14 +370,77 @@ export class ModalRutasComponent implements OnInit {
   // Metodo para seleccionar una ruta predefinida para eliminarla
   // ----------------------------------------------------------------------------------------------
   onSelectRutaPredefinidaAEliminar(){
+    console.log(this.rutaSeleccionadaPredefinidaAEliminar)
     for (const element of this.rutasPredefinidas) {
-      if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
-        console.log(element.nombreRuta)
-        this.server.eliminarRuta(element.nombreRuta);
+      if (element.nombreRuta === this.rutaSeleccionadaPredefinidaAEliminar) {
+        console.log('Nombre Ruta --> ' + element.nombreRuta)
+        this.eliminarRuta(this.rutaSeleccionadaPredefinidaAEliminar);
+        this.closeModal('');
       }
     }
   }
   // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // onSelectRutaPredefinidaAEliminar()
+  // Metodo para seleccionar una ruta predefinida para eliminarla
+  // ----------------------------------------------------------------------------------------------
+  anyadirPuntoRuta(){
+
+    let coords:Posicion = {
+      lat: this.nuevoPuntoLat,
+      lng: this.nuevoPuntoLng
+    }
+    this.nuevaRuta.push(coords); // Añadimos un punto en la ruta
+
+    console.log(this.nuevaRuta);
+    this.mapa.centrarEn(coords);
+    this.currentMap = this.mapa.pintarRuta(this.nuevaRuta, this.currentMap); // Pintamos la ruta
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // presentAlertConfirm()
+  // Metodo para abrir un alert de confirmacion
+  // ----------------------------------------------------------------------------------------------
+  async presentAlertConfirmRuta() {
+    let alerta = await this.alertController.create({
+      header: 'Comfirmacion guardar ruta',
+      message: '¿Estas seguro que quieres guardar esta ruta?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            const newRoute: Ruta = {
+              nombreRuta: this.nombreDeLaNuevaRuta,
+              tipoRuta: '0',
+              ruta: this.nuevaRuta,
+              idUsuario: this.dataService.idUser
+            };
+            this.server.postRuta(newRoute, 0);
+            this.closeModal('');
+          }
+        }
+      ]
+    });
+    await alerta.present();
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // presentAlertConfirm()
+  // Metodo para abrir un alert de confirmacion
+  // ----------------------------------------------------------------------------------------------
+  eliminarUltimoPuntoRuta(){
+    this.nuevaRuta.pop();
+    console.table(this.nuevaRuta)
+  }
 
   // ----------------------------------------------------------------------------------------------
   // mostrarToast()

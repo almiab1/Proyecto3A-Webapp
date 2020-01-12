@@ -1,7 +1,7 @@
 export interface Ruta {
     nombreRuta: string;
     tipoRuta: string;
-    ruta: Position[];
+    ruta: Posicion[];
     idUsuario?: string;
 }
 
