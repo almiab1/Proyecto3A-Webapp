@@ -1,15 +1,15 @@
-// ----------------------------
+// ----------------------------------------------------------------------------------------------
 // rutas.page.ts
 // Controlador de la vista rutas
 // Equipo 4
 // Alejandro Mira Abad
 // Fecha
 // CopyRight
-// ----------------------------
+// ----------------------------------------------------------------------------------------------
 
-// ----------------------------
+// ----------------------------------------------------------------------------------------------
 // Includes
-// ----------------------------
+// ----------------------------------------------------------------------------------------------
 import {
   Component,
   ElementRef,
@@ -29,19 +29,24 @@ import {
   Storage
 } from '@ionic/storage';
 import {
-  ToastController
+  ToastController, IonSelect
 } from '@ionic/angular';
-// ----------------------------
+import {
+  DataService
+} from './../../../core/services/data.service';
+import { Ruta, RutasPreviamenteCreadas } from './../../../models/Rutas';
+
+// ----------------------------------------------------------------------------------------------
 // Components
-// ----------------------------
+// ----------------------------------------------------------------------------------------------
 @Component({
   selector: 'app-rutas',
   templateUrl: './rutas.page.html',
   styleUrls: ['./rutas.page.scss'],
 })
-// ----------------------------
+// ----------------------------------------------------------------------------------------------
 // Class RutasPage
-// ----------------------------
+// ----------------------------------------------------------------------------------------------
 export class RutasPage implements OnInit {
 
   // Propiedades
@@ -53,18 +58,23 @@ export class RutasPage implements OnInit {
     lat: 0,
     long: 0
   };
+  
+  @ViewChild('selectPredefinidas', { static: false }) selectPredefinidas: IonSelect;
+  @ViewChild('selectRealizadas', { static: false }) selectRealizadas: IonSelect;
+  @ViewChild('selectCapas', { static: false }) selectCapas: IonSelect;
+
 
   // Updates position traqueo posicion
   watchUpdates: any;
   currentMapTrack = null;
   isTracking = false;
   trackedRoute = [];
-  previousTracks = [];
+  previousTracks: Ruta[] = [];
   rutaSeleccionadaTiempo: any;
 
   // Rutas predefinidas
   rutaSeleccionadaPredefinida: any;
-  rutasPredefinidas: any[];
+  rutasPredefinidas: RutasPreviamenteCreadas[];
 
   // Constructor
   constructor(
@@ -72,13 +82,14 @@ export class RutasPage implements OnInit {
     private server: LogicaDeNegocioFake,
     private storage: Storage,
     public toastController: ToastController,
+    public dataService: DataService
   ) {
     // Actualizados la posicion del icono cuando se cambia la ubicación3
-    if (this.currentLocation !== undefined) {
+    if (this.currentLocation != undefined) {
       setInterval(() => {
         this.gps.obtenerMiPosicionGPS().then((resp) => {
 
-          if (this.currentLocation.lat !== resp.lat || this.currentLocation.long !== resp.long) {
+          if (this.currentLocation.lat != resp.lat || this.currentLocation.long != resp.long) {
             this.currentLocation.lat = resp.lat;
             this.currentLocation.long = resp.long;
 
@@ -105,7 +116,6 @@ export class RutasPage implements OnInit {
 
   // ----------------------------------------------------------------------------------------------
   ngOnInit(): void {
-    this.loadHistoricRoutes();
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -115,8 +125,6 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
-
-    this.loadHistoricRoutes();
 
     this.gps.obtenerMiPosicionGPS().then((resp) => {
       this.currentLocation.lat = resp.lat;
@@ -207,6 +215,7 @@ export class RutasPage implements OnInit {
       this.mapa.ocultarTodasLasCapas();
       this.mapa.mostrarCapa('o3');
 
+      this.loadHistoricRoutes();
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -234,9 +243,9 @@ export class RutasPage implements OnInit {
     console.log('INICIO ONSELECTRUTA');
     let ruta: any[];
     this.previousTracks.forEach(element => {
-      console.log(element);
-      if (element.finished === this.rutaSeleccionadaTiempo) {
-        ruta = element.path;
+      console.log(element)
+      if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
+        ruta = element.ruta
       }
     });
     this.showHistoryRoute(ruta);
@@ -247,7 +256,7 @@ export class RutasPage implements OnInit {
   // Comparar los objetos de rutas
   // ----------------------------------------------------------------------------------------------
   compareById(o1, o2) {
-    return o1.finished === o2.finished;
+    return o1.finished === o2.finished
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -260,7 +269,7 @@ export class RutasPage implements OnInit {
     this.trackedRoute = [];
 
     this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
-      if (resp !== undefined) {
+      if (resp != undefined) {
 
         // Actualizamos nuestra posicion actual
         this.currentLocation.lat = resp.coords.latitude;
@@ -286,11 +295,16 @@ export class RutasPage implements OnInit {
   // metodo para parar el monitoreo de ruta
   // ----------------------------------------------------------------------------------------------
   stopTracking() {
-    const newRoute = {
-      finished: new Date().getTime(),
-      path: this.trackedRoute
+    let date = new Date();
+    const newRoute: Ruta = {
+      nombreRuta: 'Ruta del ' + date.toLocaleString(),
+      tipoRuta: '1',
+      ruta: this.trackedRoute,
+      idUsuario: this.dataService.idUser
     };
     this.previousTracks.push(newRoute);
+
+    this.server.postRuta(newRoute, 1);
     this.storage.set('routes', this.previousTracks);
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
@@ -314,13 +328,8 @@ export class RutasPage implements OnInit {
   // metodo para cargar de la bd las rutas ya realizadas
   // ----------------------------------------------------------------------------------------------
   loadHistoricRoutes() {
-    this.storage.get('routes').then(data => {
-      if (data) {
-        this.previousTracks = data;
-      }
-    });
-
     this.rutasPredefinidas = this.cargarRutasPreviamenteCreadas();
+    this.previousTracks = this.cargarRutasPrevias();
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -329,27 +338,104 @@ export class RutasPage implements OnInit {
   // metodo para cargar de la bd las rutas predefinidas
   // ----------------------------------------------------------------------------------------------
   cargarRutasPreviamenteCreadas() {
-    const rutas = [
-      {
-        nombreRuta: 'Ruta Novelda',
-        puntoInicio: {lat: 38.381392, lng: -0.768067},
-        wayPoints: [{location: {lat: 38.381723, lng: -0.774593}}, {location: {lat: 38.384118, lng: -0.774465}}],
-        puntoFinal: {lat: 38.383905, lng: -0.770708}
+    let rutas: RutasPreviamenteCreadas[] = [];
+
+    //Ruta test
+    rutas.push({
+      nombreRuta: 'Ruta Novelda',
+      puntoInicial: {
+        lat: 38.381392,
+        lng: -0.768067
+      },
+      wayPoints: [{
+        location: {
+          lat: 38.381723,
+          lng: -0.774593
+        }
+      }, {
+        location: {
+          lat: 38.384118,
+          lng: -0.774465
+        }
+      }],
+      puntoFinal: {
+        lat: 38.383905,
+        lng: -0.770708
       }
-    ];
+    });
+
+    this.server.getRutas(0, this.dataService.idUser).subscribe(
+      res => {
+
+         if (res.length != 0 || res != undefined) {
+          res.forEach(element => {
+
+            let rutaPath = JSON.parse(element.ruta);
+
+            let rutaPrevia: RutasPreviamenteCreadas = {
+              nombreRuta: element.nombreRuta,
+              puntoInicial: rutaPath.ruta[0],
+              puntoFinal: rutaPath.ruta[rutaPath.ruta.length - 1],
+              wayPoints: [],
+            };
+
+            if (rutaPath.ruta.length >= 3) {
+              for (let i = 1; i <= rutaPath.ruta.length - 1; i++) {
+                rutaPrevia.wayPoints.push({
+                  location: rutaPath.ruta[i]
+                });
+              }
+            }
+            console.log('Rutas Previas');
+            console.log(rutaPrevia);
+            rutas.push(rutaPrevia);
+
+          });
+        }
+      },
+      err => console.log(err),
+    );
+
     return rutas;
   }
   // ----------------------------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------------------------
-  // cargarRutasPreviamenteCreadas()
-  // metodo para cargar de la bd las rutas predefinidas
+  // cargarRutasPrevias()
+  // metodo para cargar de la bd las rutas ya hechas
+  // ----------------------------------------------------------------------------------------------
+  cargarRutasPrevias() {
+    let rutas: Ruta[] = [];
+
+    this.server.getRutas(1, 'canut@gmail.com').subscribe(
+      res => {
+        rutas = res;
+        this.storage.set('routes', res);
+      },
+      err => console.log(err),
+    );
+    console.log('cargarRutasPrevias Inicio-------------------------------------');
+    console.log(rutas);
+    console.log('cargarRutasPrevias Fin-------------------------------------');
+
+    this.storage.get('routes').then(data => {
+      if (data) {
+        rutas = data;
+      }
+    }, err => console.error(err));
+    return rutas;
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // onSelectRutaPredefinida()
+  // Metodo para seleccionar una ruta predefinida
   // ----------------------------------------------------------------------------------------------
   onSelectRutaPredefinida() {
     for (const element of this.rutasPredefinidas) {
       if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
         const puntos = [];
-        puntos.push(element.puntoInicio);
+        puntos.push(element.puntoInicial);
         for (let i = 0; i < element.wayPoints.length; i++) {
           puntos[i + 1] = element.wayPoints[i].location;
         }
@@ -370,6 +456,36 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   limpiarMapa() {
     this.mapa.limpiarMapa(this.currentMapTrack);
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // abrirSelect()
+  // metodo para limpiar el mapa
+  // ----------------------------------------------------------------------------------------------
+  abrirSelect(select) {
+    switch (select) {
+      case 'selectPredefinidas': {
+        console.log('----------Select selectPredefinidas------------');
+        this.selectPredefinidas.open();
+        break;
+      }
+      case 'selectRealizadas': {
+        console.log('----------Select selectRealizadas------------');
+        this.selectRealizadas.open();
+        break;
+      }
+      case 'selectCapas': {
+        console.log('----------Select selectCapas------------');
+        this.selectCapas.open();
+        break;
+      }
+      default: {
+        console.log('----------Default------------');
+
+        break;
+      }
+    }
   }
   // ----------------------------------------------------------------------------------------------
 

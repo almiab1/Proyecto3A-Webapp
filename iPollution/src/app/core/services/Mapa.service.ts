@@ -126,6 +126,18 @@ export class MapaService {
   }
   // ------------------------------------------
 
+
+  // ------------------------------------------
+  // nombreDeCapa:string --> eliminarCapa() --> void
+  // ------------------------------------------
+  borrarCapa(nombreDeCapa: string) {
+    if (this.capasDeMediciones[nombreDeCapa]) {
+      delete this.capasDeMediciones[nombreDeCapa];
+    }
+  }
+  // ------------------------------------------
+
+
   // -----------------------------------------
   // nombreGas:string -> mostrarCapa() -> void
   // ------------------------------------------
@@ -248,7 +260,7 @@ export class MapaService {
       });
     }
     this.directionsService.route({
-      origin: ruta.puntoInicio,
+      origin: ruta.puntoInicial,
       destination: ruta.puntoFinal,
       waypoints: ruta.wayPoints,
       travelMode: 'DRIVING',

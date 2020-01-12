@@ -19,8 +19,7 @@ import {IBeacon} from '@ionic-native/ibeacon/ngx';
 import { BeaconProvider } from 'src/app/core/services/BeaconProvider.service';
 import { Events } from '@ionic/angular';
 import {DataService} from './data.service';
-
-
+import { LogicaDeNegocioFake } from 'src/app/core/services/LogicaDeNegocioFake.service';
 // ------------------------------------------------------------------------------------------------
 // ReceptorBle
 // ------------------------------------------------------------------------------------------------
@@ -45,6 +44,7 @@ export class ReceptorBLE {
     private data: DataService,
     public beaconProvider: BeaconProvider,
     public events: Events,
+    public serve: LogicaDeNegocioFake
   ) {}
   // ------------------------------------------------------------------------------------------------
 
@@ -169,6 +169,21 @@ export class ReceptorBLE {
     return this.medicion;
   }
 
+  // ------------------------------------------------------------------------------------------------
+  // hayQueActualizarMedicionesYEnviarlasAlServidor()
+  // ------------------------------------------------------------------------------------------------
+  hayQueActualizarMedicionesYEnviarlasAlServidor() {
+    const medicion = this.obtenerO3();
+
+    console.log('----------------GUARDAR MEDIDA----------------');
+    // tslint:disable-next-line: max-line-length
+    if (medicion.valorMedido == -1 || medicion.humedad == -1 || medicion.temperatura == -1) {
+      console.log('Medicion erronea');
+    } else {
+      this.serve.guardarMedida(medicion);
+    }
+  }
+  // ------------------------------------------------------------------------------------------------
 }
 
-// ---------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------

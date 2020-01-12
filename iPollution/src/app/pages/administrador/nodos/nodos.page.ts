@@ -36,6 +36,10 @@ export class NodosPage implements OnInit {
   dataReturned: any;
   public nodos: any[];
   public nodoFiltrados: any[];
+  botonSensoresInactivos: boolean;
+  textoBotonSensoresInactivos: string;
+  botonSensoresErroneos: boolean;
+  textoBotonSensoresErroneos: string;
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
@@ -45,7 +49,10 @@ export class NodosPage implements OnInit {
     public platform: Platform,
     public serve: LogicaDeNegocioFake,
   ) {
-
+    this.botonSensoresInactivos = true;
+    this.textoBotonSensoresInactivos = 'ver sensores inactivos';
+    this.botonSensoresErroneos = true;
+    this.textoBotonSensoresErroneos = 'ver sensores erróneos';
   }
   // ----------------------------------------------------------------------------
 
@@ -67,9 +74,11 @@ export class NodosPage implements OnInit {
       res => {
         this.nodos = res;
         this.nodoFiltrados = this.nodos;
+        this.obtenerEstadoUnSensor();
       },
       err => console.log(err),
-    )
+    );
+
   }
 
   // ----------------------------------------------------------------------------
@@ -89,7 +98,7 @@ export class NodosPage implements OnInit {
     }
 
     this.nodos = this.nodos.filter(nodoDeseado => {
-      let nodoDeseado1 = 'Nodo ' + nodoDeseado.idSensor;
+      const nodoDeseado1 = 'Nodo ' + nodoDeseado.idSensor;
       if (nodoDeseado1 && nodoBuscado) {
         if (nodoDeseado1.toLowerCase().indexOf(nodoBuscado.toLowerCase()) > -1) {
           return true;
@@ -143,13 +152,51 @@ export class NodosPage implements OnInit {
       this.serve.getNodos().subscribe(
         res => {
           this.nodos = res;
+          this.obtenerEstadoUnSensor();
           this.nodoFiltrados = this.nodos;
         },
         err => console.log(err),
-      )
+      );
     });
 
     return await modal.present();
+  }
+
+  async obtenerEstadoUnSensor() {
+    for (const nodo of this.nodos) {
+      this.serve.getEstadoUnSensor(nodo.idSensor).subscribe( (response) => {
+        nodo.activo = response;
+      });
+    }
+  }
+  botonVerNodosInactivos() {
+    if (this.botonSensoresInactivos) {
+      this.botonSensoresInactivos = false;
+      this.textoBotonSensoresInactivos = 'ver todos los sensores';
+      const nodosAuxiliar = [];
+      for (const nodo of this.nodos) {
+          if (!nodo.activo) {
+          nodosAuxiliar.push(nodo);
+          }
+    }
+      this.nodos = nodosAuxiliar;
+    } else {
+      this.ionViewWillEnter();
+      this.botonSensoresInactivos = true;
+      this.textoBotonSensoresInactivos = 'ver sensores inactivos';
+    }
+  }
+
+  botonVerNodosErroneos() {
+    if(this.botonSensoresErroneos) {
+      this.botonSensoresErroneos = false;
+      this.textoBotonSensoresErroneos = 'ver todos los sensores';
+      this.nodos = [];
+    } else {
+      this.botonSensoresErroneos = true;
+      this.ionViewWillEnter();
+      this.textoBotonSensoresErroneos = 'ver sensores erróneos'
+    }
   }
 
 }

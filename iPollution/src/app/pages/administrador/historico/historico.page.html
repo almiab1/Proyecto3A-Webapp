@@ -1,0 +1,9 @@
+<app-header title="Admin | Histórico de mapas"></app-header>
+
+<ion-content>
+  <ion-item class="ion-align-items-center ion-justify-content-center" expand="full" slot="fixed" color="primario">
+      <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Selecciona una fecha para consultar" cancelText="Cancelar" doneText="OK" min="2019-08-01" [(ngModel)]="date"
+       (ionChange)="cambioDeFecha($event.target.value)"></ion-datetime>
+  </ion-item>
+  <div #mapElement class="mapElement" slot="fixed"></div>
+</ion-content>
