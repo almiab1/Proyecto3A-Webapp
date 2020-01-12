@@ -332,6 +332,7 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     public guardarMedida(data) {
         console.log('POST /basurero/guardarMedida');
+        console.table(data);
         this.http.post(this.urlBasureroGuardar, JSON.stringify(data), this.httpOptions).subscribe(data,
                 err => {
             console.log('ERROR!' + err);

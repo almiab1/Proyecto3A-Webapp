@@ -52,13 +52,10 @@ export class ReceptorBLE {
   // Metodos
   // ------------------------------------------------------------------------------------------------
   // inizializar()
-  async inizializar() {
-    // Comprobar ble
-    if (!this.estaBLEactivado()) {
-      await this.activarBLE();
-    }
+  inizializar() {
+     this.activarBLE();
     // Inicializar beacon
-    this.beaconProvider.initialise().then((isInitialised) => {
+     this.beaconProvider.initialise().then((isInitialised) => {
       if (isInitialised) {
         this.actualizarMediciones();
       }
@@ -71,13 +68,14 @@ export class ReceptorBLE {
   estaBLEactivado() {
     this.ibeacon.isBluetoothEnabled().then(
       success => {
-        return true;
+        this.data.bleActivado = true;
+        console.log('Desde ReceptorBLE', this.data.bleActivado);
       },
       error => {
-        return false;
+        this.data.bleActivado = false;
       }
     );
-    return false;
+    this.data.bleActivado = false;
   }
   // ------------------------------------------------------------------------------------------------
 
@@ -86,12 +84,13 @@ export class ReceptorBLE {
   activarBLE() {
     this.ibeacon.enableBluetooth().then(
       success => {
-        console.log('Bluetooth is enabled');
+        this.data.bleActivado = true;
       },
       error => {
-        console.log('Error enabling bluetooth');
+        this.data.bleActivado = false;
       }
     );
+    this.data.bleActivado = false;
   }
   // ------------------------------------------------------------------------------------------------
 
@@ -174,10 +173,8 @@ export class ReceptorBLE {
   // ------------------------------------------------------------------------------------------------
   hayQueActualizarMedicionesYEnviarlasAlServidor() {
     const medicion = this.obtenerO3();
-
-    console.log('----------------GUARDAR MEDIDA----------------');
     // tslint:disable-next-line: max-line-length
-    if (medicion.valorMedido == -1 || medicion.humedad == -1 || medicion.temperatura == -1) {
+    if (medicion.valorMedido === -1 || medicion.humedad === -1 || medicion.temperatura === -1) {
       console.log('Medicion erronea');
     } else {
       this.serve.guardarMedida(medicion);

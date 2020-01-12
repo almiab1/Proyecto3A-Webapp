@@ -9,8 +9,10 @@ export class DataService {
   platform: string;
   rolUser: number;
   idUser: string;
+  bleActivado: boolean;
   constructor(private http: HttpClient) {
     this.idUser = null;
+    this.bleActivado = false;
   }
   guardarToken(token: string) {
     localStorage.setItem('token', token);

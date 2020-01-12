@@ -16,8 +16,10 @@ export class HomePage implements OnInit {
               private ble: ReceptorBLE,
               private server: LogicaDeNegocioFake,
               private data: DataService) {
-      this.inicializarBLE();
       setInterval( () => {
+          if (!this.data.bleActivado) {
+              this.inicializarBLE();
+          }
           this.subirMedidas();
       }, 5000);
     }
@@ -37,8 +39,10 @@ export class HomePage implements OnInit {
     if (medicion.valorMedido === -1 || medicion.humedad === -1 || medicion.temperatura === -1) {
       console.log('medición errónea');
       return;
-    } else if (this.data.idUser !== null && this.data.rolUser === 1) {
-      this.server.guardarMedida(medicion);
+    } else if (this.data.bleActivado) {
+        if (this.data.idUser !== null && this.data.rolUser === 1) {
+            this.server.guardarMedida(medicion);
+        }
     }
   }
   contarNumeroWidgets(): number {
