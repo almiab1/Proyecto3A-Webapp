@@ -18,6 +18,10 @@ import {
   LogicaDeNegocioFake
 } from 'src/app/core/services/LogicaDeNegocioFake.service';
 import { ModalNodosComponent } from '../../../components/admin/modal-nodos/modal-nodos.component';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
 // ----------------------------------------------------------------------------
 // Component
@@ -40,6 +44,8 @@ export class NodosPage implements OnInit {
   textoBotonSensoresInactivos: string;
   botonSensoresErroneos: boolean;
   textoBotonSensoresErroneos: string;
+  pdfObj: any;
+  public nodosInactivos: Array<any> = [];
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
@@ -188,15 +194,79 @@ export class NodosPage implements OnInit {
   }
 
   botonVerNodosErroneos() {
-    if(this.botonSensoresErroneos) {
+    if (this.botonSensoresErroneos) {
       this.botonSensoresErroneos = false;
       this.textoBotonSensoresErroneos = 'ver todos los sensores';
       this.nodos = [];
     } else {
       this.botonSensoresErroneos = true;
       this.ionViewWillEnter();
-      this.textoBotonSensoresErroneos = 'ver sensores erróneos'
+      this.textoBotonSensoresErroneos = 'ver sensores erróneos';
     }
   }
+
+  // -------------------------------------------------------------------------
+  //  descargarPdf()
+  //  Descripcion: Funcion para descargar un informe del estado de los nodos (nodos inactivos y nodos con medidas erroneas) en formato de pdf.
+  // -------------------------------------------------------------------------
+  descargarPdf() {
+    console.log('descargando pdf');
+
+    for(let i = 0; this.nodos.length > i;  i++ ){
+      if(!this.nodos[i].activo){
+        this.nodosInactivos.push('Nodo ' + this.nodos[i].idSensor);
+      }
+    }
+
+    // crear variable del pdf
+    const docDefinition = {
+      content: [
+        {
+          text: 'Informe del estado de los nodos',
+          style: 'header',
+          alignment: 'center'
+        },
+        {
+            alignment: 'center',
+        columns: [
+          {text: 'Sensores inactivos:', style: 'subheader', margin:[10,20,0,10]},
+          {text: 'Sensores con medidas erroneas:', style: 'subheader', margin:[0,20,0,10]},
+        ]
+        },
+        {
+            alignment: 'justify',
+        columns: [
+        {
+          ul: this.nodosInactivos,
+          margin: [0, 0, 0, 0]
+        },
+        {
+          ul: [
+            'ninguno'
+          ],
+          margin: [0, 0, 0, 0]
+        }
+        ]
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          alignment: 'justify'
+        },
+        subheader: {
+          fontSize: 15,
+          bold: true
+      }
+      }
+
+    };
+
+    // download the pdf
+    this.pdfObj = pdfMake.createPdf(docDefinition);
+    this.pdfObj.download();
+  } // descargarPdf()
+  // -------------------------------------------------------------------------
 
 }
