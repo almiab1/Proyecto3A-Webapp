@@ -71,12 +71,18 @@ export class ModalRutasComponent implements OnInit {
     static: false
   }) selectCapas: IonSelect;
 
-  //Rutas
+  // Rutas
   currentMap = null;
   rutasPreviasRealizadas: Ruta[] = [];
   rutaSeleccionadaTiempo: any;
   rutaSeleccionadaPredefinida: any;
   rutasPredefinidas: RutasPreviamenteCreadas[];
+
+  // Posicion
+  currentLocation: any = {
+    lat: 0,
+    long: 0
+  };
 
   // Constructor
   constructor(
@@ -319,6 +325,24 @@ export class ModalRutasComponent implements OnInit {
         break;
       }
     }
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // centrarEn()
+  // metodo para centrarte en el mapa
+  // ----------------------------------------------------------------------------------------------
+  centrarEn() {
+    this.gps.obtenerMiPosicionGPS().then((resp) => {
+
+        this.currentLocation.lat = resp.lat;
+        this.currentLocation.long = resp.long;
+
+        this.mapa.centrarEn({
+          lat: this.currentLocation.lat,
+          lng: this.currentLocation.long
+        });
+    });
   }
   // ----------------------------------------------------------------------------------------------
 

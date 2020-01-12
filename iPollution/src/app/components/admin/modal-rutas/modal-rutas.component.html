@@ -2,23 +2,12 @@
     <ion-toolbar color="secundario">
 
         <ion-grid>
-            <ion-row>
-                <ion-col size="2">
-                    <ion-icon (click)="closeModal()" name="arrow-back" color="acentuado" size="large" expand="full">
-                    </ion-icon>
-                </ion-col>
-
-                <ion-col size="8" aling-self-center>
-                    <ion-title mode="ios" color="acentuado" size="large" class=" ion-text-center" expand="full">
-                        {{tituloComponent}}
-                    </ion-title>
-                </ion-col>
-
-                <ion-col size="2">
-                    <ion-button color="success" (click)="closeModal('guardar')">
-                        <ion-icon size="large" name="save"></ion-icon>
-                    </ion-button>
-                </ion-col>
+            <ion-row style="justify-content: space-around; align-items: center;">
+                <ion-icon (click)="closeModal()" name="arrow-back" color="acentuado" size="large" expand="full">
+                </ion-icon>
+                <ion-title mode="ios" color="acentuado" size="large" class=" ion-text-center" expand="full">
+                    {{tituloComponent}}
+                </ion-title>
             </ion-row>
         </ion-grid>
 
@@ -27,7 +16,7 @@
 
 <ion-content>
 
-    <ion-item vertical="top" horizontal="start" slot="fixed">
+    <ion-item vertical="top" horizontal="start" slot="fixed" >
         <ion-grid>
             <ion-row style="justify-content: space-around; align-items: center;">
                 <ion-item>
@@ -41,6 +30,10 @@
 
                 <ion-button color="warning" expand="full">
                     <ion-icon name="add"></ion-icon>
+                </ion-button>
+
+                <ion-button color="success" (click)="closeModal('guardar')">
+                    <ion-icon  name="save"></ion-icon>
                 </ion-button>
             </ion-row>
         </ion-grid>
@@ -88,7 +81,13 @@
         </ion-row>
     </ion-grid>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="tituloComponent == 'Rutas'">
+    <ion-fab horizontal="start" slot="fixed">
+        <ion-fab-button color="accent" size="small" (click)="centrarEn()">
+            <ion-icon name="locate"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="modo == 'editar'">
         <ion-fab-button color="accent">
             <ion-icon name="arrow-dropup"></ion-icon>
         </ion-fab-button>
@@ -105,5 +104,9 @@
         </ion-fab-list>
     </ion-fab>
 
+
+
+
     <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
+
 </ion-content>

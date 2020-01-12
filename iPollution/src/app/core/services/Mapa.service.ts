@@ -49,7 +49,7 @@ export class MapaService {
     this.puntoCentral = posicion;
     this.mapa = new google.maps.Map(elementoHtml, {
       zoom: settings.zoom,
-      zoomControl: true,
+      zoomControl: false,
       streetViewControl: false,
       mapTypeControl: false,
     });
