@@ -78,11 +78,11 @@ export class RutasPage implements OnInit {
     public dataService: DataService
   ) {
     // Actualizados la posicion del icono cuando se cambia la ubicación3
-    if (this.currentLocation != undefined) {
+    if (this.currentLocation !== undefined) {
       setInterval(() => {
         this.gps.obtenerMiPosicionGPS().then((resp) => {
 
-          if (this.currentLocation.lat != resp.lat || this.currentLocation.long != resp.long) {
+          if (this.currentLocation.lat !== resp.lat || this.currentLocation.long !== resp.long) {
             this.currentLocation.lat = resp.lat;
             this.currentLocation.long = resp.long;
 
@@ -251,7 +251,7 @@ export class RutasPage implements OnInit {
   // Comparar los objetos de rutas
   // ----------------------------------------------------------------------------------------------
   compareById(o1, o2) {
-    return o1.finished === o2.finished
+    return o1.finished === o2.finished;
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -264,7 +264,7 @@ export class RutasPage implements OnInit {
     this.trackedRoute = [];
 
     this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
-      if (resp != undefined) {
+      if (resp !== undefined) {
 
         // Actualizamos nuestra posicion actual
         this.currentLocation.lat = resp.coords.latitude;
@@ -382,17 +382,22 @@ export class RutasPage implements OnInit {
   // onSelectRutaPredefinida()
   // Metodo para seleccionar una ruta predefinida
   // ----------------------------------------------------------------------------------------------
-  onSelectRutaPredefinida(){
-    let ruta: any;
-
-    this.rutasPredefinidas.forEach(element => {
-      console.log(element)
+  onSelectRutaPredefinida() {
+    for (const element of this.rutasPredefinidas) {
       if (element.nombreRuta === this.rutaSeleccionadaPredefinida) {
-        ruta = element;
+        const puntos = [];
+        puntos.push(element.puntoInicio);
+        for (let i = 0; i < element.wayPoints.length; i++) {
+          puntos[i + 1] = element.wayPoints[i].location;
+        }
+        puntos.push(element.puntoFinal);
+        let contaminacion: any;
+        this.server.getEstimacionCalidadAire(puntos).subscribe(res => {
+          contaminacion = res;
+          this.mapa.calcularYMostrarRutasPredefinida(element, contaminacion.calidadDelAire);
+        });
       }
-    });
-
-    this.mapa.calcularYMostrarRutasPredefinida(ruta);
+    }
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -400,7 +405,7 @@ export class RutasPage implements OnInit {
   // limpiarMapa()
   // metodo para limpiar el mapa
   // ----------------------------------------------------------------------------------------------
-  limpiarMapa(){
+  limpiarMapa() {
     this.mapa.limpiarMapa(this.currentMapTrack);
   }
   // ----------------------------------------------------------------------------------------------

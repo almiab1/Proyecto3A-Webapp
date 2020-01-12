@@ -81,7 +81,7 @@ export class LogicaDeNegocioFake {
     protected httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            Authorization: localStorage.getItem('token')
         })
     };
 
@@ -502,6 +502,9 @@ export class LogicaDeNegocioFake {
                     console.log('ERROR --> ');
                     console.log(err);
                 });
+    }
+    getEstimacionCalidadAire(puntos) {
+        return this.http.post('https://osblasae.upv.edu.es/basurero/getValoracionCalidadAire', puntos, this.httpOptions);
     }
 }
 
