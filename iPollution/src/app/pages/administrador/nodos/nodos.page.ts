@@ -45,7 +45,7 @@ export class NodosPage implements OnInit {
   botonSensoresErroneos: boolean;
   textoBotonSensoresErroneos: string;
   pdfObj: any;
-  public nodosInactivos: Array<any> = [];
+  public listaNodosInactivos: Array<any> = [];
   // ----------------------------------------------------------------------------
 
   // ----------------------------------------------------------------------------
@@ -212,9 +212,9 @@ export class NodosPage implements OnInit {
   descargarPdf() {
     console.log('descargando pdf');
 
-    for(let i = 0; this.nodos.length > i;  i++ ){
-      if(!this.nodos[i].activo){
-        this.nodosInactivos.push('Nodo ' + this.nodos[i].idSensor);
+    for (let i = 0; this.nodos.length > i;  i++ ) {
+      if (!this.nodos[i].activo) {
+        this.listaNodosInactivos.push('Nodo ' + this.nodos[i].idSensor);
       }
     }
 
@@ -229,20 +229,20 @@ export class NodosPage implements OnInit {
         {
             alignment: 'center',
         columns: [
-          {text: 'Sensores inactivos:', style: 'subheader', margin:[10,20,0,10]},
-          {text: 'Sensores con medidas erroneas:', style: 'subheader', margin:[0,20,0,10]},
+          {text: 'Sensores inactivos:', style: 'subheader', margin: [10, 20, 0, 10]},
+          {text: 'Sensores con medidas erróneas:', style: 'subheader', margin: [0, 20, 0, 10]},
         ]
         },
         {
             alignment: 'justify',
         columns: [
         {
-          ul: this.nodosInactivos,
+          ul: this.listaNodosInactivos,
           margin: [0, 0, 0, 0]
         },
         {
           ul: [
-            'ninguno'
+            'Todos los nodos funcionan correctamente'
           ],
           margin: [0, 0, 0, 0]
         }
