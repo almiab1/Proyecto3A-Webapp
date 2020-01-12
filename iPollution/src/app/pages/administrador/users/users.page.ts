@@ -155,14 +155,9 @@ export class UsersPage implements OnInit {
   // ----------------------------------------------------------------------------
   async openModalRutas(data, tipo) {
 
-    let titulo;
+    let titulo = 'Rutas';
     let tipoModal =  tipo;
 
-    if (data != undefined) {
-      titulo = data.descripcion;
-    } else {
-      titulo = 'Añadir Ruta';
-    }
     const modal = await this.modalController.create({
       component: ModalRutasComponent,
       componentProps: {

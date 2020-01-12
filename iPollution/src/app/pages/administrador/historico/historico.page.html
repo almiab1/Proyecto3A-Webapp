@@ -5,5 +5,5 @@
       <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Selecciona una fecha para consultar" cancelText="Cancelar" doneText="OK" min="2019-08-01" [(ngModel)]="date"
        (ionChange)="cambioDeFecha($event.target.value)"></ion-datetime>
   </ion-item>
-  <div #mapElement class="mapElement" slot="fixed"></div>
+  <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
 </ion-content>

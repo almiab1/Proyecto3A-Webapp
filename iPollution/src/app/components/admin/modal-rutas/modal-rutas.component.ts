@@ -1,4 +1,3 @@
-import { DataService } from './../../../core/services/data.service';
 // ----------------------------------------------------------------------------------------------
 // modal-rutas.component.ts
 // Controlador modal rutas
@@ -26,6 +25,7 @@ import {
 import {
   ModalController,
   NavParams,
+  IonSelect,
 } from '@ionic/angular';
 import {
   MapaService
@@ -34,6 +34,10 @@ import {
   Ruta,
   RutasPreviamenteCreadas
 } from '../../../models/Rutas';
+import {
+  DataService
+} from './../../../core/services/data.service';
+
 // ----------------------------------------------------------------------------------------------
 // Components
 // ----------------------------------------------------------------------------------------------
@@ -56,13 +60,29 @@ export class ModalRutasComponent implements OnInit {
     static: false
   }) mapElement: ElementRef;
 
+  // Selects
+  @ViewChild('selectPredefinidas', {
+    static: false
+  }) selectPredefinidas: IonSelect;
+  @ViewChild('selectRealizadas', {
+    static: false
+  }) selectRealizadas: IonSelect;
+  @ViewChild('selectCapas', {
+    static: false
+  }) selectCapas: IonSelect;
 
-  //Rutas
+  // Rutas
   currentMap = null;
   rutasPreviasRealizadas: Ruta[] = [];
   rutaSeleccionadaTiempo: any;
   rutaSeleccionadaPredefinida: any;
   rutasPredefinidas: RutasPreviamenteCreadas[];
+
+  // Posicion
+  currentLocation: any = {
+    lat: 0,
+    long: 0
+  };
 
   // Constructor
   constructor(
@@ -275,6 +295,54 @@ export class ModalRutasComponent implements OnInit {
   // ----------------------------------------------------------------------------------------------
   compareById(o1, o2) {
     return o1.finished === o2.finished
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // abrirSelect()
+  // metodo para limpiar el mapa
+  // ----------------------------------------------------------------------------------------------
+  abrirSelect(select) {
+    switch (select) {
+      case 'selectPredefinidas': {
+        console.log('----------Select selectPredefinidas------------');
+        this.selectPredefinidas.open();
+        break;
+      }
+      case 'selectRealizadas': {
+        console.log('----------Select selectRealizadas------------');
+        this.selectRealizadas.open();
+        break;
+      }
+      case 'selectCapas': {
+        console.log('----------Select selectCapas------------');
+        this.selectCapas.open();
+        break;
+      }
+      default: {
+        console.log('----------Default------------');
+
+        break;
+      }
+    }
+  }
+  // ----------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------
+  // centrarEn()
+  // metodo para centrarte en el mapa
+  // ----------------------------------------------------------------------------------------------
+  centrarEn() {
+    this.gps.obtenerMiPosicionGPS().then((resp) => {
+
+        this.currentLocation.lat = resp.lat;
+        this.currentLocation.long = resp.long;
+
+        this.mapa.centrarEn({
+          lat: this.currentLocation.lat,
+          lng: this.currentLocation.long
+        });
+    });
   }
   // ----------------------------------------------------------------------------------------------
 
