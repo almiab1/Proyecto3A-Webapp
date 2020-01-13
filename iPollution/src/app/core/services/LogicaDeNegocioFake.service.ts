@@ -290,20 +290,20 @@ export class LogicaDeNegocioFake {
     getRutas(tipoRuta, idUsuario): Observable < any > {
         switch (this.dataService.rolUser) {
             case 1: {
-                //Estado basurero
-                if (tipoRuta == 0) {
+                // Estado basurero
+                if (tipoRuta === 0) {
                     // Peticion cuando eres basurero y queres realizar consulta de una ruta predefinida
-                    return this.http.get(this.urlGetRutasPredefinidasBasurero, this.httpOptions); 
+                    return this.http.get(this.urlGetRutasPredefinidasBasurero, this.httpOptions);
                 } else if (tipoRuta == 1) {
                     // Peticion cuando eres basurero y queres realizar consulta de una ruta realizada
                     return this.http.get(this.urlGetRutasRealizadasBasurero + '/' + idUsuario, this.httpOptions);
                 } else {
-                    console.error('Error en el tipo de ruta pedido')
+                    console.error('Error en el tipo de ruta pedido');
                     break;
                 }
             }
             case 2: {
-                //Estado admin
+                // Estado admin
                 if (tipoRuta == 0) {
                     // Peticion cuando eres admin y queres realizar consulta de una ruta predefinida
                     return this.http
@@ -313,12 +313,12 @@ export class LogicaDeNegocioFake {
                     return this.http
                         .get(this.urlGetRutasRealizadasAdmin + '/' + idUsuario, this.httpOptions);
                 } else {
-                    console.error('Error en el tipo de ruta pedido')
+                    console.error('Error en el tipo de ruta pedido');
                     break;
                 }
             }
             default: {
-                //Estado por defecto
+                // Estado por defecto
                 break;
             }
         }
@@ -393,7 +393,7 @@ export class LogicaDeNegocioFake {
     // ------------------------------------------------------------------------------------
     public postRuta(data, tipoRutaPost) {
 
-        let rutaPath:string = JSON.stringify({ruta: data.ruta});
+        const rutaPath: string = JSON.stringify({ruta: data.ruta});
 
         const ruta: RutaAEnviar = {
             nombreRuta: data.nombreRuta,
@@ -402,11 +402,11 @@ export class LogicaDeNegocioFake {
             idUsuario: data.idUsuario,
         };
 
-        console.table(ruta)
+        console.table(ruta);
 
         switch (this.dataService.rolUser) {
             case 1: {
-                //Estado basurero
+                // Estado basurero
                 this.http.post(this.urlPostRutaBasurero, JSON.stringify(ruta), this.httpOptions)
                     .subscribe(
                         data => console.log('Se ha hecho la peticion postRuta'),
@@ -417,7 +417,7 @@ export class LogicaDeNegocioFake {
                 break;
             }
             case 2: {
-                //Estado admin cuando quieres hacer un post de una ruta
+                // Estado admin cuando quieres hacer un post de una ruta
                 this.http.post(this.urlPostRutaBasurero, JSON.stringify(ruta), this.httpOptions)
                     .subscribe(
                         data => console.log('Se ha hecho la peticion postRuta'),
@@ -428,7 +428,7 @@ export class LogicaDeNegocioFake {
                 break;
             }
             default: {
-                //Estado por defecto 
+                // Estado por defecto
                 break;
             }
         }

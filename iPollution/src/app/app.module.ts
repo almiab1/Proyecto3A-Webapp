@@ -19,6 +19,8 @@ import { LocalizadorGPS } from './core/services/LocalizadorGPS.service';
 import { AdminModule } from './components/admin/admin.module';
 import { ReceptorBLE } from './core/services/ReceptorBle.service';
 import { IonicStorageModule } from '@ionic/storage';
+import {BackgroundModeOriginal} from '@ionic-native/background-mode';
+import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +39,7 @@ import { IonicStorageModule } from '@ionic/storage';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
     LocalizadorGPS,
+    BackgroundMode,
     ReceptorBLE,
     LogicaDeNegocioFake,
     HttpClientModule,

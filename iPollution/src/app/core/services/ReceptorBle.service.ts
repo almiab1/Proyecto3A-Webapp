@@ -137,6 +137,7 @@ export class ReceptorBLE {
   // ------------------------------------------------------------------------------------------------
   // actualizarMediciones()
   private async actualizarMediciones() {
+    if (this.major === -1) { return; }
     if (this.data.idUser !== null) {
       // llamada a obtenerMisTramas()
       this.obtenerMisTramas();
@@ -165,19 +166,6 @@ export class ReceptorBLE {
   obtenerO3() {
     this.actualizarMediciones();
     return this.medicion;
-  }
-
-  // ------------------------------------------------------------------------------------------------
-  // hayQueActualizarMedicionesYEnviarlasAlServidor()
-  // ------------------------------------------------------------------------------------------------
-  hayQueActualizarMedicionesYEnviarlasAlServidor() {
-    const medicion = this.obtenerO3();
-    // tslint:disable-next-line: max-line-length
-    if (medicion.valorMedido === -1 || medicion.humedad === -1 || medicion.temperatura === -1) {
-      console.log('Medicion erronea');
-    } else {
-      this.serve.guardarMedida(medicion);
-    }
   }
   // ------------------------------------------------------------------------------------------------
 }

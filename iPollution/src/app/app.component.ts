@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import {LoginService} from './core/services/login.service';
 import {DataService} from './core/services/data.service';
+import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private loginService: LoginService,
-    private data: DataService
+    private data: DataService,
+    private backgroundMode: BackgroundMode
   ) {
     this.comprobarPlataforma();
     this.loginService.comprobarLogin();

@@ -4,6 +4,7 @@ import {Platform} from '@ionic/angular';
 import {DataService} from '../../../core/services/data.service';
 import {ReceptorBLE} from '../../../core/services/ReceptorBle.service';
 import {LogicaDeNegocioFake} from '../../../core/services/LogicaDeNegocioFake.service';
+import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +16,13 @@ export class HomePage implements OnInit {
               private platform: Platform,
               private ble: ReceptorBLE,
               private server: LogicaDeNegocioFake,
-              private data: DataService) {
+              private data: DataService,
+              private backgroundMode: BackgroundMode) {
+      backgroundMode.enable();
+      backgroundMode.moveToBackground();
       setInterval( () => {
           if (!this.data.bleActivado) {
-              this.inicializarBLE();
+             this.inicializarBLE();
           }
           this.subirMedidas();
       }, 5000);
@@ -34,12 +38,9 @@ export class HomePage implements OnInit {
     }
   }
   subirMedidas() {
-    if (!this.platform.is('mobile')) { return; }
-    const medicion = this.ble.obtenerO3();
-    if (medicion.valorMedido === -1 || medicion.humedad === -1 || medicion.temperatura === -1) {
-      console.log('medición errónea');
-      return;
-    } else if (this.data.bleActivado) {
+      if (!this.platform.is('mobile')) { return; }
+      const medicion = this.ble.obtenerO3();
+      if (this.data.bleActivado) {
         if (this.data.idUser !== null && this.data.rolUser === 1) {
             this.server.guardarMedida(medicion);
         }
