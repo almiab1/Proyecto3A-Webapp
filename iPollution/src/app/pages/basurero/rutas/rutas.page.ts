@@ -360,8 +360,6 @@ export class RutasPage implements OnInit {
                 });
               }
             }
-            console.log('Rutas Previas');
-            console.log(rutaPrevia);
             rutas.push(rutaPrevia);
 
           });

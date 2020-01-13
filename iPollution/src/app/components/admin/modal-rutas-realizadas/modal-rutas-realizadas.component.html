@@ -24,7 +24,7 @@
         [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById"
         (ionChange)="onSelectRuta()" color="secundario" expand="full" mode="ios"
         interface="action-sheet">
-        <ion-select-option *ngFor="let route of previousTracks" value="{{ route.nombreRuta }}"
+        <ion-select-option *ngFor="let route of rutas" value="{{ route.nombreRuta }}"
             color="acentuado">
             {{ route.nombreRuta }}
         </ion-select-option>

@@ -92,15 +92,23 @@ export class ModalRutasRealizadasComponent implements OnInit {
   // metodo para cargar de la bd las rutas ya hechas
   // ----------------------------------------------------------------------------------------------
   cargarRutas() {
-    let rutas: Ruta[] = [];
+    let rutas = [];
 
-    this.server.getRutas(1, this.dataService.idUser).subscribe(
+    this.server.getRutas(1, this.idUsuario).subscribe(
       res => {
-        rutas = res;
+        console.log('Rutas Previas Get del lado page')
+        console.log(res);
+        res.forEach(element => {
+          rutas.push(element);
+        });
+        console.log('Rutas Previas Get del lado page 2')
+        console.log(rutas);
       },
       err => console.log(err),
     );
 
+    console.log('Rutas Previas Get del lado page FIN ')
+    console.log(rutas);
     return rutas;
   }
   // ----------------------------------------------------------------------------------------------
