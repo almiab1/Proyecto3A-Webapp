@@ -5,6 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './mas-info.page.html',
   styleUrls: ['./mas-info.page.scss'],
 })
+
+// ----------------------------------------------------------------------------------------------
+// Class MasIngoPage
+// ----------------------------------------------------------------------------------------------
 export class MasInfoPage implements OnInit {
 
   constructor() { }

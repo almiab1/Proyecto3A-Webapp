@@ -23,6 +23,10 @@ import {
   templateUrl: './historico.page.html',
   styleUrls: ['./historico.page.scss'],
 })
+
+// ----------------------------------------------------------------------------------------------
+// Class HistoricoPage
+// ----------------------------------------------------------------------------------------------
 export class HistoricoPage implements OnInit {
   mapa: MapaService;
   @ViewChild('mapElement', {
@@ -34,7 +38,9 @@ export class HistoricoPage implements OnInit {
     long: 0
   };
 
-
+// ----------------------------------------------------------------------------------------------
+// Constructor
+// ----------------------------------------------------------------------------------------------
   constructor(private geolocation: LocalizadorGPS,
               private server: LogicaDeNegocioFake, private toastController: ToastController) {}
 
@@ -61,22 +67,37 @@ export class HistoricoPage implements OnInit {
     });
   }
 
+// ----------------------------------------------------------------------------------------------
+// fechaIso:string --> cambioDeFecha()
+// Handler del evento de cambio de fecha en el selector
+// ----------------------------------------------------------------------------------------------
   cambioDeFecha(fechaIso: string): void {
+
+    // Transformo la fecha en formato ISO a millis
     let fecha = new Date(Date.parse(fechaIso));
+
+    // Ajusto para ponerlo a las 12h de ese dia
     fecha.setHours(12);
     fecha.setMinutes(0);
     fecha.setSeconds(0);
     fecha.setMilliseconds(0);
 
+
+    // Oculto las capas
     this.mapa.ocultarCapa('o3');
     this.mapa.borrarCapa('o3');
 
+
+    // Obtén las medidas del servidor
     try {
     this.getMedidas(fecha, medidas => {
       if (medidas.length > 0) {
         this.anyadirLaCapa(medidas);
       } else {
+
+        // Si no me ha llegado nada, lo indico en un toast
         this.mostrarToast('Sin resultados', 1500);
+
       }
     });
     } catch (error) {
@@ -85,26 +106,41 @@ export class HistoricoPage implements OnInit {
    }
 
   }
+// -------------------------------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------------------------
+// fecha:int --> getMedidas() --> [medidas] via callback
+// funcion que devuelve asíncronamente las medidas que pide al servidor segun una fecha
+// ----------------------------------------------------------------------------------------------
   getMedidas(fecha, callback): void {
     this.server.getMedidasDeIntervaloConcreto(fecha.getTime(), 24).toPromise().then(valores => {
 
+      // Si me llega algo del servidor...
       if(valores.length > 0) {
         let medidas = new Array<any>();
         let nuevaFecha = new Date();
         valores.forEach(valor => {
           nuevaFecha.setTime(valor.tiempo);
+
+          // Añade al array a devolver al comprobar que son medidas del dia elegido
           if (nuevaFecha.toLocaleDateString() === fecha.toLocaleDateString()) {
             medidas.unshift(valor);
           }
         });
+
         callback(medidas);
       } else {
+        // indica en el caso de que no haya llegado nada
         this.mostrarToast('Sin resultados', 1500);
       }
     });
   }
+// ------------------------------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------------------------
+// [medidas] --> anyadirLaCapa()
+// Añade al mapa como capa el array de medidas
+// ----------------------------------------------------------------------------------------------
   anyadirLaCapa(medidas: any): void {
     this.mapa.refrescarMapa();
     this.mapa.anyadirCapa({
@@ -119,7 +155,12 @@ export class HistoricoPage implements OnInit {
 
     this.mapa.refrescarMapa();
   }
+// -----------------------------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------------------------
+// texto:string, duracion:int --> mostrarToast()
+// Muestra un toast con el texto recibido con la duración indicada
+// ----------------------------------------------------------------------------------------------
   async mostrarToast(texto: string, duracion: number) {
     const toast =  await this.toastController.create({
       message: texto,
@@ -136,5 +177,5 @@ export class HistoricoPage implements OnInit {
 
     toast.present();
   }
-
+// ------------------------------------------------------------------------------------------------
 }
