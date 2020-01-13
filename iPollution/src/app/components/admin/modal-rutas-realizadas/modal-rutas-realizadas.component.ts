@@ -129,6 +129,7 @@ export class ModalRutasRealizadasComponent implements OnInit {
 
     console.table(ruta);
 
+    this.mapa.centrarEn(ruta[0]);
     this.showHistoryRoute(ruta);
     console.log('FIN ONSELECTRUTA');
   }
