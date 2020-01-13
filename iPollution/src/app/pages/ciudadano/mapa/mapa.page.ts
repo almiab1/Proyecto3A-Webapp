@@ -8,6 +8,10 @@ import {LogicaDeNegocioFake} from '../../../core/services/LogicaDeNegocioFake.se
   templateUrl: './mapa.page.html',
   styleUrls: ['./mapa.page.scss'],
 })
+
+// ----------------------------------------------------------------------------------------------
+// Class MapaPage
+// ----------------------------------------------------------------------------------------------
 export class MapaPage implements OnInit {
   mapa: MapaService;
   @ViewChild('mapElement', {
@@ -17,6 +21,10 @@ export class MapaPage implements OnInit {
     lat: 0,
     long: 0
   };
+
+// ----------------------------------------------------------------------------------------------
+// Constructor
+// ----------------------------------------------------------------------------------------------
   constructor(private geolocation: LocalizadorGPS,
               private server: LogicaDeNegocioFake) { }
 
@@ -28,24 +36,32 @@ export class MapaPage implements OnInit {
       this.currentLocation.lat = resp.lat;
       this.currentLocation.long = resp.long;
 
+      // Genera el objeto mapa
       this.mapa = new MapaService({
         lat: resp.lat,
         lng: resp.long
       }, {
         zoom: 15
       }, this.mapElement.nativeElement);
+
+
+      // Añade un marcador en mi posición actual
       this.mapa.anyadirMarcador(
           'Posicion Actual', {
             lat: this.currentLocation.lat,
             lng: this.currentLocation.long
           }, 'assets/icon/gpsIcon.svg'
       );
+
+      // Añade un marcador en la posición de la estación oficial
       const estacionOficial = this.mapa.anyadirMarcador(
           'Estacion Oficial', {
             lat: 38.966754,
             lng: -0.185648
           }, 'assets/icon/courthouse.svg'
       );
+
+      // Div que aparece al tapear el icono de la estacióbn
       const contenido = '<div align="center"><img src="assets/estacion_oficial.png" width="270" heigth="195"></div>' +
           '<br>' +
           '<p>Estación oficial de la red de vigilancia y control de la</p>' +
@@ -91,6 +107,7 @@ export class MapaPage implements OnInit {
         maxIntensidad: 1500 // Valor en el cual el color es máximo
       });
 
+      // Capa con las medidas de CO
       this.mapa.anyadirCapa({
         nombre: 'co',
         disipado: true,
@@ -98,6 +115,7 @@ export class MapaPage implements OnInit {
         maxIntensidad: 1000
       });
 
+      // Capa con las medidas de SO2
       this.mapa.anyadirCapa({
         nombre: 'so2',
         disipado: true,
@@ -143,14 +161,18 @@ export class MapaPage implements OnInit {
         valorMedido: 270
       }];
 
+
+      // Añade las medidas de CO
       medidasCo.forEach(medida => {
         this.mapa.anyadirMedicion('co', medida);
       });
 
+      // Añade las medidas de So2
       medidasSo2.forEach(medida => {
         this.mapa.anyadirMedicion('so2', medida);
       });
 
+      // Mostrar solo la de O3 por defecto
       this.mapa.ocultarTodasLasCapas();
       this.mapa.mostrarCapa('o3');
 
@@ -161,6 +183,10 @@ export class MapaPage implements OnInit {
   }
   // ----------------------------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------------------------
+// [valores]:string -> onSelectCapaChange()
+// Handler de cuando se elige mostrar otra capa
+// ----------------------------------------------------------------------------------------------
   onSelectCapaChange(valores) {
     this.mapa.ocultarTodasLasCapas();
     valores.forEach(capa => {

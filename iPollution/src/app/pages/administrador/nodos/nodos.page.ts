@@ -168,6 +168,10 @@ export class NodosPage implements OnInit {
     return await modal.present();
   }
 
+// ----------------------------------------------------------------------------------------------
+// obtenerEstadoUnSensor()
+// Obtñen del servidor el actual estado de un sensor
+// ----------------------------------------------------------------------------------------------
   async obtenerEstadoUnSensor() {
     for (const nodo of this.nodos) {
       this.serve.getEstadoUnSensor(nodo.idSensor).subscribe( (response) => {
@@ -175,6 +179,12 @@ export class NodosPage implements OnInit {
       });
     }
   }
+  // -------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------------------------
+// botonVerNodosInactivos()
+// Handler de pulsar el botón
+// ----------------------------------------------------------------------------------------------
   botonVerNodosInactivos() {
     if (this.botonSensoresInactivos) {
       this.botonSensoresInactivos = false;
@@ -193,6 +203,10 @@ export class NodosPage implements OnInit {
     }
   }
 
+// ----------------------------------------------------------------------------------------------
+// botonVerNodosErroneos()
+// Handler de pulsar el bóton para ver los nodos detectados como erróneos
+// ----------------------------------------------------------------------------------------------
   botonVerNodosErroneos() {
     if (this.botonSensoresErroneos) {
       this.botonSensoresErroneos = false;
@@ -207,7 +221,8 @@ export class NodosPage implements OnInit {
 
   // -------------------------------------------------------------------------
   //  descargarPdf()
-  //  Descripcion: Funcion para descargar un informe del estado de los nodos (nodos inactivos y nodos con medidas erroneas) en formato de pdf.
+  //  Descripcion: Funcion para descargar un informe del estado de los nodos
+  // (nodos inactivos y nodos con medidas erroneas) en formato de pdf.
   // -------------------------------------------------------------------------
   descargarPdf() {
     console.log('descargando pdf');

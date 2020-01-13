@@ -10,7 +10,15 @@ import {LogicaDeNegocioFake} from '../../../core/services/LogicaDeNegocioFake.se
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
+
+// ----------------------------------------------------------------------------------------------
+// Class HomePage
+// ----------------------------------------------------------------------------------------------
 export class HomePage implements OnInit {
+
+// ----------------------------------------------------------------------------------------------
+// Constructor
+// ----------------------------------------------------------------------------------------------
   constructor(private loginService: LoginService,
               private platform: Platform,
               private ble: ReceptorBLE,
@@ -28,11 +36,22 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.tamanyoWidget = this.contarNumeroWidgets();
   }
+
+// ----------------------------------------------------------------------------------------------
+// inicializarBLE()
+// Activar bluetooth
+// ----------------------------------------------------------------------------------------------
   inicializarBLE() {
     if (this.platform.is('mobile')) {
       this.ble.inizializar();
     }
   }
+// -----------------------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------------------------
+// subirMedidas()
+// Envia las medidas al servidor
+// ----------------------------------------------------------------------------------------------
   subirMedidas() {
     if (!this.platform.is('mobile')) { return; }
     const medicion = this.ble.obtenerO3();
@@ -45,6 +64,12 @@ export class HomePage implements OnInit {
         }
     }
   }
+  // ---------------------------------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------------------------
+// contarNumeroWidgets() --> numero:int
+// Devuelve el número de widgets de home
+// ----------------------------------------------------------------------------------------------
   contarNumeroWidgets(): number {
     let contador = 1;
     if (this.platform.is('mobile')) {
