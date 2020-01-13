@@ -21,6 +21,7 @@ import { ReceptorBLE } from './core/services/ReceptorBle.service';
 import { IonicStorageModule } from '@ionic/storage';
 import {BackgroundModeOriginal} from '@ionic-native/background-mode';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,7 +44,8 @@ import {BackgroundMode} from '@ionic-native/background-mode/ngx';
     ReceptorBLE,
     LogicaDeNegocioFake,
     HttpClientModule,
-    IBeacon, BeaconProvider
+    IBeacon, BeaconProvider,
+    Camera
   ],
   bootstrap: [AppComponent]
 })
