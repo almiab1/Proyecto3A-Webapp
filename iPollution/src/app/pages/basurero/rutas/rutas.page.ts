@@ -37,7 +37,8 @@ import {
 } from './../../../core/services/data.service';
 import {
   Ruta,
-  RutasPreviamenteCreadas
+  RutasPreviamenteCreadas,
+  Posicion
 } from './../../../models/Rutas';
 
 // ----------------------------------------------------------------------------------------------
@@ -78,7 +79,7 @@ export class RutasPage implements OnInit {
   watchUpdates: any;
   currentMapTrack = null;
   isTracking = false;
-  trackedRoute = [];
+  nuevaRuta: Posicion[] = [];
   previousTracks: Ruta[] = [];
   rutaSeleccionadaTiempo: any;
 
@@ -234,8 +235,8 @@ export class RutasPage implements OnInit {
     let ruta: any[];
     this.previousTracks.forEach(element => {
       console.log(element)
-      if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
-        ruta = element.ruta
+      if (element.nombreRuta === this.rutaSeleccionadaTiempo) {
+        ruta = element.ruta;
       }
     });
     this.showHistoryRoute(ruta);
@@ -246,7 +247,7 @@ export class RutasPage implements OnInit {
   // Comparar los objetos de rutas
   // ----------------------------------------------------------------------------------------------
   compareById(o1, o2) {
-    return o1.finished === o2.finished
+    return o1.finished === o2.finished;
   }
   // ----------------------------------------------------------------------------------------------
 
@@ -256,7 +257,7 @@ export class RutasPage implements OnInit {
   // ----------------------------------------------------------------------------------------------
   startTracking() {
     this.isTracking = true; // cambiamos el estado a monitoreo
-    this.trackedRoute = [];
+    this.nuevaRuta = [];
 
     this.watchUpdates = this.gps.watchLocation(this.watchUpdates).subscribe((resp) => {
       if (resp != undefined) {
@@ -265,16 +266,18 @@ export class RutasPage implements OnInit {
         this.currentLocation.lat = resp.coords.latitude;
         this.currentLocation.long = resp.coords.longitude;
 
-        this.trackedRoute.push({
+        let ubicacion: Posicion = {
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
-        }); // Añadimos un punto en la ruta
+        };
+
+        this.nuevaRuta.push(ubicacion); // Añadimos un punto en la ruta
 
         this.mapa.centrarEn({
           lat: resp.coords.latitude,
           lng: resp.coords.longitude
         });
-        this.currentMapTrack = this.mapa.pintarRuta(this.trackedRoute, this.currentMapTrack); // Pintamos la ruta
+        this.currentMapTrack = this.mapa.pintarRuta(this.nuevaRuta, this.currentMapTrack); // Pintamos la ruta
       }
     });
   }
@@ -285,17 +288,22 @@ export class RutasPage implements OnInit {
   // metodo para parar el monitoreo de ruta
   // ----------------------------------------------------------------------------------------------
   stopTracking() {
-    let date = new Date();
+    const date = new Date();
+
     const newRoute: Ruta = {
       nombreRuta: 'Ruta del ' + date.toLocaleString(),
       tipoRuta: '1',
-      ruta: this.trackedRoute,
+      ruta: this.nuevaRuta,
       idUsuario: this.dataService.idUser
     };
+
+    console.table(newRoute.ruta);
+
     this.previousTracks.push(newRoute);
 
-    this.server.postRuta(newRoute, 1);
     this.storage.set('routes', this.previousTracks);
+
+    this.server.postRuta(newRoute, 1);
 
     this.isTracking = false; // cambiamos el estado a no monitoreo
     this.gps.stopLocationWatch(this.watchUpdates); // paramos de monitorear
@@ -352,8 +360,6 @@ export class RutasPage implements OnInit {
                 });
               }
             }
-            console.log('Rutas Previas');
-            console.log(rutaPrevia);
             rutas.push(rutaPrevia);
 
           });
@@ -373,19 +379,19 @@ export class RutasPage implements OnInit {
   cargarRutasPrevias() {
     let rutas: Ruta[] = [];
 
-    this.server.getRutas(1, 'canut@gmail.com').subscribe(
+    this.server.getRutas(1, this.dataService.idUser).subscribe(
       res => {
-        rutas = res;
-        this.storage.set('routes', res);
+        console.log('Rutas Previas Get del lado page')
+        console.log(res);
+        res.forEach(element => {
+          rutas.push(element);
+        });
+        console.log('Rutas Previas Get del lado page 2')
+        console.log(rutas);
+        this.storage.set('routes', rutas);
       },
       err => console.log(err),
     );
-
-    this.storage.get('routes').then(data => {
-      if (data) {
-        rutas = data;
-      }
-    }, err => console.error(err));
     return rutas;
   }
   // ----------------------------------------------------------------------------------------------

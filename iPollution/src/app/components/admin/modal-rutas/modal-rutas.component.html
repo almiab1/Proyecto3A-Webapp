@@ -41,16 +41,21 @@
                 </ion-item>
             </ion-row>
             <ion-row style="justify-content: space-around; align-items: center;" *ngIf="tipoModal == 'crear'">
-                <ion-button color="warning" expand="full" (click)="anyadirPuntoRuta()">
+                <ion-button color="warning" (click)="anyadirPuntoRuta()">
                     <ion-icon name="add"></ion-icon>
+                    <ion-label>Añadir Punto</ion-label>
                 </ion-button>
 
                 <ion-button color="danger" (click)="eliminarUltimoPuntoRuta()">
                     <ion-icon name="redo"></ion-icon>
+                    <ion-label>Eliminar ultimo punto</ion-label>
+
                 </ion-button>
 
                 <ion-button color="success" (click)="presentAlertConfirmRuta()">
-                    <ion-icon name="save"></ion-icon>
+                    <ion-icon name="save">Guardar</ion-icon>
+                    <ion-label>Guardar</ion-label>
+
                 </ion-button>
             </ion-row>
 
@@ -79,12 +84,11 @@
                     </ion-button>
                 </ion-col>
 
-
-
             </ion-row>
         </ion-grid>
     </ion-item>
 
+    <!-- Selec ruta predefinida a eliminar -->
     <div hidden>
         <ion-select #selectPredefinidasAEliminar name="rutaSeleccionadaPredefinidaAEliminar" multiple="false"
             cancelText="Cancelar" okText="Eliminar" [(ngModel)]="rutaSeleccionadaPredefinidaAEliminar"

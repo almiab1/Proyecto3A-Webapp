@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="secundario">
+      <ion-grid>
+          <ion-row style="justify-content: space-around; align-items: center;">
+              <ion-icon (click)="closeModal()" name="arrow-back" color="acentuado" size="large" expand="full">
+              </ion-icon>
+              <ion-title mode="ios" color="acentuado" size="large" class=" ion-text-center" expand="full">
+                  Rutas de {{nombreUser}}
+              </ion-title>
+          </ion-row>
+      </ion-grid>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item color="secondary" vertical="top" horizontal="start" slot="fixed">
+    <ion-label>
+        <h3>Rutas realizadas:</h3>
+    </ion-label>
+
+    <ion-select #selectRealizadas name="selectRuta" multiple="false" cancelText="Cancelar" okText="Cargar"
+        [(ngModel)]="rutaSeleccionadaTiempo" [compareWith]="compareById"
+        (ionChange)="onSelectRuta()" color="secundario" expand="full" mode="ios"
+        interface="action-sheet">
+        <ion-select-option *ngFor="let route of rutas" value="{{ route.nombreRuta }}"
+            color="acentuado">
+            {{ route.nombreRuta }}
+        </ion-select-option>
+    </ion-select>
+</ion-item>
+  <div #mapElement class="mapElement" slot="fixed" expand="block"></div>
+
+</ion-content>

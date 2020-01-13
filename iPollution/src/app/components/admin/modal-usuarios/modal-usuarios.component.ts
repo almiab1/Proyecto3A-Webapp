@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 // ----------------------------------------------------------------------------
 // editar-usuarios.component.ts
 // Controlador modal editar usuarios
@@ -22,6 +21,7 @@ import {
   ModalController,
   NavParams,
 } from '@ionic/angular';
+import { ModalRutasRealizadasComponent } from '../../../components/admin/modal-rutas-realizadas/modal-rutas-realizadas.component';
 // ----------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------
@@ -46,6 +46,9 @@ export class ModalUsuariosComponent implements OnInit {
   tipoUsuario: string;
   distancia: any;
   actividad: any;
+
+  // Modal
+  dataReturned: any;
 
   // ----------------------------------------------------------------------------
   // Constructor
@@ -134,4 +137,33 @@ export class ModalUsuariosComponent implements OnInit {
         });
     });
   }
+  // ----------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------
+  // openModal()
+  // ----------------------------------------------------------------------------
+  async openModalRutas() {
+
+    let nombreUser = this.nombreUser;
+    let idUsuario =  this.emailUsuario;
+
+    const modal = await this.modalController.create({
+      component: ModalRutasRealizadasComponent,
+      componentProps: {
+        nombreUser,
+        idUsuario
+      }
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+        // alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+
+    return await modal.present();
+  }
+
+  // ----------------------------------------------------------------------------
 }
