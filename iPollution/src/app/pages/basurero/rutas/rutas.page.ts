@@ -381,14 +381,17 @@ export class RutasPage implements OnInit {
 
     this.server.getRutas(1, this.dataService.idUser).subscribe(
       res => {
-        console.log('Rutas Previas Get del lado page')
-        console.log(res);
         res.forEach(element => {
-          rutas.push(element);
+          const pathObject = JSON.parse(element.ruta);
+
+          const ruta:Ruta = {
+            nombreRuta: element.nombreRuta,
+            tipoRuta: element.tipoRuta,
+            ruta: pathObject.ruta,
+            idUsuario: element.idUsuario
+          }
+          rutas.push(ruta);
         });
-        console.log('Rutas Previas Get del lado page 2')
-        console.log(rutas);
-        this.storage.set('routes', rutas);
       },
       err => console.log(err),
     );

@@ -15,7 +15,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MapaService } from './../../../core/services/Mapa.service';
 import { DataService } from './../../../core/services/data.service';
 import { LocalizadorGPS } from 'src/app/core/services/LocalizadorGPS.service';
-import { Ruta } from './../../../models/Rutas';
+import { Ruta, Posicion } from './../../../models/Rutas';
 // ----------------------------------------------------------------------------------------------
 // Component
 // ----------------------------------------------------------------------------------------------
@@ -92,23 +92,23 @@ export class ModalRutasRealizadasComponent implements OnInit {
   // metodo para cargar de la bd las rutas ya hechas
   // ----------------------------------------------------------------------------------------------
   cargarRutas() {
-    let rutas = [];
+    let rutas:Ruta[] = [];
 
     this.server.getRutas(1, this.idUsuario).subscribe(
       res => {
-        console.log('Rutas Previas Get del lado page')
-        console.log(res);
         res.forEach(element => {
-          rutas.push(element);
+          const pathObject = JSON.parse(element.ruta);
+          const ruta:Ruta = {
+            nombreRuta: element.nombreRuta,
+            tipoRuta: element.tipoRuta,
+            ruta: pathObject.ruta,
+            idUsuario: element.idUsuario
+          }
+          rutas.push(ruta);
         });
-        console.log('Rutas Previas Get del lado page 2')
-        console.log(rutas);
       },
       err => console.log(err),
     );
-
-    console.log('Rutas Previas Get del lado page FIN ')
-    console.log(rutas);
     return rutas;
   }
   // ----------------------------------------------------------------------------------------------
@@ -119,13 +119,16 @@ export class ModalRutasRealizadasComponent implements OnInit {
   // ----------------------------------------------------------------------------------------------
   onSelectRuta() {
     console.log('INICIO ONSELECTRUTA');
-    let ruta: any[];
+    let ruta: Posicion[];
     this.rutas.forEach(element => {
-      console.log(element)
+      console.log(element.ruta)
       if (element.nombreRuta == this.rutaSeleccionadaTiempo) {
-        ruta = element.ruta
+        ruta = element.ruta;
       }
     });
+
+    console.table(ruta);
+
     this.showHistoryRoute(ruta);
     console.log('FIN ONSELECTRUTA');
   }
