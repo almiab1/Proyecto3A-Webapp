@@ -35,12 +35,12 @@ import { Camera } from '@ionic-native/camera/ngx';
         IonicStorageModule.forRoot()
     ],
   providers: [
+    BackgroundMode,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
     LocalizadorGPS,
-    BackgroundMode,
     ReceptorBLE,
     LogicaDeNegocioFake,
     HttpClientModule,

@@ -20,58 +20,60 @@ export class HomePage implements OnInit {
 // ----------------------------------------------------------------------------------------------
 // Constructor
 // ----------------------------------------------------------------------------------------------
-  constructor(private loginService: LoginService,
-              private platform: Platform,
-              private ble: ReceptorBLE,
-              private server: LogicaDeNegocioFake,
-              private data: DataService,
-              private backgroundMode: BackgroundMode) {
-      backgroundMode.enable();
-      backgroundMode.moveToBackground();
-      setInterval( () => {
-          if (!this.data.bleActivado) {
-             this.inicializarBLE();
-          }
-          this.subirMedidas();
-      }, 5000);
+    constructor(private loginService: LoginService,
+                private platform: Platform,
+                private ble: ReceptorBLE,
+                private server: LogicaDeNegocioFake,
+                private data: DataService) {
+        setInterval(() => {
+            if (!this.data.bleActivado) {
+                this.inicializarBLE();
+            }
+            this.subirMedidas();
+        }, 5000);
     }
-  tamanyoWidget: number;
 
-  ngOnInit() {
-    this.tamanyoWidget = this.contarNumeroWidgets();
-  }
+    tamanyoWidget: number;
+
+    ngOnInit() {
+        this.tamanyoWidget = this.contarNumeroWidgets();
+    }
 
 // ----------------------------------------------------------------------------------------------
 // inicializarBLE()
 // Activar bluetooth
 // ----------------------------------------------------------------------------------------------
-  inicializarBLE() {
-    if (this.platform.is('mobile')) {
-      this.ble.inizializar();
+    inicializarBLE() {
+        if (this.platform.is('mobile')) {
+            this.ble.inizializar();
+        }
     }
-  }
+
 // -----------------------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------------------------
 // subirMedidas()
 // Envia las medidas al servidor
 // ----------------------------------------------------------------------------------------------
-  subirMedidas() {
-      if (!this.platform.is('mobile')) { return; }
-      const medicion = this.ble.obtenerO3();
-      if (this.data.bleActivado) {
-        if (this.data.idUser !== null && this.data.rolUser === 1) {
-            this.server.guardarMedida(medicion);
-        }
+    subirMedidas() {
+            const medicion = this.ble.obtenerO3();
+            if (medicion.valorMedido === undefined || medicion.valorMedido === 0 ||
+                medicion.humedad === 0) {
+                return;
+            }
+            if (this.data.bleActivado) {
+                if (this.data.idUser !== null && this.data.rolUser === 1) {
+                    this.server.guardarMedida(medicion);
+                }
+            }
     }
-  }
   // ---------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------------------------
 // contarNumeroWidgets() --> numero:int
 // Devuelve el número de widgets de home
 // ----------------------------------------------------------------------------------------------
-  contarNumeroWidgets(): number {
+contarNumeroWidgets(): number {
     let contador = 1;
     if (this.platform.is('mobile')) {
       contador++;

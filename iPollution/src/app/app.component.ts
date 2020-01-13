@@ -20,7 +20,6 @@ export class AppComponent {
     private statusBar: StatusBar,
     private loginService: LoginService,
     private data: DataService,
-    private backgroundMode: BackgroundMode
   ) {
     this.comprobarPlataforma();
     this.loginService.comprobarLogin();
