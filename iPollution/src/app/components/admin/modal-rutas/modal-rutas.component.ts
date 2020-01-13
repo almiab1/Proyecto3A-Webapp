@@ -89,7 +89,7 @@ export class ModalRutasComponent implements OnInit {
   nuevoPuntoLat: number;
   nuevoPuntoLng: number;
   nuevaRutaPredefinida: Ruta;
-  nombreDeLaNuevaRuta: string = 'Prueba Creacion';
+  nombreDeLaNuevaRuta: string = 'Ruta predefinida';
 
   // Posicion
   currentLocation: any = {
@@ -387,8 +387,9 @@ export class ModalRutasComponent implements OnInit {
         {
           text: 'Si',
           handler: () => {
+            let i = Math.floor(Math.random() * 100);
             const newRoute: Ruta = {
-              nombreRuta: this.nombreDeLaNuevaRuta,
+              nombreRuta: this.nombreDeLaNuevaRuta + '' + i,
               tipoRuta: '0',
               ruta: this.nuevaRuta,
               idUsuario: this.dataService.idUser
