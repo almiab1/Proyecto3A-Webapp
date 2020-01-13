@@ -50,7 +50,8 @@ export class EscanerPage implements OnInit {
 
   // ----------------------------------------------------------------------------------------------
   // tomarFoto()
-  // Metodo para tomar fotos
+  // Metodo para tomar fotos y poner en la vista la foto
+  // --> tomarFoto() -->
   // ----------------------------------------------------------------------------------------------
   tomarFoto(){
     this.camera.getPicture(this.cameraOptions).then((imageData) => {
