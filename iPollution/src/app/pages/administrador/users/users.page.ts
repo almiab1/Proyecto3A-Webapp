@@ -108,7 +108,7 @@ export class UsersPage implements OnInit {
     let tipoModal =  tipo;
 
     if (data != undefined) {
-      titulo = data.descripcion;
+      titulo = data.nombre;
       nombre = data.nombre;
       email = data.idUsuario;
       telefono = data.telefono;
