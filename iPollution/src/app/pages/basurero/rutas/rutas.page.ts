@@ -2,7 +2,7 @@
 // rutas.page.ts
 // Controlador de la vista rutas
 // Equipo 4
-// Alejandro Mira Abad
+// Alejandro Mira Abad y Óscar Blánquez
 // Fecha
 // CopyRight
 // ----------------------------------------------------------------------------------------------

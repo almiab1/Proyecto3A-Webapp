@@ -2,7 +2,7 @@
 // config.page.ts
 // Controlador vista configuracion
 // Equipo 4
-// Alejandro Mira Abad y Oscar Blazquez
+// Alejandro Mira Abad y Oscar Blanquez
 // Fecha
 // CopyRight
 // -----------------------------------------------------------------------

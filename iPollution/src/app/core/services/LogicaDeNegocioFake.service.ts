@@ -471,6 +471,10 @@ export class LogicaDeNegocioFake {
                     console.log(err);
                 });
     }
+    // ------------------------------------------------------------------------------------
+    // POST getEstimacionCalidadAire()
+    // puntos: [{lat, lng}] --> f() --> res: Número (0, 1, 2)
+    // ------------------------------------------------------------------------------------
     getEstimacionCalidadAire(puntos) {
         return this.http.post('https://osblasae.upv.edu.es/basurero/getValoracionCalidadAire', puntos, this.httpOptions);
     }
